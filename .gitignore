@@ -2,6 +2,7 @@
 # IntelliJ
 *.iml
 .idea
+#'project build folder'?
 #(more android studio stuff will need to go here)
 # end of Android-Studio gitignore stuff
 
