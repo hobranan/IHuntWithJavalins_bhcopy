@@ -1,4 +1,3 @@
-CCID GithubUserName
 hoynick hobranan
 hblow hblow
 murab VirajCommits
