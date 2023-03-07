@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<!--    for camera and barcode stuff-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.back" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!--    for camera and barcode stuff (END)-->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +22,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHuntWithJavalins"
         tools:targetApi="31">
+
+        <!--    for camera and barcode stuff-->
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+        <!--    for camera and barcode stuff (END)-->
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -25,6 +42,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name=".CameraActivity"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>
