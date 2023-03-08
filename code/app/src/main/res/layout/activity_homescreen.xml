@@ -9,10 +9,10 @@
         android:id="@+id/textView_hosc_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text=" "
+        android:text="USERNAME"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="I see prey...\nLet's Hunt!"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +59,7 @@
         android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
+
     <TextView
         android:id="@+id/textView_hosc_code2"
         android:layout_width="189dp"
@@ -68,6 +69,7 @@
         android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_hosc_code" />
+
     <TextView
         android:id="@+id/textView_hosc_code3"
         android:layout_width="189dp"
@@ -81,6 +83,28 @@
 
 
     <TextView
+        android:id="@+id/textView_hosc_totalCodesTValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Total Code Amount"
+        app:layout_constraintStart_toEndOf="@+id/textView_hosc_totalsCodesText"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalCodesText" />
+
+    <TextView
+        android:id="@+id/textView_hosc_totalPointsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="196dp"
+        android:gravity="center"
+        android:text="Total Points:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
+
+    <TextView
         android:id="@+id/textView_hosc_totalCodesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,14 +115,15 @@
         app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
 
     <TextView
-        android:id="@+id/textView_hosc_totalCodesTValue"
+        android:id="@+id/textView_hosc_totalsCodesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Total Code Amount"
-        app:layout_constraintStart_toEndOf="@+id/textView_hosc_totalsCodesText"
-        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalCodesText" />
+        android:text="Total Codes:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText" />
 
     <TextView
         android:id="@+id/textView_hosc_code4"
@@ -110,38 +135,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_hosc_code3" />
 
-    <TextView
-        android:id="@+id/textView_hosc_totalPointsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="196dp"
-        android:gravity="center"
-        android:text="Total Points:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
-
-    <TextView
-        android:id="@+id/textView_hosc_totalsCodesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Total Codes:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/FAButton_hosc_quickNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="92dp"
-        android:clickable="true"
-        android:contentDescription="Quick Navigation Button"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
+        android:text="QN"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText" />
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/FAButton_hosc_quickNav"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="96dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:clickable="true"-->
+    <!--        android:contentDescription="Quick Navigation Button"-->
+    <!--        android:gravity="center"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText"-->
+    <!--        app:srcCompat="@android:drawable/btn_star_big_on" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

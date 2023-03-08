@@ -10,15 +10,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    final String LogCat_TAG = "Sample";
     Button cameraButton;
-    static String savedBarcodeText;
+    Button mapButton;
+    Button quickNavButton;
     TextView codeText;
     TextView codeHash;
     TextView codeName;
     TextView codePoints;
-//    Button mapsButton;
 
 
     @Override
@@ -26,7 +24,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_homescreen);
+
         cameraButton = findViewById(R.id.button_hosc_scanCode);
+        mapButton = findViewById(R.id.button_hosc_checkmap);
+        quickNavButton = findViewById(R.id.FAButton_hosc_quickNav);
+
+
         codeText = findViewById(R.id.textView_hosc_code);
         codeHash = findViewById(R.id.textView_hosc_code2);
         codeName = findViewById(R.id.textView_hosc_code3);
@@ -57,5 +60,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OpenStreetMapActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        quickNavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, QuickNavActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+
+
+
     }
 }
