@@ -38,9 +38,11 @@ public class CustomListForCustomAdapter extends ArrayAdapter<QRCode> {
         }
         QRCode tempCode = codes.get(position);
         TextView codeName = view.findViewById(R.id.code_name_text);
-        TextView pointsName = view.findViewById(R.id.code_points_text);
+        TextView codePoints = view.findViewById(R.id.code_points_text);
+        TextView codeHash = view.findViewById(R.id.code_hash_text);
         codeName.setText(tempCode.getCodeName());
-        pointsName.setText(tempCode.getCodePoints());
+        codePoints.setText(tempCode.getCodePoints());
+        codeHash.setText(tempCode.getCodeHash());
         return view;
     }
 }

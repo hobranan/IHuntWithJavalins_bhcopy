@@ -31,6 +31,7 @@ import java.util.HashMap;
 
 public class MyCodeLibraryActivity extends AppCompatActivity {
 
+    Button codeLib_quickNav;
     Button addExButton;
     Button removeExButton;
 
@@ -54,6 +55,8 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.my_code_library_activity);
+
+        codeLib_quickNav = findViewById(R.id.button_codelib_qn);
 
         addExButton = findViewById(R.id.button_addHardcodes);
         addExButton.setVisibility(View.VISIBLE);
@@ -81,6 +84,15 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         final CollectionReference collectionReference = db.collection("MyCodes"); // pull instance of specific collection in firestore
         final String TAG = "Sample"; // used as starter string for debug-log messaging
 
+        codeLib_quickNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyCodeLibraryActivity.this, QuickNavActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         addExButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +112,8 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
                     nameslist.add(temp.getCodeName());
 
                     HashMap<String, String> dataMap = new HashMap<>(); //setup temp key-value mapping (to throw list items at firestore)
-                    dataMap.put("Point Value:", temp.getCodePoints()); // add key-value-pair for province (within subcollection of 'city name' document)
+                    dataMap.put("Point Value", temp.getCodePoints()); // add key-value-pair for province (within subcollection of 'city name' document)
+                    dataMap.put("Hash Value", temp.getCodeHash()); // add key-value-pair for province (within subcollection of 'city name' document)
                     collectionReference
                             .document(temp.getCodeName())// point to at city name then...
                             .set(dataMap) // add province key-value-pair (to sub-collection of document)
@@ -136,8 +149,9 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
 //                    Log.d(TAG, String.valueOf(doc.getData().get("Province Name")));
                     String codeName = doc.getId();
-                    String codePoints = (String) doc.getData().get("Point Value:");
-                    codeList.add(new QRCode(codeName, codePoints));
+                    String codePoints = (String) doc.getData().get("Point Value");
+                    String codeHash = (String) doc.getData().get("Hash Value");
+                    codeList.add(new QRCode(codeName, codePoints, codeHash));
                 }
                 customAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
@@ -153,6 +167,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
 
             HashMap<String, String> dataMap = new HashMap<>(); //setup temp key-value mapping (to throw list items at firestore)
             dataMap.put("Point Value:", value4); // add key-value-pair for province (within subcollection of 'city name' document)
+            dataMap.put("Hash Value", value2); // add key-value-pair for province (within subcollection of 'city name' document)
             collectionReference
                     .document(value3)// point to at city name then...
                     .set(dataMap) // add province key-value-pair (to sub-collection of document)

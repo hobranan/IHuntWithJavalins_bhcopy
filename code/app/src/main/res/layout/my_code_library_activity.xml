@@ -42,6 +42,12 @@
     <ListView
         android:id="@+id/code_list_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="327dp" />
+
+    <Button
+        android:id="@+id/button_codelib_qn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QN" />
 
 </LinearLayout>
