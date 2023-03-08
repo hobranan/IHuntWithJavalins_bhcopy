@@ -99,8 +99,8 @@ public class QuickNavActivity extends AppCompatActivity {
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(QuickNavActivity.this, LibraryActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(QuickNavActivity.this, MyCodeLibraryActivity.class);
+                startActivity(intent);
 
             }
         });

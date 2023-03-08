@@ -27,6 +27,11 @@ public class QRCode {
         analyzeWordToHashToNameToPoints(textCode);
     }
 
+    public QRCode(String codeName, String codePoints) {
+this.codePoints = codePoints;
+this.codeName = codeName;
+    }
+
     public String getCodeHash() {
         return codeHash;
     }

@@ -32,6 +32,8 @@ public class CameraActivity extends AppCompatActivity {
         private ToneGenerator toneGen1;//This class provides methods to play DTMF tones
         private TextView barcodeText;
         private String barcodeData;
+        public static int cameraFlag;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class CameraActivity extends AppCompatActivity {
                 toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 50);
                 surfaceView = findViewById(R.id.surface_view);
                 barcodeText = findViewById(R.id.barcode_text);
+                cameraFlag = 0;
                 initialiseDetectorsAndSources();
         }
 
@@ -101,11 +104,13 @@ public class CameraActivity extends AppCompatActivity {
                                                 }
                                         });
                                         QRCode thisCode = new QRCode(barcodeText.getText().toString());
-                                        Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+//                                        Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+                                        Intent intent = new Intent(CameraActivity.this, MyCodeLibraryActivity.class);
                                         intent.putExtra("cameraSavedCodeText",barcodeText.getText().toString());
                                         intent.putExtra("cameraSavedCodeHash",thisCode.getCodeHash());
                                         intent.putExtra("cameraSavedCodeName",thisCode.getCodeName());
                                         intent.putExtra("cameraSavedCodePoints",thisCode.getCodePoints());
+                                        cameraFlag = 1;
                                         startActivity(intent);
                                 }
                         }
