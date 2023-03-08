@@ -166,7 +166,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
             String value4 = extras.getString("cameraSavedCodePoints");//The key argument here must match that used in the other activity
 
             HashMap<String, String> dataMap = new HashMap<>(); //setup temp key-value mapping (to throw list items at firestore)
-            dataMap.put("Point Value:", value4); // add key-value-pair for province (within subcollection of 'city name' document)
+            dataMap.put("Point Value", value4); // add key-value-pair for province (within subcollection of 'city name' document)
             dataMap.put("Hash Value", value2); // add key-value-pair for province (within subcollection of 'city name' document)
             collectionReference
                     .document(value3)// point to at city name then...
