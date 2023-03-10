@@ -11,17 +11,42 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
-public class DBConnector {
+/**
+ * Connects to Database, gettings the users unique firestore ID to identify them.
+ * Predominantly code is from Well Fed project
+ *
+ * @version 1.0
+ */
+public class DBConnection {
+    /**
+     * Holds tag for logging
+     */
     private final static String TAG = "DBConnector";
+    /**
+     * Holds instance of Firestore database
+     */
     private FirebaseFirestore db;
+    /**
+     * Holds string representation of unique user id
+     */
     private String uuid;
 
-    public DBConnector(Context context) {
+    /**
+     * Constructor for the DBConnection, ie. Connects with the firestore database and gives the
+     * user a unique randomly generated UUID
+     * @param context the context of the application
+     */
+    public DBConnection(Context context) {
         this.db = FirebaseFirestore.getInstance();
         this.uuid = getUUID(context);
         Log.d(TAG, "New UUID:" + this.uuid);
     }
 
+    /**
+     * Gets the UUID for the device to identify user and randomly generates one if not existing already
+     * @param context the context of the application
+     * @return the unique user id
+     */
     public String getUUID(Context context) {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
@@ -38,14 +63,35 @@ public class DBConnector {
         return uuid;
     }
 
-    public CollectionReference getCollection(String subCollection) {
+    /**
+     * Gets the reference to the a given subcollection within the user document
+     * @param subCollection the given subCollection id
+     * @return reference to given subcollection
+     */
+    public CollectionReference getSubCollection(String subCollection) {
         return this.db.collection("users").document("user" + uuid).collection(subCollection);
     }
 
+    /**
+     * Gets the reference to the collection of users of the application
+     * @return reference to user collection
+     */
+    public CollectionReference getUserCollection() {
+        return this.db.collection("users");
+    }
+
+    /**
+     * Gets the reference to the document of the current user
+     * @return reference to the user document
+     */
     public DocumentReference getUserDocument() {
         return this.db.collection("users").document("user" + uuid);
     }
 
+    /**
+     * Gets the instance of the Firebase Firestore database
+     * @return the instance of the Firebase Firestore database
+     */
     public FirebaseFirestore getDB() {
         return this.db;
     }
