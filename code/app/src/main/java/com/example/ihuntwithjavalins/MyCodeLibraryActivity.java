@@ -34,21 +34,17 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
     Button codeLib_quickNav;
     Button addExButton;
     Button removeExButton;
-
     Button addButtonIndivid;
     Button removeButtonIndivid;
     Button removeButtonIndividCancel;
-
-
-    int captureOfDeletePosition; // captures UI-list position (when clicked)
-
+    static int captureOfDeletePosition; // captures UI-list position (when clicked)
     ArrayList<String> text4hashlist = new ArrayList<>();
     ArrayList<String> hashlist = new ArrayList<>();
     ArrayList<String> pointslist = new ArrayList<>();
     ArrayList<String> nameslist = new ArrayList<>();
     ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
     ListView libraryList; // activity_main.xml's object for holding the UI-datalist (within content.xml)
-    ArrayAdapter<QRCode> customAdapter; // adapter (custom child class of Adapter) to link/use on backend-datalist
+    static ArrayAdapter<QRCode> customAdapter; // adapter (custom child class of Adapter) to link/use on backend-datalist
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +77,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         // my database name is ...  on the ... location
         FirebaseFirestore db; // firestore database object (need to import library dependency)
         db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
-        final CollectionReference collectionReference = db.collection("MyCodes"); // pull instance of specific collection in firestore
+        final CollectionReference collectionReference = db.collection("UserEx1"); // pull instance of specific collection in firestore
         final String TAG = "Sample"; // used as starter string for debug-log messaging
 
         codeLib_quickNav.setOnClickListener(new View.OnClickListener() {
@@ -96,16 +92,15 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         addExButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                text4hashlist.addAll( Arrays.asList(
-                        "asdasdffhsad",
-                        "hashcode",
-                        "Treat each line as a separate string",
-                        "sdjldksfjlasdhfoiasdhofjasdoifmoiasdjfinjx",
-                        "44181028",
-                        "066341365154"
+                text4hashlist.addAll(Arrays.asList(
+                        "adsfadsgasga",
+                        "tyurtyurtyu",
+                        "89678kfuykr",
+                        "678567dfghsdfgh",
+                        "1234asdfasdf"
                 ));
                 for (int i = 0; i < text4hashlist.size(); i++) {
-                    QRCode temp = new QRCode( text4hashlist.get(i));
+                    QRCode temp = new QRCode(text4hashlist.get(i));
                     codeList.add(temp);
                     nameslist.add(temp.getCodeName());
                     hashlist.add(temp.getCodeHash());
@@ -153,14 +148,14 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
                     String codePoints = (String) doc.getData().get("Point Value");
                     String codeHash = (String) doc.getData().get("Hash Value");
                     String codeImgRef = (String) doc.getData().get("Img Ref");
-                    codeList.add(new QRCode(codeName, codePoints, codeHash, codeImgRef ));
+                    codeList.add(new QRCode(codeName, codePoints, codeHash, codeImgRef));
                 }
                 customAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
         });
 
         Bundle extras = getIntent().getExtras();
-        if ((extras != null)&(com.example.ihuntwithjavalins.CameraActivity.cameraFlag == 1)) {
+        if ((extras != null) & (com.example.ihuntwithjavalins.CameraActivity.cameraFlag == 1)) {
             com.example.ihuntwithjavalins.CameraActivity.cameraFlag = 0;
             String value1 = extras.getString("cameraSavedCodeText");//The key argument here must match that used in the other activity
             String value2 = extras.getString("cameraSavedCodeHash");//The key argument here must match that used in the other activity
@@ -218,15 +213,16 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
 //                removeButtonIndividCancel.setVisibility(View.VISIBLE); // show delete-cancelling button
 
                 Intent intent = new Intent(MyCodeLibraryActivity.this, MyCodeViewActivity.class);
-              QRCode item = customAdapter.getItem(captureOfDeletePosition);
-                intent.putExtra("cameraSavedCodeHash",item.getCodeHash());
-                intent.putExtra("cameraSavedCodeName",item.getCodeName());
-                intent.putExtra("cameraSavedCodePoints",item.getCodePoints());
-                intent.putExtra("cameraSavedCodeImageRef",item.getCodeImageRef());
+                QRCode item = customAdapter.getItem(captureOfDeletePosition);
+                intent.putExtra("cameraSavedCodeHash", item.getCodeHash());
+                intent.putExtra("cameraSavedCodeName", item.getCodeName());
+                intent.putExtra("cameraSavedCodePoints", item.getCodePoints());
+                intent.putExtra("cameraSavedCodeImageRef", item.getCodeImageRef());
                 startActivity(intent);
 
             }
         });
+
 
         // This listener will delete the selected UI-list item.
         removeButtonIndivid.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +250,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
                                 Log.d(TAG, "Data could not be deleted!" + e.toString());
                             }
                         });
-                if (codeList.size() <=0 ) {
+                if (codeList.size() <= 0) {
                     addExButton.setVisibility(View.VISIBLE);
                 } else {
                     addExButton.setVisibility(View.INVISIBLE);
@@ -275,4 +271,38 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
 
     }
 
+    static void deleteCodeFromCodeView() {
+        FirebaseFirestore db; // firestore database object (need to import library dependency)
+        db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
+        final String TAG = "Sample"; // used as starter string for debug-log messaging
+        final CollectionReference collectionReference = db.collection("MyCodes"); // pull instance of specific collection in firestore
+        QRCode item = customAdapter.getItem(captureOfDeletePosition);
+        customAdapter.remove(item); // delete current list entry
+//        removeButtonIndivid.setVisibility(View.GONE); // re-hide delete and delete-cancelling button
+//        removeButtonIndividCancel.setVisibility(View.GONE);
+        customAdapter.notifyDataSetChanged(); // update UI-list adapter
+
+        DocumentReference docRef = db.collection("MyCodes").document(String.valueOf(item.getCodeName()));
+        docRef
+                .delete() // delete document from firebase database
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // These are a method which gets executed when the task is succeeded
+                        Log.d(TAG, "Data has been deleted successfully!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // These are a method which gets executed if there’s any problem
+                        Log.d(TAG, "Data could not be deleted!" + e.toString());
+                    }
+                });
+//        if (codeList.size() <= 0) {
+//            addExButton.setVisibility(View.VISIBLE);
+//        } else {
+//            addExButton.setVisibility(View.INVISIBLE);
+//        }
+    }
 }

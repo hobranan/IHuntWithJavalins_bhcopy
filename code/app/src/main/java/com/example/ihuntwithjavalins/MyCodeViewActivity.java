@@ -21,6 +21,8 @@ public class MyCodeViewActivity extends AppCompatActivity {
     ImageButton imageButton;
     ImageButton quickNavButton;
 
+    Button deleteButton;
+
     TextView codeName;
     TextView codeHash;
     TextView codePoints;
@@ -36,6 +38,8 @@ public class MyCodeViewActivity extends AppCompatActivity {
         backButton = findViewById(R.id.go_back);
         quickNavButton = findViewById(R.id.imageButton);
         imageButton = findViewById(R.id.image_button);
+        deleteButton = findViewById(R.id.btn_remove_code);
+
 
         codeName = findViewById(R.id.player_name);
         codeHash = findViewById(R.id.player_hash);
@@ -63,6 +67,14 @@ public class MyCodeViewActivity extends AppCompatActivity {
                 Intent intent = new Intent(MyCodeViewActivity.this, QuickNavActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                com.example.ihuntwithjavalins.MyCodeLibraryActivity.deleteCodeFromCodeView();
+                finish();
             }
         });
 
