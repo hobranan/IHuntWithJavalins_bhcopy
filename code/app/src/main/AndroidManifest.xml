@@ -78,6 +78,18 @@
 
         </activity>
 
+        <activity
+            android:name=".MyCodeViewActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".MyCodeImageViewActivity"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>

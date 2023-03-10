@@ -110,6 +110,7 @@ public class CameraActivity extends AppCompatActivity {
                                         intent.putExtra("cameraSavedCodeHash",thisCode.getCodeHash());
                                         intent.putExtra("cameraSavedCodeName",thisCode.getCodeName());
                                         intent.putExtra("cameraSavedCodePoints",thisCode.getCodePoints());
+                                        intent.putExtra("cameraSavedCodeImageRef",thisCode.getCodeImageRef());
                                         cameraFlag = 1;
                                         startActivity(intent);
                                 }

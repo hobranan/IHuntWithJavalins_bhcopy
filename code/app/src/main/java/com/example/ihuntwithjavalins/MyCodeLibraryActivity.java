@@ -107,13 +107,14 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
                 for (int i = 0; i < text4hashlist.size(); i++) {
                     QRCode temp = new QRCode( text4hashlist.get(i));
                     codeList.add(temp);
+                    nameslist.add(temp.getCodeName());
                     hashlist.add(temp.getCodeHash());
                     pointslist.add(temp.getCodePoints());
-                    nameslist.add(temp.getCodeName());
 
                     HashMap<String, String> dataMap = new HashMap<>(); //setup temp key-value mapping (to throw list items at firestore)
-                    dataMap.put("Point Value", temp.getCodePoints()); // add key-value-pair for province (within subcollection of 'city name' document)
-                    dataMap.put("Hash Value", temp.getCodeHash()); // add key-value-pair for province (within subcollection of 'city name' document)
+                    dataMap.put("Hash Value", temp.getCodeHash());  // add key-value-pair for province (within subcollection of document)
+                    dataMap.put("Point Value", temp.getCodePoints());
+                    dataMap.put("Img Ref", temp.getCodeImageRef());
                     collectionReference
                             .document(temp.getCodeName())// point to at city name then...
                             .set(dataMap) // add province key-value-pair (to sub-collection of document)
@@ -151,7 +152,8 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
                     String codeName = doc.getId();
                     String codePoints = (String) doc.getData().get("Point Value");
                     String codeHash = (String) doc.getData().get("Hash Value");
-                    codeList.add(new QRCode(codeName, codePoints, codeHash));
+                    String codeImgRef = (String) doc.getData().get("Img Ref");
+                    codeList.add(new QRCode(codeName, codePoints, codeHash, codeImgRef ));
                 }
                 customAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
@@ -164,10 +166,12 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
             String value2 = extras.getString("cameraSavedCodeHash");//The key argument here must match that used in the other activity
             String value3 = extras.getString("cameraSavedCodeName");//The key argument here must match that used in the other activity
             String value4 = extras.getString("cameraSavedCodePoints");//The key argument here must match that used in the other activity
+            String value5 = extras.getString("cameraSavedCodeImageRef");//The key argument here must match that used in the other activity
 
             HashMap<String, String> dataMap = new HashMap<>(); //setup temp key-value mapping (to throw list items at firestore)
             dataMap.put("Point Value", value4); // add key-value-pair for province (within subcollection of 'city name' document)
-            dataMap.put("Hash Value", value2); // add key-value-pair for province (within subcollection of 'city name' document)
+            dataMap.put("Hash Value", value2);
+            dataMap.put("Img Ref", value5);
             collectionReference
                     .document(value3)// point to at city name then...
                     .set(dataMap) // add province key-value-pair (to sub-collection of document)
@@ -209,8 +213,17 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 captureOfDeletePosition = position; // capture list item's position
-                                removeButtonIndivid.setVisibility(View.VISIBLE); // show delete button
-                removeButtonIndividCancel.setVisibility(View.VISIBLE); // show delete-cancelling button
+
+//                                removeButtonIndivid.setVisibility(View.VISIBLE); // show delete button
+//                removeButtonIndividCancel.setVisibility(View.VISIBLE); // show delete-cancelling button
+
+                Intent intent = new Intent(MyCodeLibraryActivity.this, MyCodeViewActivity.class);
+              QRCode item = customAdapter.getItem(captureOfDeletePosition);
+                intent.putExtra("cameraSavedCodeHash",item.getCodeHash());
+                intent.putExtra("cameraSavedCodeName",item.getCodeName());
+                intent.putExtra("cameraSavedCodePoints",item.getCodePoints());
+                intent.putExtra("cameraSavedCodeImageRef",item.getCodeImageRef());
+                startActivity(intent);
 
             }
         });
@@ -260,28 +273,6 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            String value1 = extras.getString("cameraSavedCodeText");//The key argument here must match that used in the other activity
-//            String value2 = extras.getString("cameraSavedCodeHash");//The key argument here must match that used in the other activity
-//            String value3 = extras.getString("cameraSavedCodeName");//The key argument here must match that used in the other activity
-//            String value4 = extras.getString("cameraSavedCodePoints");//The key argument here must match that used in the other activity
-//            codeText.setText(value1);
-//            codeHash.setText(value2);
-//            codeName.setText(value3);
-//            codePoints.setText(value4);
-//        } else {
-//            codeText.setText("null text");
-//            codeHash.setText("null hash");
-//            codeName.setText("null name");
-//            codePoints.setText("null point");
-//        }
     }
 
 }

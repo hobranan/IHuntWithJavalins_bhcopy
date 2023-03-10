@@ -20,6 +20,7 @@ public class QRCode {
     String codeHash;
     String codeName;
     String codePoints;
+    String codeImageRef;
 
     public QRCode(String textCode) {
 //        dateFirstGenerated = new Date();
@@ -27,10 +28,11 @@ public class QRCode {
         analyzeWordToHashToNameToPoints(textCode);
     }
 
-    public QRCode(String codeName, String codePoints, String codeHash) {
-this.codePoints = codePoints;
-this.codeName = codeName;
+    public QRCode(String codeName, String codePoints, String codeHash, String codeImageRef) {
+        this.codePoints = codePoints;
+        this.codeName = codeName;
         this.codeHash = codeHash;
+        this.codeImageRef = codeImageRef;
     }
 
     public String getCodeHash() {
@@ -44,6 +46,7 @@ this.codeName = codeName;
     public String getCodePoints() {
         return codePoints;
     }
+    public String getCodeImageRef() { return codeImageRef;}
 
     void analyzeWordToHashToNameToPoints(String textCode) {
         Log.d("myTag", textCode);
@@ -118,51 +121,67 @@ this.codeName = codeName;
         switch (hashCharArray[1]) {
             case '0':
                 SecondName = "Fire";
+                codeImageRef = "picture_1-min.png";
                 break;
             case '1':
                 SecondName = "Water";
+                codeImageRef = "picture_2-min.png";
                 break;
             case '2':
                 SecondName = "Plant";
+                codeImageRef = "picture_3-min.png";
                 break;
             case '3':
                 SecondName = "Electric";
+                codeImageRef = "picture_4-min.png";
                 break;
             case '4':
                 SecondName = "Ice";
+                codeImageRef = "picture_5-min.png";
                 break;
             case '5':
                 SecondName = "Fighting";
+                codeImageRef = "picture_6-min.png";
                 break;
             case '6':
                 SecondName = "Poison";
+                codeImageRef = "picture_7-min.png";
                 break;
             case '7':
                 SecondName = "Ground";
+                codeImageRef = "picture_8-min.png";
                 break;
             case '8':
                 SecondName = "Flying";
+                codeImageRef = "picture_9-min.png";
                 break;
             case '9':
                 SecondName = "Psychic";
+                codeImageRef = "picture_10-min.png";
                 break;
             case 'A':
                 SecondName = "Bug";
+                codeImageRef = "picture_11-min.png";
                 break;
             case 'B':
                 SecondName = "Rock";
+                codeImageRef = "picture_12-min.png";
                 break;
             case 'C':
                 SecondName = "Ghost";
+                codeImageRef = "picture_13-min.png";
                 break;
             case 'D':
                 SecondName = "Dragon";
+                codeImageRef = "picture_14-min.png";
                 break;
             case 'E':
                 SecondName = "Dark";
+                codeImageRef = "picture_15-min.png";
                 break;
             case 'F':
                 SecondName = "Steel";
+                codeImageRef = "picture_16-min.png";
                 break;
         }
         switch (hashCharArray[2]) {
