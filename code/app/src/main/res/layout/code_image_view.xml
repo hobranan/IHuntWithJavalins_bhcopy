@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background">
+
+    <ImageButton
+        android:id="@+id/civ_go_back"
+        android:layout_width="126dp"
+        android:layout_height="77dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable"
+        android:contentDescription="BACK" />
+
+    <TextView
+        android:id="@+id/civ_back_text"
+        android:layout_width="154dp"
+        android:layout_height="71dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:text="Back"
+        android:textColor="@color/purple_200"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/civ_qr_code_name"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:text="Dubious Bar Fly"
+        android:textColor="@color/purple_200"
+        android:textSize="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_back_text" />
+
+    <ImageView
+        android:id="@+id/civ_display_img"
+        android:layout_width="412dp"
+        android:layout_height="326dp"
+        android:textColor="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_hash_code_"
+        app:srcCompat="@drawable/a_project_x" />
+
+    <TextView
+        android:id="@+id/civ_total_points"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="136dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:text="150points"
+        android:textColor="@color/purple_200"
+        android:textSize="45dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_display_img" />
+
+    <Button
+        android:id="@+id/civ_show_attached"
+        android:layout_width="252dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="14dp"
+        android:text="See the photo you attached to this"
+        android:textColor="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_total_points" />
+
+    <Button
+        android:id="@+id/civ_no_geo_btn"
+        android:layout_width="257dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="23dp"
+        android:text="See geolocation of where you caught this"
+        android:textColor="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_show_attached" />
+
+    <TextView
+        android:id="@+id/civ_hash_code_"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:text="jdsfhbgkjsdhfglkjdshflgkjhsdflkgjhsdlkfjghlskdfjhglkdsjfhlkgjshdflkgjhsd"
+        android:textColor="@color/purple_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_qr_code_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

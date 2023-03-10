@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/FAButton_close_quickNav"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:clickable="true"-->
+<!--        android:contentDescription="close Quick Navigation Button"-->
+<!--        android:gravity="center"-->
+<!--        app:srcCompat="@android:drawable/btn_star_big_on" />-->
+
+    <Button
+        android:id="@+id/FAButton_close_quickNav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:gravity="center"
+        android:text="close qn" />
+
+    <TextView
+        android:id="@+id/goto_homescreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:gravity="center"
+        android:text="Home"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/button_qn_hs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="homescreen" />
+
+    <TextView
+        android:id="@+id/goto_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:gravity="center"
+        android:text="Camera"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/button_qn_scanCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Scan Code" />
+
+    <TextView
+        android:id="@+id/goto_codeLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:gravity="center"
+        android:text="My Codes"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/button_qn_cl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="code library" />
+
+    <TextView
+        android:id="@+id/goto_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:gravity="center"
+        android:text="Map"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/button_qn_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="map" />
+
+    <TextView
+        android:id="@+id/goto_scoreboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:gravity="center"
+        android:text="Scoreboard"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/button_qn_sb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="scoreboard" />
+
+    <TextView
+        android:id="@+id/goto_myProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:gravity="center"
+        android:text="Profile"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/button_qn_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="profile" />
+</LinearLayout>

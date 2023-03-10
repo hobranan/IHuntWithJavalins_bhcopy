@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView_hosc_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="USERNAME"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_hosc_huntmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="I see prey...\nLet's Hunt!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_username" />
+
+    <Button
+        android:id="@+id/button_hosc_scanCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Scan Code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_huntmsg" />
+
+    <Button
+        android:id="@+id/button_hosc_checkmap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Check map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_hosc_scanCode" />
+
+    <TextView
+        android:id="@+id/textView_hosc_code"
+        android:layout_width="189dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
+
+    <TextView
+        android:id="@+id/textView_hosc_code2"
+        android:layout_width="189dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_code" />
+
+    <TextView
+        android:id="@+id/textView_hosc_code3"
+        android:layout_width="189dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="1dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_code2" />
+
+
+    <TextView
+        android:id="@+id/textView_hosc_totalCodesTValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Total Code Amount"
+        app:layout_constraintStart_toEndOf="@+id/textView_hosc_totalsCodesText"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalCodesText" />
+
+    <TextView
+        android:id="@+id/textView_hosc_totalPointsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="196dp"
+        android:gravity="center"
+        android:text="Total Points:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
+
+    <TextView
+        android:id="@+id/textView_hosc_totalCodesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
+        android:gravity="center"
+        android:text="Total Point Value"
+        app:layout_constraintStart_toEndOf="@+id/textView_hosc_totalPointsText"
+        app:layout_constraintTop_toBottomOf="@+id/button_hosc_checkmap" />
+
+    <TextView
+        android:id="@+id/textView_hosc_totalsCodesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Total Codes:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText" />
+
+    <TextView
+        android:id="@+id/textView_hosc_code4"
+        android:layout_width="189dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_code3" />
+
+    <Button
+        android:id="@+id/FAButton_hosc_quickNav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="QN"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText" />
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/FAButton_hosc_quickNav"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="96dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:clickable="true"-->
+    <!--        android:contentDescription="Quick Navigation Button"-->
+    <!--        android:gravity="center"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView_hosc_totalPointsText"-->
+    <!--        app:srcCompat="@android:drawable/btn_star_big_on" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

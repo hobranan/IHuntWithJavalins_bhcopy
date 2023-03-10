@@ -1,4 +1,4 @@
-import org.gradle.api.initialization.resolve.RepositoriesMode
+import org.gradle.api.initialization.resolve.RepositoriesMode // for firebase functionality
 
 pluginManagement {
     repositories {
@@ -9,7 +9,7 @@ pluginManagement {
 }
 dependencyResolutionManagement {
     //repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // for firebase functionality
     repositories {
         google()
         mavenCentral()
