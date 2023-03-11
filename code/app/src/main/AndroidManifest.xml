@@ -61,7 +61,7 @@
         </activity>
 
         <activity
-            android:name=".map.MapActivity"
+            android:name=".Map.MapActivity"
             android:exported="true">
 
         </activity>

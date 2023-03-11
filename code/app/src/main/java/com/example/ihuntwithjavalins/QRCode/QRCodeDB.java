@@ -62,6 +62,11 @@ public class QRCodeDB {
         this.collection = db.collection("users").document("user" + playerId).collection("QRCodes");
     }
 
+    /**
+     * Adds a new QRCode document to the database
+     * @param code the code to add to the database
+     * @param listener the listener to call when the code is added
+     */
     public void addQRCode(@NonNull QRCode code, OnCompleteListener<QRCode> listener) {
         // creating batch and return value
         WriteBatch batch = db.batch();
@@ -89,6 +94,11 @@ public class QRCodeDB {
         });
     }
 
+    /**
+     * Gets the QRCode from the database(Use Lambda to retrieve)
+     * @param code the code to retrieve from database
+     * @param listener the listener to call after getting code
+     */
     public void getCode(QRCode code, OnCompleteListener<QRCode> listener) {
         String codeId = code.getCodeId();
         DocumentReference codeRef = collection.document(codeId);
@@ -118,6 +128,11 @@ public class QRCodeDB {
         });
     }
 
+    /**
+     * Deletes given code from the database
+     * @param code the given code to delete
+     * @param listener the listener to call when the code is deleted
+     */
     public void deleteCode(@NonNull QRCode code, OnCompleteListener<QRCode> listener) {
         WriteBatch batch = db.batch();
 
@@ -164,10 +179,21 @@ public class QRCodeDB {
         return codeList;
     }
 
+    /**
+     * Gets and returns reference to QRCode document
+     * @param code given code to find document of
+     * @return the document reference of QRCode in database
+     */
     public DocumentReference getDocumentReference(QRCode code) {
         return collection.document(code.getCodeId());
     }
 
+    /**
+     * Gets and returns the Query for sorted QRCodes based on Point Value in database
+     * Citation: How to sort firestore query: https://firebase.google.com/docs/firestore/query-data/order-limit-data
+     * @param ascending true if sorting in ascending order, false if sorting in descending order
+     * @return a query of the sorted QRCodes in the database
+     */
     public Query getSortedCodes(Boolean ascending) {
         return collection.orderBy("Point Value", ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);    // Running .get on the Query should give you the sorted data
     }

@@ -15,20 +15,49 @@ import java.util.Date;
  * @version 1.0
  */
 public class QRCode {
+    /**
+     * Holds the unique code firestore ID
+     */
     private String codeId;
+    /**
+     * Holds the hash value for the code
+     */
     private String codeHash;
+    /**
+     * Holds the semi unique name for the code
+     */
     private String codeName;
+    /**
+     * Holds the point value of the code
+     */
     private String codePoints;
+    /**
+     * Holds the image reference of the code
+     */
     private String codeImageRef;
 
+    /**
+     * Constructor for new instance of QRCode object initialized based on textCode string
+     * @param textCode the textCode to be converted into QRCode data
+     */
     public QRCode(String textCode) {
 //        dateFirstGenerated = new Date();
 //        CommentsForThisCode = new ArrayList<Comments>();
         analyzeWordToHashToNameToPoints(textCode);
     }
 
+    /**
+     * Constructor for new instance of QRCode object
+     */
     public QRCode(){}
 
+    /**
+     * Constructor for new instance of QRCode object, initializes initial fields based on parameters
+     * @param codeName the name of the QRCode
+     * @param codePoints the point value of the QRCode
+     * @param codeHash the Hash value of the QRCode
+     * @param codeImageRef the image reference of the QRCode
+     */
     public QRCode(String codeName, String codePoints, String codeHash, String codeImageRef) {
         this.codePoints = codePoints;
         this.codeName = codeName;
@@ -36,25 +65,76 @@ public class QRCode {
         this.codeImageRef = codeImageRef;
     }
 
+    /**
+     * Sets the unique firestore id of the QRCode
+     * @param id the id to set the QRCode to
+     */
     public void setCodeId(String id) {this.codeId = id;}
+
+    /**
+     * Sets the Hash Value of the QRCode
+     * @param hash the hash value to set the QRCode to
+     */
     public void setCodeHash(String hash) {this.codeHash = hash;}
+
+    /**
+     * Sets the name of the QRCode
+     * @param name the name to set the QRCode to
+     */
     public void setCodeName(String name) {this.codeName = name;}
+
+    /**
+     * Sets the point value of the QRCode
+     * @param points the point value to set the QRCode to
+     */
     public void setCodePoints(String points) {this.codePoints = points;}
+
+    /**
+     * Sets the image reference of the QRCode
+     * @param imageRef the image reference to set the QRCode to
+     */
     public void setCodeImageRef(String imageRef) {this.codeImageRef = imageRef;}
+
+    /**
+     * Gets the unique QRCode firestore id
+     * @return the QRCode id
+     */
     public String getCodeId() {return codeId;}
+
+    /**
+     * Gets the Hash Value of the QRCode
+     * @return the QRCode hash value
+     */
     public String getCodeHash() {
         return codeHash;
     }
 
+    /**
+     * Gets the name of the QRCode
+     * @return the QRCode name
+     */
     public String getCodeName() {
         return codeName;
     }
 
+    /**
+     * Gets the point value of the QRCode
+     * @return the QRCode point value
+     */
     public String getCodePoints() {
         return codePoints;
     }
+
+    /**
+     * Gets the image reference of the QRCode
+     * @return the QRCode image reference
+     */
     public String getCodeImageRef() { return codeImageRef;}
 
+    /**
+     * Initializes the QRCode object's fields based on textCode
+     * @param textCode the textCode to convert into QRCode object field data
+     */
     void analyzeWordToHashToNameToPoints(String textCode) {
         Log.d("myTag", textCode);
         MessageDigest md = null;

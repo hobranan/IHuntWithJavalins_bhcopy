@@ -11,9 +11,12 @@ import java.util.List;
  * @version 1.0
  */
 public class Player {
+    /**
+     * Holds the unique uuid of the Player
+     */
     private String uuid;
     /**
-     * Holds the unique username of the Player
+     * Holds the username of the Player
      */
     private String username;
     /**

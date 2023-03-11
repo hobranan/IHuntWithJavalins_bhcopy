@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
-import com.example.ihuntwithjavalins.map.MapActivity;
+import com.example.ihuntwithjavalins.Map.MapActivity;
 
 public class QuickNavActivity extends AppCompatActivity {
 
