@@ -3,10 +3,8 @@ package com.example.ihuntwithjavalins;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -16,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -105,7 +104,7 @@ public class CameraActivity extends AppCompatActivity {
                                         });
                                         QRCode thisCode = new QRCode(barcodeText.getText().toString());
 //                                        Intent intent = new Intent(CameraActivity.this, MainActivity.class);
-                                        Intent intent = new Intent(CameraActivity.this, MyCodeLibraryActivity.class);
+                                        Intent intent = new Intent(CameraActivity.this, QRCodeLibraryActivity.class);
                                         intent.putExtra("cameraSavedCodeText",barcodeText.getText().toString());
                                         intent.putExtra("cameraSavedCodeHash",thisCode.getCodeHash());
                                         intent.putExtra("cameraSavedCodeName",thisCode.getCodeName());

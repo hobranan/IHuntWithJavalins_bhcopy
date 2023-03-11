@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.QRCode;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.CameraActivity;
+import com.example.ihuntwithjavalins.CustomListForCustomAdapter;
+import com.example.ihuntwithjavalins.QuickNavActivity;
+import com.example.ihuntwithjavalins.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class MyCodeLibraryActivity extends AppCompatActivity {
+public class QRCodeLibraryActivity extends AppCompatActivity {
 
     Button codeLib_quickNav;
     Button addExButton;
@@ -87,7 +89,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         codeLib_quickNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyCodeLibraryActivity.this, QuickNavActivity.class);
+                Intent intent = new Intent(QRCodeLibraryActivity.this, QuickNavActivity.class);
                 startActivity(intent);
 
             }
@@ -194,7 +196,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
         addButtonIndivid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyCodeLibraryActivity.this, CameraActivity.class);
+                Intent intent = new Intent(QRCodeLibraryActivity.this, CameraActivity.class);
                 startActivity(intent);
             }
         });
@@ -217,7 +219,7 @@ public class MyCodeLibraryActivity extends AppCompatActivity {
 //                                removeButtonIndivid.setVisibility(View.VISIBLE); // show delete button
 //                removeButtonIndividCancel.setVisibility(View.VISIBLE); // show delete-cancelling button
 
-                Intent intent = new Intent(MyCodeLibraryActivity.this, MyCodeViewActivity.class);
+                Intent intent = new Intent(QRCodeLibraryActivity.this, QRCodeViewActivity.class);
               QRCode item = customAdapter.getItem(captureOfDeletePosition);
                 intent.putExtra("cameraSavedCodeHash",item.getCodeHash());
                 intent.putExtra("cameraSavedCodeName",item.getCodeName());

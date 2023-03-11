@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
+import com.example.ihuntwithjavalins.map.MapActivity;
 
 public class QuickNavActivity extends AppCompatActivity {
 
@@ -90,7 +92,7 @@ public class QuickNavActivity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, OpenStreetMapActivity.class);
+                Intent intent = new Intent(QuickNavActivity.this, MapActivity.class);
                 startActivity(intent);
 
             }
@@ -99,7 +101,7 @@ public class QuickNavActivity extends AppCompatActivity {
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, MyCodeLibraryActivity.class);
+                Intent intent = new Intent(QuickNavActivity.this, QRCodeLibraryActivity.class);
                 startActivity(intent);
 
             }

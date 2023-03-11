@@ -142,7 +142,15 @@ public class Player {
      * @param code The QRCode the Player scanned to be added to list of codes
      */
     public void addCode(QRCode code) {
-        codes.add(code);
+        this.codes.add(code);
+    }
+
+    /**
+     * Adds all QRCodes from list to Player list of codes
+     * @param codes The list containing QRCode objects to add to Player list
+     */
+    public void addCodes(List<QRCode> codes) {
+        this.codes.addAll(codes);
     }
 
     /**

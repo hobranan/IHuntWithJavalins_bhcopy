@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QRCode.QRCodeDB;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
@@ -14,7 +15,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * PlayerDB is a class which handles all database operations for Player objects.
@@ -34,11 +41,15 @@ public class PlayerDB {
     /**
      * Holds the instance of the QRCodeDB
      */
-    private final QRCodeDB codeDB;
+    private QRCodeDB codeDB;
     /**
      * Holds the CollectionReference for the user collection
      */
     private CollectionReference collection;
+    /**
+     * Holds the string of userId
+     */
+    private String userId;
 
     /**
      * Constructor for the PlayerDB class, initializes declared fields
@@ -51,8 +62,43 @@ public class PlayerDB {
 
         // Create new instance of QRCodeDB based on current connection
         codeDB = new QRCodeDB(connection);
+        userId = connection.getUserDocument().getId();
     }
 
+    /**
+     * Adds a player to the database(Use lambda to retrieve)
+     * Citation: Batch Update Info https://cloud.google.com/firestore/docs/samples/firestore-data-batch-writes
+     * @param player the Player object being added to the database
+     * @param listener the listener to call when the player is added
+     */
+    public void addPlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
+        // creating batch and return value
+        WriteBatch batch = db.batch();
+
+        // add player info to batch
+        String playerId = player.getId();
+        DocumentReference playerRef = collection.document("user" + playerId);
+        Map<String, Object> item = new HashMap<>();
+        item.put("Username", player.getUsername());
+        item.put("Email", player.getEmail());
+        item.put("Phone Number", player.getPhoneNumber());
+        item.put("Region", player.getRegion());
+        //item.put("highest score", 0);
+        //item.put("total score", 0);
+        batch.update(playerRef, item);
+
+        // commits batch writes to firebase
+        batch.commit().addOnCompleteListener(task -> {
+            Log.d(TAG, "addPlayer:onComplete");
+            if (task.isSuccessful()) {
+                Log.d(TAG, ":isSuccessful:" + playerId);
+                listener.onComplete(player, true);
+            } else {
+                Log.d(TAG, ":isFailure:" + playerId);
+                listener.onComplete(player, false);
+            }
+        });
+    }
     /**
      * Gets the player from the database(Use lambda to retrieve)
      * @param uuid the uuid of player being accessed
@@ -62,17 +108,17 @@ public class PlayerDB {
         DocumentReference playerRef = collection.document("user" + uuid);
         playerRef.get().addOnCompleteListener(task -> {
             String id = playerRef.getId();
-            Log.d(TAG, "getIngredient:onComplete");
+            Log.d(TAG, "getPlayer:onComplete");
             if (task.isSuccessful()) {
                 Log.d(TAG, ":isSuccessful:" + id);
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     Log.d(TAG, ":exists:" + id);
                     Player player = new Player();
-                    player.setUsername(document.getString("username"));
-                    player.setEmail(document.getString("email"));
-                    player.setRegion(document.getString("region"));
-                    player.setPhoneNumber(document.getString("phone number"));
+                    player.setUsername(document.getString("Username"));
+                    player.setEmail(document.getString("Email"));
+                    player.setRegion(document.getString("Region"));
+                    player.setPhoneNumber(document.getString("Phone Number"));
                     player.setId(id);
                     listener.onComplete(player, true);
                 } else {
@@ -95,11 +141,11 @@ public class PlayerDB {
     public void deletePlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
         WriteBatch batch = db.batch();
 
-        DocumentReference userDocument = collection.document(player.getId());
+        DocumentReference userDocument = collection.document("user" + player.getId());
         batch.delete(userDocument);
 
         batch.commit().addOnCompleteListener(task -> {
-            Log.d(TAG, "deleteIngredient:onComplete");
+            Log.d(TAG, "deletePlayer:onComplete");
             if (task.isSuccessful()) {
                 Log.d(TAG, ":isSuccessful:" + player.getId());
                 listener.onComplete(player, true);
@@ -120,7 +166,7 @@ public class PlayerDB {
         String uuid = player.getId();
         DocumentReference playerRef = collection.document("user" + uuid);
         playerRef
-                .update("username", newUsername)
+                .update("Username", newUsername)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -148,7 +194,7 @@ public class PlayerDB {
         String uuid = player.getId();
         DocumentReference playerRef = collection.document("user" + uuid);
         playerRef
-                .update("email", newEmail)
+                .update("Email", newEmail)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -176,7 +222,7 @@ public class PlayerDB {
         String uuid = player.getId();
         DocumentReference playerRef = collection.document("user" + uuid);
         playerRef
-                .update("phone number", newContact)
+                .update("Phone Number", newContact)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -204,7 +250,7 @@ public class PlayerDB {
         String uuid = player.getId();
         DocumentReference playerRef = collection.document("user" + uuid);
         playerRef
-                .update("region", newRegion)
+                .update("Region", newRegion)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -222,8 +268,82 @@ public class PlayerDB {
                 });
     }
 
-    // This method probably should use getQRCodes method from QRCodeDB(when that is made)
-    public void getPlayerCodes(){
-
+    /**
+     * Gets reference to player document
+     * @param player the Player object's document to be retrieved
+     * @return reference to given player document
+     */
+    public DocumentReference getDocumentReference(Player player) {
+        return collection.document("user" + player.getId());
     }
+
+    /**
+     * Gets query of sorted player documents(Use .get to retrieve data)
+     * @param field the field to sort player documents by
+     * @param ascending true if sorting in ascending order, false if sorting in descending order
+     * @return the query of sorted player documents
+     */
+    public Query getSortedPlayers(String field, Boolean ascending) {
+        return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);    // Running .get on the Query should give you the sorted data
+    }
+
+    /**
+     * Adds given code to player code collection in database
+     * @param code given code to add
+     * @param listener the listener to call when code is added
+     */
+    public void playerAddQRCode(QRCode code, OnCompleteListener<QRCode> listener) {
+        codeDB.getCode(code, (foundCode, success) -> {
+            if (foundCode == null) {
+                codeDB.addQRCode(code, (addedCode, success2) -> {
+                    if (addedCode != null) {
+                        listener.onComplete(addedCode, true);
+                    } else {
+                        listener.onComplete(null, false);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Deletes given code from player code collection in database
+     * @param code given code to delete
+     * @param listener the listener to call when the code is deleted
+     */
+    public void playerDelQRCode(QRCode code, OnCompleteListener<QRCode> listener){
+        codeDB.getCode(code, (foundCode, success) -> {
+            if (foundCode != null) {
+                codeDB.deleteCode(code, (deletedCode, success2) -> {
+                    if (deletedCode != null) {
+                        listener.onComplete(deletedCode, true);
+                    } else {
+                        listener.onComplete(null, false);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Returns a list of QRCodes the user owns
+     * @return list of user owned QRCodes
+     */
+    public List<QRCode> getUserCodes (){
+        return codeDB.getCodes();
+    }
+
+    /**
+     * Returns a list of QRCodes the given player owns
+     * @param player the given player who owns the codes
+     * @return list of player owned QRCodes
+     */
+    public List<QRCode> getPlayerCodes(Player player){
+        String playerId = player.getId();
+        codeDB.switchFromPlayerToPlayerCodes(playerId);
+        List<QRCode> codeList = codeDB.getCodes();
+        codeDB.switchFromPlayerToPlayerCodes(userId);
+        return codeList;
+    }
+
 }

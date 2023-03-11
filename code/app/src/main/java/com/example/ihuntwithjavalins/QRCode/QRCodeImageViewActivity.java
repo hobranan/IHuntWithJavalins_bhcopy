@@ -1,6 +1,5 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.QRCode;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,17 +12,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Objects;
-
-public class MyCodeImageViewActivity extends AppCompatActivity {
+public class QRCodeImageViewActivity extends AppCompatActivity {
 
     ImageButton backButton;
     TextView codeName;

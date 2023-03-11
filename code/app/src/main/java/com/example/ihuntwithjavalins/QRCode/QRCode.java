@@ -15,18 +15,19 @@ import java.util.Date;
  * @version 1.0
  */
 public class QRCode {
-    // putting making QRCode on hold until we figure out visual representation and QR Code scanning functionality and how we store those values
-
-    String codeHash;
-    String codeName;
-    String codePoints;
-    String codeImageRef;
+    private String codeId;
+    private String codeHash;
+    private String codeName;
+    private String codePoints;
+    private String codeImageRef;
 
     public QRCode(String textCode) {
 //        dateFirstGenerated = new Date();
 //        CommentsForThisCode = new ArrayList<Comments>();
         analyzeWordToHashToNameToPoints(textCode);
     }
+
+    public QRCode(){}
 
     public QRCode(String codeName, String codePoints, String codeHash, String codeImageRef) {
         this.codePoints = codePoints;
@@ -35,6 +36,12 @@ public class QRCode {
         this.codeImageRef = codeImageRef;
     }
 
+    public void setCodeId(String id) {this.codeId = id;}
+    public void setCodeHash(String hash) {this.codeHash = hash;}
+    public void setCodeName(String name) {this.codeName = name;}
+    public void setCodePoints(String points) {this.codePoints = points;}
+    public void setCodeImageRef(String imageRef) {this.codeImageRef = imageRef;}
+    public String getCodeId() {return codeId;}
     public String getCodeHash() {
         return codeHash;
     }

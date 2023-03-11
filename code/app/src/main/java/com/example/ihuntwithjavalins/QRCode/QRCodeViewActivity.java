@@ -1,21 +1,19 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.QRCode;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.ihuntwithjavalins.QuickNavActivity;
+import com.example.ihuntwithjavalins.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class MyCodeViewActivity extends AppCompatActivity {
+public class QRCodeViewActivity extends AppCompatActivity {
 
     ImageButton backButton;
     ImageButton imageButton;
@@ -60,7 +58,7 @@ public class MyCodeViewActivity extends AppCompatActivity {
         quickNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyCodeViewActivity.this, QuickNavActivity.class);
+                Intent intent = new Intent(QRCodeViewActivity.this, QuickNavActivity.class);
                 startActivity(intent);
 
             }
@@ -69,7 +67,7 @@ public class MyCodeViewActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyCodeViewActivity.this, MyCodeImageViewActivity.class);
+                Intent intent = new Intent(QRCodeViewActivity.this, QRCodeImageViewActivity.class);
                 intent.putExtra("cameraSavedCodeName", savedCodeName);
                 intent.putExtra("cameraSavedCodeHash", savedCodeHash);
                 intent.putExtra("cameraSavedCodePoints", savedCodePoints);

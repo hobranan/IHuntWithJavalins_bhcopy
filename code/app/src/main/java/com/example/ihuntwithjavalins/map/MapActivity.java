@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,17 +6,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.ihuntwithjavalins.LocationTrack;
+import com.example.ihuntwithjavalins.MainActivity;
+import com.example.ihuntwithjavalins.R;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -32,10 +32,9 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class OpenStreetMapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
 //    private MyLocationNewOverlay mLocationOverlay;
@@ -93,7 +92,7 @@ public class OpenStreetMapActivity extends AppCompatActivity {
         requestPermissionsIfNecessary(permissions);
 
         // location tracker https://www.digitalocean.com/community/tutorials/android-location-api-tracking-gps
-        locationTrack = new LocationTrack(OpenStreetMapActivity.this);
+        locationTrack = new LocationTrack(MapActivity.this);
         double longitude = 53.5;
         double latitude = -113.5;
         if (locationTrack.canGetLocation()) {

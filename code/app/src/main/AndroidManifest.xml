@@ -61,7 +61,7 @@
         </activity>
 
         <activity
-            android:name=".OpenStreetMapActivity"
+            android:name=".map.MapActivity"
             android:exported="true">
 
         </activity>
@@ -73,19 +73,19 @@
         </activity>
 
         <activity
-            android:name=".MyCodeLibraryActivity"
+            android:name=".QRCode.QRCodeLibraryActivity"
             android:exported="true">
 
         </activity>
 
         <activity
-            android:name=".MyCodeViewActivity"
+            android:name=".QRCode.QRCodeViewActivity"
             android:exported="true">
 
         </activity>
 
         <activity
-            android:name=".MyCodeImageViewActivity"
+            android:name=".QRCode.QRCodeImageViewActivity"
             android:exported="true">
 
         </activity>
