@@ -40,55 +40,93 @@
             android:value="barcode" />
         <!--    for camera and barcode stuff (END)-->
 
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
+
         <activity
-            android:name=".MainActivity"
+            android:name=".TitleActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
 
         <activity
-            android:name=".CameraActivity"
+            android:name=".SignUpActivity"
             android:exported="true">
-
-        </activity>
-
-        <activity
-            android:name=".OpenStreetMapActivity"
-            android:exported="true">
-
         </activity>
 
         <activity
             android:name=".QuickNavActivity"
             android:exported="true">
-
         </activity>
 
         <activity
-            android:name=".MyCodeLibraryActivity"
+            android:name=".Camera.CameraScanActivity"
             android:exported="true">
-
         </activity>
 
         <activity
-            android:name=".MyCodeViewActivity"
+            android:name=".Camera.CameraAnalyzeScannedActivity"
             android:exported="true">
-
         </activity>
 
         <activity
-            android:name=".MyCodeImageViewActivity"
+            android:name=".Camera.CameraAlreadyCaughtActivity"
             android:exported="true">
-
         </activity>
+
+        <activity
+            android:name=".Camera.CameraCaughtNewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Map.OpenStreetMapActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QRCode.QRCodeLibraryActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QRCode.QRCodeViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QRCode.QRCodeImageViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Map.CodeRefOpenStreetMapActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Camera.PhotoViewActivity"
+            android:exported="true">
+        </activity>
+
+
 
     </application>
 

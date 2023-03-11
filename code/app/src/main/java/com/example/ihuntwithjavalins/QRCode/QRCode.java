@@ -6,8 +6,6 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * This class represents a QRCode scanned by Players in the application.
@@ -15,39 +13,171 @@ import java.util.Date;
  * @version 1.0
  */
 public class QRCode {
-    // putting making QRCode on hold until we figure out visual representation and QR Code scanning functionality and how we store those values
-
-    String codeHash;
-    String codeName;
-    String codePoints;
-    String codeImageRef;
-
+    /**
+     * Holds the unique code firestore ID
+     */
+    private String codeDate;
+    /**
+     * Holds the hash value for the code
+     */
+    private String codeHash;
+    /**
+     * Holds the semi unique name for the code
+     */
+    private String codeName;
+    /**
+     * Holds the point value of the code
+     */
+    private String codePoints;
+    /**
+     * Holds the image reference of the code
+     */
+    private String codeGendImageRef;
+    private String codeLat;
+    private String codeLon;
+    private String codePhotoRef;
+    /**
+     * Constructor for new instance of QRCode object initialized based on textCode string
+     * @param textCode the textCode to be converted into QRCode data
+     */
     public QRCode(String textCode) {
 //        dateFirstGenerated = new Date();
 //        CommentsForThisCode = new ArrayList<Comments>();
         analyzeWordToHashToNameToPoints(textCode);
+        codeLat = "";
+        codeLon = "";
+        codePhotoRef = "";
     }
 
-    public QRCode(String codeName, String codePoints, String codeHash, String codeImageRef) {
-        this.codePoints = codePoints;
-        this.codeName = codeName;
+    /**
+     * Constructor for new instance of QRCode object
+     */
+    public QRCode(){}
+
+    /**
+     * Constructor for new instance of QRCode object, initializes initial fields based on parameters
+     * @param codeName the name of the QRCode
+     * @param codePoints the point value of the QRCode
+     * @param codeHash the Hash value of the QRCode
+     * @param codeGendImageRef the image reference of the QRCode
+     */
+//    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef) {
+//        this.codeHash = codeHash;
+//        this.codeName = codeName;
+//        this.codePoints = codePoints;
+//        this.codeGendImageRef = codeGendImageRef;
+//    }
+
+    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef, String codeLat, String codeLon, String codePhotoRef) {
         this.codeHash = codeHash;
-        this.codeImageRef = codeImageRef;
+        this.codeName = codeName;
+        this.codePoints = codePoints;
+        this.codeGendImageRef = codeGendImageRef;
+        this.codeLat = codeLat;
+        this.codeLon = codeLon;
+        this.codePhotoRef = codePhotoRef;
     }
 
+
+    /**
+     * Sets the unique firestore id of the QRCode
+     * @param date the id to set the QRCode to
+     */
+    public void setCodeDate(String date) {this.codeDate = date;}
+
+    /**
+     * Sets the Hash Value of the QRCode
+     * @param hash the hash value to set the QRCode to
+     */
+    public void setCodeHash(String hash) {this.codeHash = hash;}
+
+    /**
+     * Sets the name of the QRCode
+     * @param name the name to set the QRCode to
+     */
+    public void setCodeName(String name) {this.codeName = name;}
+
+    /**
+     * Sets the point value of the QRCode
+     * @param points the point value to set the QRCode to
+     */
+    public void setCodePoints(String points) {this.codePoints = points;}
+
+    /**
+     * Sets the image reference of the QRCode
+     * @param imageRef the image reference to set the QRCode to
+     */
+    public void setCodeGendImageRef(String imageRef) {this.codeGendImageRef = imageRef;}
+
+
+
+    public void setCodePhotoRef(String codePhotoRef) {
+        this.codePhotoRef = codePhotoRef;
+    }
+
+
+    public void setCodeLat(String codeLat) {
+        this.codeLat = codeLat;
+    }
+
+
+    public void setCodeLon(String codeLon) {
+        this.codeLon = codeLon;
+    }
+
+
+    /**
+     * Gets the unique QRCode firestore id
+     * @return the QRCode id
+     */
+    public String getCodeDate() {return codeDate;}
+
+    /**
+     * Gets the Hash Value of the QRCode
+     * @return the QRCode hash value
+     */
     public String getCodeHash() {
         return codeHash;
     }
 
+    /**
+     * Gets the name of the QRCode
+     * @return the QRCode name
+     */
     public String getCodeName() {
         return codeName;
     }
 
+    /**
+     * Gets the point value of the QRCode
+     * @return the QRCode point value
+     */
     public String getCodePoints() {
         return codePoints;
     }
-    public String getCodeImageRef() { return codeImageRef;}
 
+    /**
+     * Gets the image reference of the QRCode
+     * @return the QRCode image reference
+     */
+    public String getCodeGendImageRef() { return codeGendImageRef;}
+
+
+    public String getCodePhotoRef() {
+        return codePhotoRef;
+    }
+    public String getCodeLat() {
+        return codeLat;
+    }
+    public String getCodeLon() {
+        return codeLon;
+    }
+
+
+    /**
+     * Initializes the QRCode object's fields based on textCode
+     * @param textCode the textCode to convert into QRCode object field data
+     */
     void analyzeWordToHashToNameToPoints(String textCode) {
         Log.d("myTag", textCode);
         MessageDigest md = null;
@@ -121,67 +251,67 @@ public class QRCode {
         switch (hashCharArray[1]) {
             case '0':
                 SecondName = "Fire";
-                codeImageRef = "picture_1-min.png";
+                codeGendImageRef = "picture_1-min.png";
                 break;
             case '1':
                 SecondName = "Water";
-                codeImageRef = "picture_2-min.png";
+                codeGendImageRef = "picture_2-min.png";
                 break;
             case '2':
                 SecondName = "Plant";
-                codeImageRef = "picture_3-min.png";
+                codeGendImageRef = "picture_3-min.png";
                 break;
             case '3':
                 SecondName = "Electric";
-                codeImageRef = "picture_4-min.png";
+                codeGendImageRef = "picture_4-min.png";
                 break;
             case '4':
                 SecondName = "Ice";
-                codeImageRef = "picture_5-min.png";
+                codeGendImageRef = "picture_5-min.png";
                 break;
             case '5':
                 SecondName = "Fighting";
-                codeImageRef = "picture_6-min.png";
+                codeGendImageRef = "picture_6-min.png";
                 break;
             case '6':
                 SecondName = "Poison";
-                codeImageRef = "picture_7-min.png";
+                codeGendImageRef = "picture_7-min.png";
                 break;
             case '7':
                 SecondName = "Ground";
-                codeImageRef = "picture_8-min.png";
+                codeGendImageRef = "picture_8-min.png";
                 break;
             case '8':
                 SecondName = "Flying";
-                codeImageRef = "picture_9-min.png";
+                codeGendImageRef = "picture_9-min.png";
                 break;
             case '9':
                 SecondName = "Psychic";
-                codeImageRef = "picture_10-min.png";
+                codeGendImageRef = "picture_10-min.png";
                 break;
             case 'A':
                 SecondName = "Bug";
-                codeImageRef = "picture_11-min.png";
+                codeGendImageRef = "picture_11-min.png";
                 break;
             case 'B':
                 SecondName = "Rock";
-                codeImageRef = "picture_12-min.png";
+                codeGendImageRef = "picture_12-min.png";
                 break;
             case 'C':
                 SecondName = "Ghost";
-                codeImageRef = "picture_13-min.png";
+                codeGendImageRef = "picture_13-min.png";
                 break;
             case 'D':
                 SecondName = "Dragon";
-                codeImageRef = "picture_14-min.png";
+                codeGendImageRef = "picture_14-min.png";
                 break;
             case 'E':
                 SecondName = "Dark";
-                codeImageRef = "picture_15-min.png";
+                codeGendImageRef = "picture_15-min.png";
                 break;
             case 'F':
                 SecondName = "Steel";
-                codeImageRef = "picture_16-min.png";
+                codeGendImageRef = "picture_16-min.png";
                 break;
         }
         switch (hashCharArray[2]) {

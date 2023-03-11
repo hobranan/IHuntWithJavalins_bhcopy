@@ -6,27 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background">
 
-    <ImageButton
-        android:id="@+id/civ_go_back"
-        android:layout_width="126dp"
-        android:layout_height="77dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable"
-        android:contentDescription="BACK" />
-
     <TextView
-        android:id="@+id/civ_back_text"
-        android:layout_width="154dp"
-        android:layout_height="71dp"
+        android:id="@+id/text_gotcha"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
         android:background="@android:color/transparent"
         android:ems="10"
-        android:text="Back"
+        android:text="Gotcha!"
         android:textColor="@color/purple_200"
-        android:textSize="25dp"
+        android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,12 +30,21 @@
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/civ_back_text" />
+        app:layout_constraintTop_toBottomOf="@+id/text_gotcha" />
+
+    <TextView
+        android:id="@+id/civ_hash_code_"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:text="7B7EA9EB434144E6BE5C78C7F557693965B7385052B4D7DD81C663D76EC28B0B"
+        android:textColor="@color/purple_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_qr_code_name" />
 
     <ImageView
         android:id="@+id/civ_display_img"
-        android:layout_width="406dp"
-        android:layout_height="190dp"
+        android:layout_width="427dp"
+        android:layout_height="157dp"
         android:textColor="@color/purple_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -58,7 +56,7 @@
         android:id="@+id/civ_total_points"
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:layout_marginStart="136dp"
+        android:layout_marginStart="44dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:text="150points"
@@ -67,47 +65,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/civ_display_img" />
 
-    <Button
-        android:id="@+id/civ_show_attached"
-        android:layout_width="252dp"
-        android:layout_height="63dp"
-        android:text="See the photo you attached to this"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+    <CheckBox
+        android:id="@+id/checkbox_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Take location photo for public view?"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/civ_total_points" />
 
-    <Button
-        android:id="@+id/civ_no_geo_btn"
-        android:layout_width="257dp"
-        android:layout_height="65dp"
-        android:text="See geolocation of where you caught this"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/civ_show_attached"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/civ_hash_code_"
-        android:layout_width="0dp"
-        android:layout_height="49dp"
-        android:text="jdsfhbgkjsdhfglkjdshflgkjhsdflkgjhsdlkfjghlskdfjhglkdsjfhlkgjshdflkgjhsd"
-        android:textColor="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/civ_qr_code_name" />
-
-    <ImageButton
-        android:id="@+id/menu_btn3"
+    <CheckBox
+        android:id="@+id/checkbox_geolocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
+        android:layout_marginStart="12dp"
+        android:text="Save geolocation for public view?"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_menu_24" />
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_photo" />
+
+    <Button
+        android:id="@+id/civ_confirm_button"
+        android:layout_width="252dp"
+        android:layout_height="63dp"
+        android:text="CONFIRM"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_geolocation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

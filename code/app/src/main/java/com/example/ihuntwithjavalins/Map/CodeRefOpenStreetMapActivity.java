@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.Map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,17 +6,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+//import com.example.ihuntwithjavalins.MainActivity;
+import com.example.ihuntwithjavalins.R;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -29,16 +28,13 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class OpenStreetMapActivity extends AppCompatActivity {
+public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
-//    private MyLocationNewOverlay mLocationOverlay;
+    //    private MyLocationNewOverlay mLocationOverlay;
 //    private GpsMyLocationProvider mGPSLocationProvider;
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
@@ -57,7 +53,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         //(handle permissions first, before map is created. not depicted here)
@@ -92,19 +87,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
         };
         requestPermissionsIfNecessary(permissions);
 
-        // location tracker https://www.digitalocean.com/community/tutorials/android-location-api-tracking-gps
-        locationTrack = new LocationTrack(OpenStreetMapActivity.this);
-        double longitude = 53.5;
-        double latitude = -113.5;
-        if (locationTrack.canGetLocation()) {
-            longitude = locationTrack.getLongitude();
-            latitude = locationTrack.getLatitude();
-            Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(longitude) +
-                    "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
-        } else {
-            locationTrack.showSettingsAlert();
-        }
-        // location tracker (END)
 
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
@@ -127,20 +109,20 @@ public class OpenStreetMapActivity extends AppCompatActivity {
         //Map controller
         IMapController mapController = map.getController();
         mapController.setZoom(18.5);
-        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
+//        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
 
+        double latitude = -113.5;
+        double longitude = 53.5;
+        Bundle extras = getIntent().getExtras();
+        String savedCodeLat = extras.getString("imageSavedCodeLat");//The key argument here must match that used in the other activity
+        String savedCodeLon = extras.getString("imageSavedCodeLon");//The key argument here must match that used in the other activity
+        latitude = Double.parseDouble(savedCodeLat);
+        longitude = Double.parseDouble(savedCodeLon);
         GeoPoint myGPS_point = new GeoPoint(latitude, longitude); // current 'location tracker' point
-
-        //example map points
         ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
-        items.add(new OverlayItem("quad poster2", "1250", new GeoPoint(53.52724, -113.52779))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
-
-        //my location map point 'item'
-        OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point);
+//        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
+        //this item's location map point 'item'
+        OverlayItem myGPSoverlayItem = new OverlayItem("Code Location", "here", myGPS_point);
         items.add(myGPSoverlayItem);
 
         //the overlay
@@ -160,15 +142,13 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 }, ctx);
         mOverlay.setFocusItemsOnTap(true);
         map.getOverlays().add(mOverlay); // add 'item' array of points
-//        mapController.setCenter(Point_uofa);
         mapController.setCenter(myGPS_point);
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ctx, MainActivity.class);
-                startActivity(intent);
+                finish();
 
             }
         });
@@ -225,12 +205,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        locationTrack.stopListener();
     }
 
 

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">IHuntWithJavalins</string>
+        <string-array name="regions_array">
+            <item>Edmonton</item>
+            <item>Calgary</item>
+            <item>Rural Alberta</item>
+            <item>Vancouver</item>
+            <item>Regina</item>
+            <item>Toronto</item>
+            <item>Montreal</item>
+        </string-array>
 </resources>

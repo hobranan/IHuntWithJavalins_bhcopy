@@ -1,29 +1,40 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.Camera;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
+import com.example.ihuntwithjavalins.QRCode.QRCodeViewActivity;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraScanActivity extends AppCompatActivity {
 
         private SurfaceView surfaceView; // box of live camera overlay
         private BarcodeDetector barcodeDetector;
@@ -59,10 +70,10 @@ public class CameraActivity extends AppCompatActivity {
                         @Override
                         public void surfaceCreated(SurfaceHolder holder) {
                                 try {
-                                        if (ActivityCompat.checkSelfPermission(CameraActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                                        if (ActivityCompat.checkSelfPermission(CameraScanActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                                                 cameraSource.start(surfaceView.getHolder());
                                         } else {
-                                                ActivityCompat.requestPermissions(CameraActivity.this, new
+                                                ActivityCompat.requestPermissions(CameraScanActivity.this, new
                                                         String[]{android.Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                                         }
                                 } catch (IOException e) {
@@ -104,14 +115,14 @@ public class CameraActivity extends AppCompatActivity {
                                                 }
                                         });
                                         QRCode thisCode = new QRCode(barcodeText.getText().toString());
-//                                        Intent intent = new Intent(CameraActivity.this, MainActivity.class);
-                                        Intent intent = new Intent(CameraActivity.this, MyCodeLibraryActivity.class);
-                                        intent.putExtra("cameraSavedCodeText",barcodeText.getText().toString());
-                                        intent.putExtra("cameraSavedCodeHash",thisCode.getCodeHash());
-                                        intent.putExtra("cameraSavedCodeName",thisCode.getCodeName());
-                                        intent.putExtra("cameraSavedCodePoints",thisCode.getCodePoints());
-                                        intent.putExtra("cameraSavedCodeImageRef",thisCode.getCodeImageRef());
-                                        cameraFlag = 1;
+//                                        Intent intent = new Intent(CameraScanActivity.this, CameraAnalyzeScannedActivity.class);
+                                        Intent intent = new Intent(CameraScanActivity.this, CameraCaughtNewActivity.class); //testing
+                                        intent.putExtra("cameraSavedCodeHash", thisCode.getCodeHash());
+                                        intent.putExtra("cameraSavedCodeName", thisCode.getCodeName());
+                                        intent.putExtra("cameraSavedCodePoints", thisCode.getCodePoints());
+                                        intent.putExtra("cameraSavedCodeImageRef", thisCode.getCodeGendImageRef());
+
+//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                 }
                         }
@@ -130,6 +141,8 @@ public class CameraActivity extends AppCompatActivity {
                 getSupportActionBar().hide();
                 initialiseDetectorsAndSources();
         }
+
+
 }
 
     /*
