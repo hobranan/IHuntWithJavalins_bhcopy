@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.QRCode;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.R;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class CustomListForCustomAdapter extends ArrayAdapter<QRCode> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.content_code, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.content_library_item, parent,false);
         }
         QRCode tempCode = codes.get(position);
         TextView codeName = view.findViewById(R.id.code_name_text);

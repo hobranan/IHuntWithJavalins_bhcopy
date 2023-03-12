@@ -52,11 +52,24 @@ public class Player {
         this.region = region;
     }
 
+    public Player(String username, String email, String phoneNumber, String region) {
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.region = region;
+    }
+
     /**
      * Constructor for new instance of Player object
      */
     public Player() {
 
+    }
+
+
+    public Player(String username, String region) {
+        this.username = username;
+        this.region = region;
     }
 
     public String getId(){
@@ -66,6 +79,7 @@ public class Player {
     public void setId(String uuid){
         this.uuid = uuid;
     }
+
     /**
      * Gets the username of the Player
      * @return The String representing the username of the Player
@@ -139,6 +153,19 @@ public class Player {
     }
 
     // I won't write a unit test for Player methods yet, I think it makes more sense for there to be a unit test for a controller using said model class
+
+    /**
+     * Gets the list of QRCode objects the Player has scanned
+     * @return The list containing QRCode objects the Player has scanned
+     */
+    public int getTotalCodes(){
+        List<QRCode> all_codes = getCodes();
+        int sum = 0;
+        for (QRCode object : all_codes) {
+            sum += Integer.parseInt(object.getCodePoints());
+        }
+        return sum;
+    }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned

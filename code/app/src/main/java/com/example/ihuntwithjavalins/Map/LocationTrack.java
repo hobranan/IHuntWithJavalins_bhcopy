@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins;
+package com.example.ihuntwithjavalins.Map;
 
 import android.app.Service;
 import android.content.Context;

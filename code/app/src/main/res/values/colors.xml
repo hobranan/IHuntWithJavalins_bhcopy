@@ -7,4 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="text1_bolded">#E1C158</color>
+    <color name="text2_general">#F8F7F8</color>
+    <color name="text3_edittext">#3D3D3D</color>
+    <color name="text4_caught_have">#00B833</color>
+    <color name="text5_donthave">#FF0000</color>
+
+    <color name="button1">#B29700</color>
+    <color name="button2_delete">#B22000</color>
+
+    <color name="fill1_dark">#000000</color>
+    <color name="fill2_unavailable">#7A7171</color>
+    <color name="fill3_light">#FFFFFF</color>
+    <color name="fill4_spinner">#B29700</color>
+
 </resources>

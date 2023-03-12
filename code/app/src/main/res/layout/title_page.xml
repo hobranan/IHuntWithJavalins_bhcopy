@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="IHuntWithJavalin's\nQR Hunter"
+        android:textColor="@color/text1_bolded"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/appimage_main"
+        android:layout_width="246dp"
+        android:layout_height="296dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="title pic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_text"
+        android:src="@drawable/title_picture" />
+
+    <ImageView
+        android:id="@+id/appimage_companyLogo"
+        android:layout_width="290dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="company logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appimage_main"
+        android:src="@drawable/company_logo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

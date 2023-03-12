@@ -10,7 +10,6 @@ import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +31,7 @@ public class PlayerDB {
     /**
      * Holds the tag for logging
      */
-    private final static String TAG = "PlayerDB";
+    private final static String myTAG = "PlayerDB";
     /**
      * Holds the instance of the Firebase Firestore database
      */
@@ -89,12 +87,12 @@ public class PlayerDB {
 
         // commits batch writes to firebase
         batch.commit().addOnCompleteListener(task -> {
-            Log.d(TAG, "addPlayer:onComplete");
+            Log.d(myTAG, "addPlayer:onComplete");
             if (task.isSuccessful()) {
-                Log.d(TAG, ":isSuccessful:" + playerId);
+                Log.d(myTAG, ":isSuccessful:" + playerId);
                 listener.onComplete(player, true);
             } else {
-                Log.d(TAG, ":isFailure:" + playerId);
+                Log.d(myTAG, ":isFailure:" + playerId);
                 listener.onComplete(player, false);
             }
         });
@@ -108,12 +106,12 @@ public class PlayerDB {
         DocumentReference playerRef = collection.document("user" + uuid);
         playerRef.get().addOnCompleteListener(task -> {
             String id = playerRef.getId();
-            Log.d(TAG, "getPlayer:onComplete");
+            Log.d(myTAG, "getPlayer:onComplete");
             if (task.isSuccessful()) {
-                Log.d(TAG, ":isSuccessful:" + id);
+                Log.d(myTAG, ":isSuccessful:" + id);
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    Log.d(TAG, ":exists:" + id);
+                    Log.d(myTAG, ":exists:" + id);
                     Player player = new Player();
                     player.setUsername(document.getString("Username"));
                     player.setEmail(document.getString("Email"));
@@ -122,11 +120,11 @@ public class PlayerDB {
                     player.setId(id);
                     listener.onComplete(player, true);
                 } else {
-                    Log.d(TAG, ":notExists:" + id);
+                    Log.d(myTAG, ":notExists:" + id);
                     listener.onComplete(null, false);
                 }
             } else {
-                Log.d(TAG, ":isFailure:" + id);
+                Log.d(myTAG, ":isFailure:" + id);
                 listener.onComplete(null, false);
             }
 
@@ -145,12 +143,12 @@ public class PlayerDB {
         batch.delete(userDocument);
 
         batch.commit().addOnCompleteListener(task -> {
-            Log.d(TAG, "deletePlayer:onComplete");
+            Log.d(myTAG, "deletePlayer:onComplete");
             if (task.isSuccessful()) {
-                Log.d(TAG, ":isSuccessful:" + player.getId());
+                Log.d(myTAG, ":isSuccessful:" + player.getId());
                 listener.onComplete(player, true);
             } else {
-                Log.d(TAG, ":isFailure:" + player.getId());
+                Log.d(myTAG, ":isFailure:" + player.getId());
                 listener.onComplete(player, false);
             }
         });
@@ -172,14 +170,14 @@ public class PlayerDB {
                     public void onSuccess(Void aVoid) {
                         player.setUsername(newUsername);
                         listener.onComplete(player, true);
-                        Log.d(TAG, "Username successfully updated!");
+                        Log.d(myTAG, "Username successfully updated!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         listener.onComplete(player, false);
-                        Log.w(TAG, "Error updating document", e);
+                        Log.w(myTAG, "Error updating document", e);
                     }
                 });
     }
@@ -200,14 +198,14 @@ public class PlayerDB {
                     public void onSuccess(Void aVoid) {
                         player.setUsername(newEmail);
                         listener.onComplete(player, true);
-                        Log.d(TAG, "Email successfully updated!");
+                        Log.d(myTAG, "Email successfully updated!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         listener.onComplete(player, false);
-                        Log.w(TAG, "Error updating document", e);
+                        Log.w(myTAG, "Error updating document", e);
                     }
                 });
     }
@@ -228,14 +226,14 @@ public class PlayerDB {
                     public void onSuccess(Void aVoid) {
                         player.setUsername(newContact);
                         listener.onComplete(player, true);
-                        Log.d(TAG, "Phone Number successfully updated!");
+                        Log.d(myTAG, "Phone Number successfully updated!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         listener.onComplete(player, false);
-                        Log.w(TAG, "Error updating document", e);
+                        Log.w(myTAG, "Error updating document", e);
                     }
                 });
     }
@@ -256,14 +254,14 @@ public class PlayerDB {
                     public void onSuccess(Void aVoid) {
                         player.setUsername(newRegion);
                         listener.onComplete(player, true);
-                        Log.d(TAG, "Region successfully updated!");
+                        Log.d(myTAG, "Region successfully updated!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         listener.onComplete(player, false);
-                        Log.w(TAG, "Error updating document", e);
+                        Log.w(myTAG, "Error updating document", e);
                     }
                 });
     }

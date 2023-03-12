@@ -21,7 +21,7 @@ public class DBConnection {
     /**
      * Holds tag for logging
      */
-    private final static String TAG = "DBConnector";
+    private final static String myTAG = "DBConnector";
     /**
      * Holds instance of Firestore database
      */
@@ -39,7 +39,7 @@ public class DBConnection {
     public DBConnection(Context context) {
         this.db = FirebaseFirestore.getInstance();
         this.uuid = getUUID(context);
-        Log.d(TAG, "New UUID:" + this.uuid);
+        Log.d(myTAG, "New UUID:" + this.uuid);
     }
 
     /**
