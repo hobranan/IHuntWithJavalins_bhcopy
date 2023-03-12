@@ -82,7 +82,7 @@ public class PlayerTest {
         // Checks if region setter and getter work
         assertNull(player.getRegion(), "Region should be null");
         player.setRegion("Canada");
-        assertEquals("hblow@ualberta.ca", player.getEmail(), "Region should be Canada");
+        assertEquals("Canada", player.getRegion(), "Region should be Canada");
 
         // Checks if get region works on constructor created region
         player = mockPlayerWithInfo();
@@ -93,8 +93,8 @@ public class PlayerTest {
     public void testPlayerCodes() {
         // Setup list of codes to have dummy code data
         Player player = mockPlayerWithInfo();
-        QRCode code1 = new QRCode("1", "Banana", "5", "ref", "10", "12", "photRef");
-        QRCode code2 = new QRCode("1", "Bana", "5", "ref", "10", "12", "photRef");
+        QRCode code1 = new QRCode("1", "Banana", "5", "ref", "10", "12", "photRef", "2");
+        QRCode code2 = new QRCode("1", "Bana", "5", "ref", "10", "12", "photRef", "2");
         List<QRCode> codeList = new ArrayList<>();
         codeList.add(code1);
         codeList.add(code2);
