@@ -54,10 +54,10 @@ public class QRCodeDB {
 
     /**
      * Switches the collection reference from one player to another
-     * @param playerId given playerId to switch the collection reference to
+     * @param playerUsername given player's username to switch the collection reference to
      */
-    public void switchFromPlayerToPlayerCodes(String playerId) {
-        this.collection = db.collection("users").document("user" + playerId).collection("QRCodes");
+    public void switchFromPlayerToPlayerCodes(String playerUsername) {
+        this.collection = db.collection("Users").document(playerUsername).collection("QRCodes");
     }
 
     /**
@@ -69,13 +69,15 @@ public class QRCodeDB {
         // creating batch and return value
         WriteBatch batch = db.batch();
 
+        String hashValue = code.getCodeHash();
         // add code info to batch
-        String codeId = collection.document().getId();    // creates a new document with a unique firestore id for the code
-        DocumentReference codeRef = collection.document(codeId);
+        DocumentReference codeRef = collection.document(hashValue);
         Map<String, Object> item = new HashMap<>();
         item.put("Name", code.getCodeName());
-        item.put("Hash Value", code.getCodeHash());
         item.put("Img Ref", code.getCodeGendImageRef());
+        item.put("Latitude", code.getCodeLat());
+        item.put("Longitude", code.getCodeLon());
+        item.put("Photo Ref", code.getCodePhotoRef());
         item.put("Point Value", code.getCodePoints());
         batch.set(codeRef, item);
 
@@ -83,10 +85,10 @@ public class QRCodeDB {
         batch.commit().addOnCompleteListener(task -> {
             Log.d(TAG, "addCode:onComplete");
             if (task.isSuccessful()) {
-                Log.d(TAG, ":isSuccessful:" + codeId);
+                Log.d(TAG, ":isSuccessful:" + hashValue);
                 listener.onComplete(code, true);
             } else {
-                Log.d(TAG, ":isFailure:" + codeId);
+                Log.d(TAG, ":isFailure:" + hashValue);
                 listener.onComplete(code, false);
             }
         });
@@ -98,28 +100,30 @@ public class QRCodeDB {
      * @param listener the listener to call after getting code
      */
     public void getCode(QRCode code, OnCompleteListener<QRCode> listener) {
-        String codeId = code.getCodeDate();
-        DocumentReference codeRef = collection.document(codeId);
+        String hashValue = code.getCodeHash();
+        DocumentReference codeRef = collection.document(hashValue);
         codeRef.get().addOnCompleteListener(task -> {
-            Log.d(TAG, "getIngredient:onComplete");
+            Log.d(TAG, "getCode:onComplete");
             if (task.isSuccessful()) {
-                Log.d(TAG, ":isSuccessful:" + codeId);
+                Log.d(TAG, ":isSuccessful:" + hashValue);
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    Log.d(TAG, ":exists:" + codeId);
+                    Log.d(TAG, ":exists:" + hashValue);
                     QRCode foundCode = new QRCode();
-                    foundCode.setCodeDate(codeId);
-                    foundCode.setCodeHash(document.getString("Hash Value"));
+                    foundCode.setCodeHash(document.getId());
                     foundCode.setCodeName(document.getString("Name"));
+                    foundCode.setCodeLat(document.getString("Latitude"));
+                    foundCode.setCodeLon(document.getString("Longitude"));
+                    foundCode.setCodePhotoRef(document.getString("Photo Ref"));
                     foundCode.setCodePoints(document.getString("Point Value"));
                     foundCode.setCodeGendImageRef(document.getString("Img Ref"));
                     listener.onComplete(foundCode, true);
                 } else {
-                    Log.d(TAG, ":notExists:" + codeId);
+                    Log.d(TAG, ":notExists:" + hashValue);
                     listener.onComplete(null, false);
                 }
             } else {
-                Log.d(TAG, ":isFailure:" + codeId);
+                Log.d(TAG, ":isFailure:" + hashValue);
                 listener.onComplete(null, false);
             }
 
@@ -134,16 +138,17 @@ public class QRCodeDB {
     public void deleteCode(@NonNull QRCode code, OnCompleteListener<QRCode> listener) {
         WriteBatch batch = db.batch();
 
-        DocumentReference codeDocument = collection.document(code.getCodeDate());
+        String hashValue = code.getCodeHash();
+        DocumentReference codeDocument = collection.document(hashValue);
         batch.delete(codeDocument);
 
         batch.commit().addOnCompleteListener(task -> {
             Log.d(TAG, "deleteCode:onComplete");
             if (task.isSuccessful()) {
-                Log.d(TAG, ":isSuccessful:" + code.getCodeDate());
+                Log.d(TAG, ":isSuccessful:" + hashValue);
                 listener.onComplete(code, true);
             } else {
-                Log.d(TAG, ":isFailure:" + code.getCodeDate());
+                Log.d(TAG, ":isFailure:" + hashValue);
                 listener.onComplete(code, false);
             }
         });
@@ -164,10 +169,12 @@ public class QRCodeDB {
                     Log.d(TAG, (String) doc.getData().get("Name"));
 
                     QRCode newCode = new QRCode();
-                    newCode.setCodeDate((String) doc.getId());
+                    newCode.setCodeHash(doc.getId());
                     newCode.setCodeName((String) doc.getData().get("Name"));
                     newCode.setCodePoints((String) doc.getData().get("Point Value"));
-                    newCode.setCodeHash((String) doc.getData().get("Hash Value"));
+                    newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
+                    newCode.setCodeLon((String) doc.getData().get("Longitude"));
+                    newCode.setCodeLat((String) doc.getData().get("Latitude"));
                     newCode.setCodeGendImageRef((String) doc.getData().get("Img Ref"));
                     codeList.add(newCode);
                 }
@@ -183,7 +190,7 @@ public class QRCodeDB {
      * @return the document reference of QRCode in database
      */
     public DocumentReference getDocumentReference(QRCode code) {
-        return collection.document(code.getCodeDate());
+        return collection.document(code.getCodeHash());
     }
 
     /**

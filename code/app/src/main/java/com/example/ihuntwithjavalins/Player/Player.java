@@ -26,14 +26,6 @@ public class Player implements Serializable {
     private String region;    // in login activity, there should be limits so user does not enter invalid region
 
 
-    public String getDateJoined() {
-        return dateJoined;
-    }
-
-    public void setDateJoined(String dateJoined) {
-        this.dateJoined = dateJoined;
-    }
-
     private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
@@ -123,6 +115,15 @@ public class Player implements Serializable {
     public void setRegion(String region) {
         this.region = region;
     }
+
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
 
     /**
      * Gets the list of QRCode objects the Player has scanned
