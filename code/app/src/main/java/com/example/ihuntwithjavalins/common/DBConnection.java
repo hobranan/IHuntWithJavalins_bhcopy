@@ -21,7 +21,7 @@ public class DBConnection {
     /**
      * Holds tag for logging
      */
-    private final static String myTAG = "DBConnector";
+    private final static String myTAG = "DBConnection";
     /**
      * Holds instance of Firestore database
      */
@@ -47,7 +47,7 @@ public class DBConnection {
      * @param context the context of the application
      * @param username the username to put into shared preferences
      */
-    public void setUsername(Context context, String username) {
+    public void saveUsername(Context context, String username) {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
 
@@ -58,6 +58,14 @@ public class DBConnection {
             editor.putString("Username", playerUsername);
             editor.apply();
         }
+    }
+
+    /**
+     * Sets the username of the DBConnection for signup purposes
+     * @param name the username to set the DBConnection to
+     */
+    public void setUsername(String name) {
+        this.playerUsername = name;
     }
 
     /**
@@ -104,7 +112,11 @@ public class DBConnection {
      * @return reference to the user document
      */
     public DocumentReference getUserDocument() {
-        return this.db.collection("Users").document(playerUsername);
+        if (playerUsername != null) {
+            return this.db.collection("Users").document(playerUsername);
+        }
+
+        return null;
     }
 
     /**

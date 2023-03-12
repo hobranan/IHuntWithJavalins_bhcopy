@@ -115,18 +115,18 @@ public class Player {
         return codes;
     }
 
-    /**
-     * Gets the list of QRCode objects the Player has scanned
-     * @return The list containing QRCode objects the Player has scanned
-     */
-    public int getTotalCodes(){
-        List<QRCode> all_codes = getCodes();
-        int sum = 0;
-        for (QRCode object : all_codes) {
-            sum += Integer.parseInt(object.getCodePoints());
-        }
-        return sum;
-    }
+//    /**
+//     * Gets the list of QRCode objects the Player has scanned
+//     * @return The list containing QRCode objects the Player has scanned
+//     */
+//    public int getTotalCodes(){
+//        List<QRCode> all_codes = getCodes();
+//        int sum = 0;
+//        for (QRCode object : all_codes) {
+//            sum += Integer.parseInt(object.getCodePoints());
+//        }
+//        return sum;
+//    }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
