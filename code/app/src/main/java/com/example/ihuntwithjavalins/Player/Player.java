@@ -2,6 +2,7 @@ package com.example.ihuntwithjavalins.Player;
 
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,7 @@ import java.util.List;
  * Players in the application.
  * @version 1.0
  */
-public class Player {
-    /**
-     * Holds the unique uuid of the Player
-     */
-    private String uuid;
+public class Player implements Serializable {
     /**
      * Holds the username of the Player
      */
@@ -24,13 +21,20 @@ public class Player {
      */
     private String email;
     /**
-     * Holds the phone number of the Player
-     */
-    private String phoneNumber;
-    /**
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
+
+
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+    private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
      */
@@ -41,21 +45,11 @@ public class Player {
      * competing against each other.
      * @param username The username of the Player
      * @param email The email of the Player
-     * @param phoneNumber The phone number of the Player
      * @param region The region the Player is in
      */
-    public Player(String uuid, String username, String email, String phoneNumber, String region) {
-        this.uuid = uuid;
+    public Player(String username, String email, String region) {
         this.username = username;
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.region = region;
-    }
-
-    public Player(String username, String email, String phoneNumber, String region) {
-        this.username = username;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
         this.region = region;
     }
 
@@ -66,18 +60,20 @@ public class Player {
 
     }
 
-
+    /**
+     * Constructor for new instance of Player object without email given
+     * @param username The username of the Player
+     * @param region The region the Player is in
+     */
     public Player(String username, String region) {
         this.username = username;
+        this.email = null;
         this.region = region;
+
     }
 
-    public String getId(){
-        return uuid;
-    }
-
-    public void setId(String uuid){
-        this.uuid = uuid;
+    public Player(String username) {
+        this.username = username;
     }
 
     /**
@@ -113,22 +109,6 @@ public class Player {
     }
 
     /**
-     * Gets the phone number of the Player
-     * @return The String representing the phone number of the Player
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the phone number of the Player
-     * @param phoneNumber The String representing the phone number of the Player
-     */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
      * Gets the region the Player is playing in
      * @return The String representing the region the Player is playing in
      */
@@ -151,8 +131,6 @@ public class Player {
     public List<QRCode> getCodes() {
         return codes;
     }
-
-    // I won't write a unit test for Player methods yet, I think it makes more sense for there to be a unit test for a controller using said model class
 
     /**
      * Gets the list of QRCode objects the Player has scanned

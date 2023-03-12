@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/prf_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_username_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_datejoined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date Joined:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_datejoined_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_email_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_region"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Region:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_region_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="region"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalpoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Points:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalpoints_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="points"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalpointsplacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Points Placing:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalpointsplacing_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tp placing"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalcodes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Codes:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalcodes_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="t codes"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalcodesplacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Codes Placing:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_totalcodesplacing_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tc place"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Highest Code Value:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalue_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hc val"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/prf_highestcodevalueplacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Highest Code Value Placing:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalueplacing_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hc val place"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/button_prf_quicknav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/button1"
+        android:gravity="left"
+        android:text="Quick Nav"
+        android:textColor="@color/text2_general" />
+</LinearLayout>

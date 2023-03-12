@@ -45,34 +45,34 @@ public class ScoreboardActivity extends AppCompatActivity {
         QRCode q15 = new QRCode("3_43234483");
         QRCode q16 = new QRCode("4_43234408");
 
-        Player me = new Player("Viraj","test@gmail.com","5879372653","Alberta");
+        Player me = new Player("Viraj","test@gmail.com","Alberta");
         me.addCode(q1);
         me.addCode(q2);
         me.addCode(q3);
 
 
 
-        Player player1 = new Player("John Doe", "john.doe@example.com", "555-1234", "New York");
+        Player player1 = new Player("John Doe", "john.doe@example.com", "New York");
         player1.addCode(q1);
         player1.addCode(q4);
         player1.addCode(q7);
 
-        Player player2 = new Player("Jane Smith", "jane.smith@example.com", "555-5678", "Los Angeles");
+        Player player2 = new Player("Jane Smith", "jane.smith@example.com","Los Angeles");
         player2.addCode(q2);
         player2.addCode(q5);
         player2.addCode(q8);
 
-        Player player3 = new Player("Bob Johnson", "bob.johnson@example.com", "555-9876", "Chicago");
+        Player player3 = new Player("Bob Johnson", "bob.johnson@example.com", "Chicago");
         player3.addCode(q3);
         player3.addCode(q6);
         player3.addCode(q9);
 
-        Player player4 = new Player("Alice Lee", "alice.lee@example.com", "555-4321", "San Francisco");
+        Player player4 = new Player("Alice Lee", "alice.lee@example.com",  "San Francisco");
         player4.addCode(q1);
         player4.addCode(q5);
         player4.addCode(q9);
 
-        Player player5 = new Player("David Kim", "david.kim@example.com", "555-2468", "Seattle");
+        Player player5 = new Player("David Kim", "david.kim@example.com", "Seattle");
         player5.addCode(q2);
         player5.addCode(q6);
         player5.addCode(q10);
