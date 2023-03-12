@@ -203,4 +203,18 @@ public class Player {
             return false;
         }
     }
+
+    /**
+     * Gets the total points value of all of a players QR codes
+     * @return the total points value of the QR codes in the players list
+     */
+    public int getTotalPoints() {
+        int scoreTotal = 0;
+        List<QRcode> allCodes = getCodes();
+        int i = allCodes.length;
+        for (int j = 0; j < i; j++) {
+            scoreTotal = allCodes[j].getCodePoints;
+        }
+        return scoreTotal;
+    }
 }
