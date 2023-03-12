@@ -205,16 +205,62 @@ public class Player {
     }
 
     /**
-     * Gets the total points value of all of a players QR codes
-     * @return the total points value of the QR codes in the players list
+     * Gets the total points value of all of a players QRcodes
+     * @return the total points value of the QRCodes in the players list
      */
     public int getTotalPoints() {
         int scoreTotal = 0;
-        List<QRcode> allCodes = getCodes();
+        List<QRCode> allCodes = getCodes();
         int i = allCodes.length;
         for (int j = 0; j < i; j++) {
             scoreTotal = allCodes[j].getCodePoints;
         }
         return scoreTotal;
+    }
+
+    /**
+     * Finds the lowest points value QRCode in the players list of scanned codes
+     * @return the lowest points value QRCode in the players list
+     */
+    public int getLowestScore() {
+        int scoreMin = 0;
+        List<QRCode> allCodes = getCodes();
+        if (allCodes.length == 0){
+            return scoreMin;
+        } else if (allCodes.length == 1) {
+            scoreMin = allCodes[0].getCodePoints;
+            return scoreMin;
+        } else {
+            int i = allCodes.length;
+            for (int j = 0; j < i; j++) {
+                if(allCodes[j].getCodePoints < scoreMin) {
+                    scoreMin = allCodes[j].getCodePoints;
+                }
+            }
+        }
+        return scoreMin;
+    }
+
+    /**
+     * Finds the highest value QRCode in the players list of scanned codes
+     * @return the highest value QRCode in the players list
+     */
+    public int getHighestScore() {
+        int scoreMax = 0;
+        List<QRCode> allCodes = getCodes();
+        if (allCodes.length == 0){
+            return scoreMax;
+        } else if (allCodes.length == 1) {
+            scoreMax = allCodes[0].getCodePoints;
+            return scoreMax;
+        } else {
+            int i = allCodes.length;
+            for (int j = 0; j < i; j++) {
+                if(allCodes[j].getCodePoints > scoreMax) {
+                    scoreMax = allCodes[j].getCodePoints;
+                }
+            }
+        }
+        return scoreMax;
     }
 }
