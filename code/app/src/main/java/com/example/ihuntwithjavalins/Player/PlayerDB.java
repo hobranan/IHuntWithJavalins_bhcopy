@@ -81,7 +81,7 @@ public class PlayerDB {
         item.put("Region", player.getRegion());
         //item.put("highest score", 0);
         //item.put("total score", 0);
-        batch.set(playerRef, item);
+        batch.update(playerRef, item);
 
         // commits batch writes to firebase
         batch.commit().addOnCompleteListener(task -> {
@@ -111,7 +111,7 @@ public class PlayerDB {
                 if (document.exists()) {
                     Log.d(myTAG, ":exists:" + playerUsername);
                     Player player = new Player();
-                    player.setUsername(document.getId());
+                    player.setUsername(document.getString("Username"));
                     player.setEmail(document.getString("Email"));
                     player.setRegion(document.getString("Region"));
                     listener.onComplete(player, true);

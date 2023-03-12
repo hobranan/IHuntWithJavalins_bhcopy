@@ -2,6 +2,7 @@ package com.example.ihuntwithjavalins.Player;
 
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Players in the application.
  * @version 1.0
  */
-public class Player {
+public class Player implements Serializable {
     /**
      * Holds the username of the Player
      */
@@ -23,6 +24,17 @@ public class Player {
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
+
+
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+    private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
      */
@@ -55,8 +67,13 @@ public class Player {
      */
     public Player(String username, String region) {
         this.username = username;
-        this.region = region;
         this.email = null;
+        this.region = region;
+
+    }
+
+    public Player(String username) {
+        this.username = username;
     }
 
     /**
@@ -115,18 +132,18 @@ public class Player {
         return codes;
     }
 
-//    /**
-//     * Gets the list of QRCode objects the Player has scanned
-//     * @return The list containing QRCode objects the Player has scanned
-//     */
-//    public int getTotalCodes(){
-//        List<QRCode> all_codes = getCodes();
-//        int sum = 0;
-//        for (QRCode object : all_codes) {
-//            sum += Integer.parseInt(object.getCodePoints());
-//        }
-//        return sum;
-//    }
+    /**
+     * Gets the list of QRCode objects the Player has scanned
+     * @return The list containing QRCode objects the Player has scanned
+     */
+    public int getTotalCodes(){
+        List<QRCode> all_codes = getCodes();
+        int sum = 0;
+        for (QRCode object : all_codes) {
+            sum += Integer.parseInt(object.getCodePoints());
+        }
+        return sum;
+    }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
