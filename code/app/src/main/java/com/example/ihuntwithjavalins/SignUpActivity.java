@@ -26,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     Button confirmSignup;
     EditText editText_signup_Username;
-    //    EditText editText_signup_Region;
+    EditText editText_signup_Email;
     Spinner spinnerRegion;
 
     @Override
@@ -35,10 +35,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         setContentView(R.layout.signup_login);
 
-        confirmSignup = findViewById(R.id.button_signup_Confirm);
-        editText_signup_Username = findViewById(R.id.editText_signup_Username);
+        confirmSignup = findViewById(R.id.button_signup_confirm);
+        editText_signup_Username = findViewById(R.id.edittext_signup_username);
+        editText_signup_Email = findViewById(R.id.edittext_signup_email);
 
-        spinnerRegion = (Spinner) findViewById(R.id.spinner_signup_Region);
+        spinnerRegion = (Spinner) findViewById(R.id.spinner_signup_region);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> SpinAdapter = ArrayAdapter.createFromResource(this, R.array.regions_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears

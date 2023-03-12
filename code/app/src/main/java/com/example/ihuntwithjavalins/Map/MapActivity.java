@@ -13,11 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-<<<<<<<< HEAD:code/app/src/main/java/com/example/ihuntwithjavalins/Map/MapActivity.java
-import com.example.ihuntwithjavalins.LocationTrack;
-import com.example.ihuntwithjavalins.MainActivity;
-========
->>>>>>>> brando2_BRANCH:code/app/src/main/java/com/example/ihuntwithjavalins/Map/OpenStreetMapActivity.java
 import com.example.ihuntwithjavalins.R;
 
 import org.osmdroid.api.IMapController;

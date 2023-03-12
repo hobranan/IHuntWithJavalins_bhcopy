@@ -2,17 +2,23 @@ package com.example.ihuntwithjavalins.QRCode;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * This class represents a QRCode scanned by Players in the application.
  *
  * @version 1.0
  */
-public class QRCode {
+public class QRCode implements Serializable {
+
     /**
      * Holds the hash value for the code
      */
@@ -32,17 +38,26 @@ public class QRCode {
     private String codeLat;
     private String codeLon;
     private String codePhotoRef;
+
+    /**
+     * Holds code acquisition date
+     */
+    private String codeDate;
     /**
      * Constructor for new instance of QRCode object initialized based on textCode string
      * @param textCode the textCode to be converted into QRCode data
      */
     public QRCode(String textCode) {
-//        dateFirstGenerated = new Date();
-//        CommentsForThisCode = new ArrayList<Comments>();
         analyzeWordToHashToNameToPoints(textCode);
         codeLat = "";
         codeLon = "";
         codePhotoRef = "";
+
+        // https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
+        String pattern = "yyyyMMdd"; //String pattern = "MM/dd/yyyy HH:mm:ss";
+        DateFormat df = new SimpleDateFormat(pattern);
+        Date today = Calendar.getInstance().getTime();
+        codeDate = df.format(today);
     }
 
     /**
@@ -50,31 +65,21 @@ public class QRCode {
      */
     public QRCode(){}
 
-//    /**
-//     * Constructor for new instance of QRCode object, initializes initial fields based on parameters
-//     * @param codeName the name of the QRCode
-//     * @param codePoints the point value of the QRCode
-//     * @param codeHash the Hash value of the QRCode
-//     * @param codeGendImageRef the image reference of the QRCode
-//     */
-//    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef) {
-//        this.codeHash = codeHash;
-//        this.codeName = codeName;
-//        this.codePoints = codePoints;
-//        this.codeGendImageRef = codeGendImageRef;
-//    }
-
     /**
      * Constructor for new instance of QRCode object, initializes initial fields based on parameters
-     * @param codeHash The hash value of the code
-     * @param codeName The semi unique name of the code
-     * @param codePoints The point value of the code
-     * @param codeGendImageRef The code's generated image's reference
-     * @param codeLat The code's latitude
-     * @param codeLon The code's longitude
-     * @param codePhotoRef The photo reference to picture of code
+     * @param codeName the name of the QRCode
+     * @param codePoints the point value of the QRCode
+     * @param codeHash the Hash value of the QRCode
+     * @param codeGendImageRef the image reference of the QRCode
      */
-    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef, String codeLat, String codeLon, String codePhotoRef) {
+    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef) {
+        this.codeHash = codeHash;
+        this.codeName = codeName;
+        this.codePoints = codePoints;
+        this.codeGendImageRef = codeGendImageRef;
+    }
+
+    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef, String codeLat, String codeLon, String codePhotoRef, String codeDate) {
         this.codeHash = codeHash;
         this.codeName = codeName;
         this.codePoints = codePoints;
@@ -82,7 +87,15 @@ public class QRCode {
         this.codeLat = codeLat;
         this.codeLon = codeLon;
         this.codePhotoRef = codePhotoRef;
+        this.codeDate = codeDate;
     }
+
+
+    /**
+     * Sets the unique firestore id of the QRCode
+     * @param date the id to set the QRCode to
+     */
+    public void setCodeDate(String date) {this.codeDate = date;}
 
     /**
      * Sets the Hash Value of the QRCode
@@ -103,35 +116,33 @@ public class QRCode {
     public void setCodePoints(String points) {this.codePoints = points;}
 
     /**
-     * Sets the generated image reference of the QRCode
+     * Sets the image reference of the QRCode
      * @param imageRef the image reference to set the QRCode to
      */
     public void setCodeGendImageRef(String imageRef) {this.codeGendImageRef = imageRef;}
 
 
-    /**
-     * Sets the user taken photo reference of the QRCode
-     * @param codePhotoRef the photo reference of the QRCode
-     */
+
     public void setCodePhotoRef(String codePhotoRef) {
         this.codePhotoRef = codePhotoRef;
     }
 
-    /**
-     * Sets the latitude of the QRCode geolocation
-     * @param codeLat the latitude of the code
-     */
+
     public void setCodeLat(String codeLat) {
         this.codeLat = codeLat;
     }
 
-    /**
-     * Sets the longitude of the QRCode geolocation
-     * @param codeLon the longitude of the code
-     */
+
     public void setCodeLon(String codeLon) {
         this.codeLon = codeLon;
     }
+
+
+    /**
+     * Gets the unique QRCode firestore id
+     * @return the QRCode id
+     */
+    public String getCodeDate() {return codeDate;}
 
     /**
      * Gets the Hash Value of the QRCode
@@ -163,29 +174,17 @@ public class QRCode {
      */
     public String getCodeGendImageRef() { return codeGendImageRef;}
 
-    /**
-     * Gets the photo reference of the QRCode
-     * @return the photo reference of the code
-     */
+
     public String getCodePhotoRef() {
         return codePhotoRef;
     }
-
-    /**
-     * Gets the latitude of the QRCode geolocation
-     * @return the latitude of the QRCode geolocation
-     */
     public String getCodeLat() {
         return codeLat;
     }
-
-    /**
-     * Gets the longitude of the QRCode geolocation
-     * @return the longitude of the QRCode geolocation
-     */
     public String getCodeLon() {
         return codeLon;
     }
+
 
     /**
      * Initializes the QRCode object's fields based on textCode

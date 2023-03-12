@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Camera.CameraScanActivity;
 import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
+import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.Profile.ProfileActivity;
 import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 public class QuickNavActivity extends AppCompatActivity {
@@ -32,7 +35,7 @@ public class QuickNavActivity extends AppCompatActivity {
 
     TextView userNameDisplay;
     TextView userTotalPoints;
-            TextView userTotalCodes;
+    TextView userTotalCodes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +114,11 @@ public class QuickNavActivity extends AppCompatActivity {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
+                Player player = new Player(mString);
+                // Add the custom object as an extra to the Intent
+                intent.putExtra("savedPlayerObject", (Serializable) player);
+                startActivity(intent);
             }
         });
 

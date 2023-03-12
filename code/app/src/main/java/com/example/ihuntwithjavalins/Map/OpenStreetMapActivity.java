@@ -13,11 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-<<<<<<<< HEAD:code/app/src/main/java/com/example/ihuntwithjavalins/Map/MapActivity.java
-import com.example.ihuntwithjavalins.LocationTrack;
-import com.example.ihuntwithjavalins.MainActivity;
-========
->>>>>>>> brando2_BRANCH:code/app/src/main/java/com/example/ihuntwithjavalins/Map/OpenStreetMapActivity.java
 import com.example.ihuntwithjavalins.R;
 
 import org.osmdroid.api.IMapController;
@@ -34,7 +29,7 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
 import java.util.ArrayList;
 
-public class MapActivity extends AppCompatActivity {
+public class OpenStreetMapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
 //    private MyLocationNewOverlay mLocationOverlay;
@@ -92,7 +87,7 @@ public class MapActivity extends AppCompatActivity {
         requestPermissionsIfNecessary(permissions);
 
         // location tracker https://www.digitalocean.com/community/tutorials/android-location-api-tracking-gps
-        locationTrack = new LocationTrack(MapActivity.this);
+        locationTrack = new LocationTrack(OpenStreetMapActivity.this);
         double longitude = 53.5;
         double latitude = -113.5;
         if (locationTrack.canGetLocation()) {

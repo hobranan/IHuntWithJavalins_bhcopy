@@ -1,5 +1,3 @@
-
-package com.example.ihuntwithjavalins.QRCode;
 package com.example.ihuntwithjavalins.Camera;
 
 import android.app.Activity;
@@ -10,29 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-public class QRCodeImageViewActivity extends AppCompatActivity {
-
-    ImageButton backButton;
-    TextView codeName;
-    TextView codeHash;
-    TextView codePoints;
-    TextView BACK_2_string; // testing
-    String codePicRef = new String();
-    ImageView codePicImage;
 
 public class PhotoViewActivity extends Activity {
 

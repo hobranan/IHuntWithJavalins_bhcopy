@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView_signup_title"
+        android:id="@+id/textview_signup_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -18,45 +18,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_signup_Username"
+        android:id="@+id/edittext_signup_username"
         android:layout_width="266dp"
         android:layout_height="59dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Enter a new Username:"
+        android:text="Enter your username"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_signup_title" />
+        app:layout_constraintTop_toBottomOf="@+id/textview_signup_title" />
 
     <EditText
-        android:id="@+id/editText_signup_Region"
+        android:id="@+id/edittext_signup_email"
         android:layout_width="291dp"
         android:layout_height="57dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Enter your region (eg. Edmonton):"
+        android:text="Enter your email:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_signup_Username" />
+        app:layout_constraintTop_toBottomOf="@+id/edittext_signup_username" />
 
     <Spinner
-        android:id="@+id/spinner_signup_Region"
+        android:id="@+id/spinner_signup_region"
         android:layout_width="286dp"
         android:layout_height="67dp"
         android:layout_marginStart="4dp"
         android:contentDescription="Select Region"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_signup_Region" />
+        app:layout_constraintTop_toBottomOf="@+id/edittext_signup_email" />
 
     <Button
-        android:id="@+id/button_signup_Confirm"
+        android:id="@+id/button_signup_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="10dp"
         android:text="Confirm"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_signup_Region" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_signup_region" />
 </androidx.constraintlayout.widget.ConstraintLayout>

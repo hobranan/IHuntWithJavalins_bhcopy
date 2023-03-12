@@ -57,7 +57,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         player1.addCode(q4);
         player1.addCode(q7);
 
-        Player player2 = new Player("Jane Smith", "jane.smith@example.com", "Los Angeles");
+        Player player2 = new Player("Jane Smith", "jane.smith@example.com","Los Angeles");
         player2.addCode(q2);
         player2.addCode(q5);
         player2.addCode(q8);
@@ -67,7 +67,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         player3.addCode(q6);
         player3.addCode(q9);
 
-        Player player4 = new Player("Alice Lee", "alice.lee@example.com", "San Francisco");
+        Player player4 = new Player("Alice Lee", "alice.lee@example.com",  "San Francisco");
         player4.addCode(q1);
         player4.addCode(q5);
         player4.addCode(q9);

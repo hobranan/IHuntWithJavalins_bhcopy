@@ -154,7 +154,8 @@ String myTAG = "Sample"; // used as starter string for debug-log messaging
                     String codeLatValue = (String) doc.getData().get("Lat Value");
                     String codeLonValue = (String) doc.getData().get("Lon Value");
                     String codePhotoRef = (String) doc.getData().get("Photo Ref");
-                    codeList.add(new QRCode(codeHash,codeName, codePoints,codeImgRef, codeLatValue, codeLonValue, codePhotoRef));
+                    String codeDate = (String) doc.getData().get("Date:");
+                    codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
                 }
                 customAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
