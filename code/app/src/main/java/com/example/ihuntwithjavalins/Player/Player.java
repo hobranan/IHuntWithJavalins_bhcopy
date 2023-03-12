@@ -211,9 +211,9 @@ public class Player {
     public int getTotalPoints() {
         int scoreTotal = 0;
         List<QRCode> allCodes = getCodes();
-        int i = allCodes.length;
+        int i = allCodes.size();
         for (int j = 0; j < i; j++) {
-            scoreTotal = allCodes[j].getCodePoints;
+            scoreTotal = Integer.parseInt(allCodes.get(j).getCodePoints());
         }
         return scoreTotal;
     }
@@ -225,16 +225,16 @@ public class Player {
     public int getLowestScore() {
         int scoreMin = 0;
         List<QRCode> allCodes = getCodes();
-        if (allCodes.length == 0){
+        if (allCodes.size() == 0){
             return scoreMin;
-        } else if (allCodes.length == 1) {
-            scoreMin = allCodes[0].getCodePoints;
+        } else if (allCodes.size() == 1) {
+            scoreMin = Integer.parseInt(allCodes.get(1).getCodePoints());
             return scoreMin;
         } else {
-            int i = allCodes.length;
+            int i = allCodes.size();
             for (int j = 0; j < i; j++) {
-                if(allCodes[j].getCodePoints < scoreMin) {
-                    scoreMin = allCodes[j].getCodePoints;
+                if(Integer.parseInt(allCodes.get(j).getCodePoints()) < scoreMin) {
+                    scoreMin = Integer.parseInt(allCodes.get(j).getCodePoints());
                 }
             }
         }
@@ -248,16 +248,16 @@ public class Player {
     public int getHighestScore() {
         int scoreMax = 0;
         List<QRCode> allCodes = getCodes();
-        if (allCodes.length == 0){
+        if (allCodes.size() == 0){
             return scoreMax;
-        } else if (allCodes.length == 1) {
-            scoreMax = allCodes[0].getCodePoints;
+        } else if (allCodes.size() == 1) {
+            scoreMax = Integer.parseInt(allCodes.get(1).getCodePoints());
             return scoreMax;
         } else {
-            int i = allCodes.length;
+            int i = allCodes.size();
             for (int j = 0; j < i; j++) {
-                if(allCodes[j].getCodePoints > scoreMax) {
-                    scoreMax = allCodes[j].getCodePoints;
+                if(Integer.parseInt(allCodes.get(j).getCodePoints()) > scoreMax) {
+                    Integer.parseInt(allCodes.get(j).getCodePoints());
                 }
             }
         }
