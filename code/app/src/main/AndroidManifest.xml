@@ -2,6 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<!--    for camera and barcode stuff-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.back" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!--    for camera and barcode stuff (END)-->
+
+    <!--    for open street map stuff-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"  />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--    for open street map stuff (END)-->
+
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,19 +33,105 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHuntWithJavalins"
         tools:targetApi="31">
+
+        <!--    for camera and barcode stuff-->
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+        <!--    for camera and barcode stuff (END)-->
+
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
+
         <activity
-            android:name=".MainActivity"
+            android:name=".TitleActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QuickNavActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Camera.CameraScanActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Camera.CameraAnalyzeScannedActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Camera.CameraAlreadyCaughtActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Camera.CameraCaughtNewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Map.OpenStreetMapActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QRCode.QRCodeLibraryActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QRCode.QRCodeViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".QRCode.QRCodeImageViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Map.CodeRefOpenStreetMapActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Camera.PhotoViewActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Profile.ProfileActivity"
+            android:exported="true">
+        </activity>
+
+
     </application>
 
 </manifest>
