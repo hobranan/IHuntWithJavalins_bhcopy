@@ -45,9 +45,9 @@ public class PlayerDB {
      */
     private CollectionReference collection;
     /**
-     * Holds the string of userId
+     * Holds the string of user's username
      */
-    private String userId;
+    private String userUsername;
 
     /**
      * Constructor for the PlayerDB class, initializes declared fields
@@ -60,7 +60,7 @@ public class PlayerDB {
 
         // Create new instance of QRCodeDB based on current connection
         codeDB = new QRCodeDB(connection);
-        userId = connection.getUserDocument().getId();
+        userUsername = connection.getUserDocument().getId();
     }
 
     /**
@@ -74,12 +74,10 @@ public class PlayerDB {
         WriteBatch batch = db.batch();
 
         // add player info to batch
-        String playerId = player.getId();
-        DocumentReference playerRef = collection.document("user" + playerId);
+        String playerUsername = player.getUsername();
+        DocumentReference playerRef = collection.document(playerUsername);
         Map<String, Object> item = new HashMap<>();
-        item.put("Username", player.getUsername());
         item.put("Email", player.getEmail());
-        item.put("Phone Number", player.getPhoneNumber());
         item.put("Region", player.getRegion());
         //item.put("highest score", 0);
         //item.put("total score", 0);
@@ -89,42 +87,40 @@ public class PlayerDB {
         batch.commit().addOnCompleteListener(task -> {
             Log.d(myTAG, "addPlayer:onComplete");
             if (task.isSuccessful()) {
-                Log.d(myTAG, ":isSuccessful:" + playerId);
+                Log.d(myTAG, ":isSuccessful:" + playerUsername);
                 listener.onComplete(player, true);
             } else {
-                Log.d(myTAG, ":isFailure:" + playerId);
+                Log.d(myTAG, ":isFailure:" + playerUsername);
                 listener.onComplete(player, false);
             }
         });
     }
     /**
      * Gets the player from the database(Use lambda to retrieve)
-     * @param uuid the uuid of player being accessed
+     * @param selectedPlayer the player who's document is being accessed
      * @param listener the listener to call when the player is found
      */
-    public void getPlayer(String uuid, OnCompleteListener<Player> listener) {
-        DocumentReference playerRef = collection.document("user" + uuid);
+    public void getPlayer(Player selectedPlayer, OnCompleteListener<Player> listener) {
+        String playerUsername = selectedPlayer.getUsername();
+        DocumentReference playerRef = collection.document(playerUsername);
         playerRef.get().addOnCompleteListener(task -> {
-            String id = playerRef.getId();
             Log.d(myTAG, "getPlayer:onComplete");
             if (task.isSuccessful()) {
-                Log.d(myTAG, ":isSuccessful:" + id);
+                Log.d(myTAG, ":isSuccessful:" + playerUsername);
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    Log.d(myTAG, ":exists:" + id);
+                    Log.d(myTAG, ":exists:" + playerUsername);
                     Player player = new Player();
                     player.setUsername(document.getString("Username"));
                     player.setEmail(document.getString("Email"));
                     player.setRegion(document.getString("Region"));
-                    player.setPhoneNumber(document.getString("Phone Number"));
-                    player.setId(id);
                     listener.onComplete(player, true);
                 } else {
-                    Log.d(myTAG, ":notExists:" + id);
+                    Log.d(myTAG, ":notExists:" + playerUsername);
                     listener.onComplete(null, false);
                 }
             } else {
-                Log.d(myTAG, ":isFailure:" + id);
+                Log.d(myTAG, ":isFailure:" + playerUsername);
                 listener.onComplete(null, false);
             }
 
@@ -139,48 +135,49 @@ public class PlayerDB {
     public void deletePlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
         WriteBatch batch = db.batch();
 
-        DocumentReference userDocument = collection.document("user" + player.getId());
+        String playerUsername = player.getUsername();
+        DocumentReference userDocument = collection.document(playerUsername);
         batch.delete(userDocument);
 
         batch.commit().addOnCompleteListener(task -> {
             Log.d(myTAG, "deletePlayer:onComplete");
             if (task.isSuccessful()) {
-                Log.d(myTAG, ":isSuccessful:" + player.getId());
+                Log.d(myTAG, ":isSuccessful:" + playerUsername);
                 listener.onComplete(player, true);
             } else {
-                Log.d(myTAG, ":isFailure:" + player.getId());
+                Log.d(myTAG, ":isFailure:" + playerUsername);
                 listener.onComplete(player, false);
             }
         });
     }
 
-    /**
-     * Updates the given player's username in the database
-     * @param player the given player to update
-     * @param newUsername the new username
-     * @param listener the listener to call when the player is updated
-     */
-    public void updatePlayerUsername(Player player, String newUsername, OnCompleteListener<Player> listener) {
-        String uuid = player.getId();
-        DocumentReference playerRef = collection.document("user" + uuid);
-        playerRef
-                .update("Username", newUsername)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        player.setUsername(newUsername);
-                        listener.onComplete(player, true);
-                        Log.d(myTAG, "Username successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        listener.onComplete(player, false);
-                        Log.w(myTAG, "Error updating document", e);
-                    }
-                });
-    }
+//    /**
+//     * Updates the given player's username in the database
+//     * @param player the given player to update
+//     * @param newUsername the new username
+//     * @param listener the listener to call when the player is updated
+//     */
+//    public void updatePlayerUsername(Player player, String newUsername, OnCompleteListener<Player> listener) {
+//        String uuid = player.getId();
+//        DocumentReference playerRef = collection.document("user" + uuid);
+//        playerRef
+//                .update("Username", newUsername)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        player.setUsername(newUsername);
+//                        listener.onComplete(player, true);
+//                        Log.d(myTAG, "Username successfully updated!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        listener.onComplete(player, false);
+//                        Log.w(myTAG, "Error updating document", e);
+//                    }
+//                });
+//    }
 
     /**
      * Updates the given player's email in the database
@@ -189,14 +186,14 @@ public class PlayerDB {
      * @param listener the listener to call when the player is updated
      */
     public void updatePlayerEmail(Player player, String newEmail, OnCompleteListener<Player> listener) {
-        String uuid = player.getId();
-        DocumentReference playerRef = collection.document("user" + uuid);
+        String playerUsername = player.getUsername();
+        DocumentReference playerRef = collection.document(playerUsername);
         playerRef
                 .update("Email", newEmail)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        player.setUsername(newEmail);
+                        player.setEmail(newEmail);
                         listener.onComplete(player, true);
                         Log.d(myTAG, "Email successfully updated!");
                     }
@@ -210,33 +207,33 @@ public class PlayerDB {
                 });
     }
 
-    /**
-     * Updates the given player's phone number in the database
-     * @param player the given player to update
-     * @param newContact the new phone number
-     * @param listener the listener to call when the player is updated
-     */
-    public void updatePlayerPhoneNumber(Player player, String newContact, OnCompleteListener<Player> listener) {
-        String uuid = player.getId();
-        DocumentReference playerRef = collection.document("user" + uuid);
-        playerRef
-                .update("Phone Number", newContact)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        player.setUsername(newContact);
-                        listener.onComplete(player, true);
-                        Log.d(myTAG, "Phone Number successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        listener.onComplete(player, false);
-                        Log.w(myTAG, "Error updating document", e);
-                    }
-                });
-    }
+//    /**
+//     * Updates the given player's phone number in the database
+//     * @param player the given player to update
+//     * @param newContact the new phone number
+//     * @param listener the listener to call when the player is updated
+//     */
+//    public void updatePlayerPhoneNumber(Player player, String newContact, OnCompleteListener<Player> listener) {
+//        String playerUsername = player.getUsername();
+//        DocumentReference playerRef = collection.document(playerUsername);
+//        playerRef
+//                .update("Phone Number", newContact)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        player.setPhoneNumber(newContact);
+//                        listener.onComplete(player, true);
+//                        Log.d(myTAG, "Phone Number successfully updated!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        listener.onComplete(player, false);
+//                        Log.w(myTAG, "Error updating document", e);
+//                    }
+//                });
+//    }
 
     /**
      * Updates the given player's phone number in the database
@@ -245,14 +242,14 @@ public class PlayerDB {
      * @param listener the listener to call when the player is updated
      */
     public void updatePlayerRegion(Player player, String newRegion, OnCompleteListener<Player> listener) {
-        String uuid = player.getId();
-        DocumentReference playerRef = collection.document("user" + uuid);
+        String playerUsername = player.getUsername();
+        DocumentReference playerRef = collection.document(playerUsername);
         playerRef
                 .update("Region", newRegion)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        player.setUsername(newRegion);
+                        player.setRegion(newRegion);
                         listener.onComplete(player, true);
                         Log.d(myTAG, "Region successfully updated!");
                     }
@@ -272,7 +269,7 @@ public class PlayerDB {
      * @return reference to given player document
      */
     public DocumentReference getDocumentReference(Player player) {
-        return collection.document("user" + player.getId());
+        return collection.document(player.getUsername());
     }
 
     /**
@@ -337,10 +334,10 @@ public class PlayerDB {
      * @return list of player owned QRCodes
      */
     public List<QRCode> getPlayerCodes(Player player){
-        String playerId = player.getId();
-        codeDB.switchFromPlayerToPlayerCodes(playerId);
+        String playerUsername = player.getUsername();
+        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
         List<QRCode> codeList = codeDB.getCodes();
-        codeDB.switchFromPlayerToPlayerCodes(userId);
+        codeDB.switchFromPlayerToPlayerCodes(userUsername);
         return codeList;
     }
 
