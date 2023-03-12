@@ -75,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Date today = Calendar.getInstance().getTime();
                     userDateJoined = df.format(today);
 
+                    //https://stackoverflow.com/questions/53332471/checking-if-a-document-exists-in-a-firestore-collection
                     // Access Firestore instance
                     final FirebaseFirestore db = FirebaseFirestore.getInstance();
                     final CollectionReference collectionRef_Users = db.collection("Users");
