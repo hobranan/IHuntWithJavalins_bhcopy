@@ -14,6 +14,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:text="IHuntWithJavalin's\nQR Hunter"
+        android:textColor="@color/text1_bolded"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
