@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.example.ihuntwithjavalins.common.DBConnection;
 
+/**
+ * MockDBConnection functions the same as DBConnection except initializes a username which is
+ * not stored locally for testing purposes.
+ */
 public class MockDBConnection extends DBConnection {
 
     /**
@@ -15,7 +19,7 @@ public class MockDBConnection extends DBConnection {
     }
 
     @Override
-    public String getUsername() {
+    public String getUsername(Context context) {
         String testDocument = "Database Testing";
         return testDocument;
     }

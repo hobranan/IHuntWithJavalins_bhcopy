@@ -6,6 +6,9 @@ import com.example.ihuntwithjavalins.QRCode.QRCode;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for QRCode model class
+ */
 public class QRCodeTest {
 
     // Needs to make QRCode based on textCode
