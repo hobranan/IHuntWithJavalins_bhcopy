@@ -12,23 +12,45 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+/**
+ * SignUpActivityTest is a class that tests SignUpActivity
+ *
+ * @version 1.0
+ */
 public class SignUpActivityTest {
 
+    /**
+     * The Robotium variable we will be using to test the class
+     */
     private Solo solo;
 
+    /**
+     * Puts us in SignUpActivity
+     */
     @Rule
     public ActivityTestRule rule = new ActivityTestRule(SignUpActivity.class, true, true);
 
+    /**
+     * Sets up the Activity before every test
+     */
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
 
+    /**
+     * Makes sure the set up didn't fail
+     */
     @Test
     public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
 
+    /**
+     * Checks to make sure a properly filled out sign up works by inputting a name, email, and
+     * selecting an item from the spinner then clicking confirm
+     * we should be taken to QuickNavActivity
+     */
     @Test
     public void goodSignUp() {
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
@@ -39,6 +61,11 @@ public class SignUpActivityTest {
         solo.assertCurrentActivity("WrongActivity", QuickNavActivity.class);
     }
 
+    /**
+     * Checks to make sure an improperly filled out sign up doesn't progress us by filling out
+     * nothing weshould be told some info is empty
+     */
+    @Test
     public void badSignUp() {
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
         solo.clickOnButton("CONFIRM");

@@ -12,6 +12,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+/**
+ * ProfileActivityTest is a class that tests ProfileActivity
+ *
+ * @version 1.0
+ */
 public class ProfileActivityTest {
 
     private Solo solo;
