@@ -1,29 +1,21 @@
 package com.example.ihuntwithjavalins.Profile;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.Camera.CameraScanActivity;
-import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
-import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
-import com.example.ihuntwithjavalins.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,7 +27,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -52,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView highestCodeValuePlacing;
     private Player player;
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
-    String myTAG = "Sample"; // used as starter string for debug-log messaging
+    private String TAG = "Sample"; // used as starter string for debug-log messaging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         highestCodeValuePlacing= findViewById(R.id.prf_highestcodevalueplacing_data);
 
 
-        // Get the intent from the MainActivity
+        // Get the intent from the previous acitvity
         Intent myIntent = getIntent();
         player = (Player) myIntent.getSerializableExtra("savedPlayerObject");
 
@@ -89,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d(myTAG, "DocumentSnapshot data" + document.getData());
+                        Log.d(TAG, "DocumentSnapshot data" + document.getData());
                         player.setEmail(document.getString("Email"));
                         player.setRegion(document.getString("Region"));
                         player.setDateJoined(document.getString("Date Joined"));
@@ -98,10 +89,10 @@ public class ProfileActivity extends AppCompatActivity {
                         userregion.setText(player.getRegion());
                         userdateJoined.setText(player.getDateJoined());
                     } else {
-                        Log.d(myTAG, "No such document");
+                        Log.d(TAG, "No such document");
                     }
                 } else {
-                    Log.d(myTAG, "get failed with ", task.getException());
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });

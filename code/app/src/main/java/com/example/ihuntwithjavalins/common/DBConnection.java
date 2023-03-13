@@ -69,7 +69,7 @@ public class DBConnection {
      * @return reference to given subcollection
      */
     public CollectionReference getSubCollection(String subCollection) {
-        return this.db.collection("users").document("user" + uuid).collection(subCollection);
+        return this.db.collection("Users").document(uuid).collection(subCollection);
     }
 
     /**
@@ -77,7 +77,7 @@ public class DBConnection {
      * @return reference to user collection
      */
     public CollectionReference getUserCollection() {
-        return this.db.collection("users");
+        return this.db.collection("Users");
     }
 
     /**
@@ -85,7 +85,7 @@ public class DBConnection {
      * @return reference to the user document
      */
     public DocumentReference getUserDocument() {
-        return this.db.collection("users").document("user" + uuid);
+        return this.db.collection("Users").document(uuid);
     }
 
     /**

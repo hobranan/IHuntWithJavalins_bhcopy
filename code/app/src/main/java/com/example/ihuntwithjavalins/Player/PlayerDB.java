@@ -111,7 +111,7 @@ public class PlayerDB {
                 if (document.exists()) {
                     Log.d(myTAG, ":exists:" + playerUsername);
                     Player player = new Player();
-                    player.setUsername(document.getString("Username"));
+                    player.setUsername(document.getId());
                     player.setEmail(document.getString("Email"));
                     player.setRegion(document.getString("Region"));
                     listener.onComplete(player, true);

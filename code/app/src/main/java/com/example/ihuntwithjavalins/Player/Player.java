@@ -11,7 +11,7 @@ import java.util.List;
  * Players in the application.
  * @version 1.0
  */
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
     /**
      * Holds the username of the Player
      */
@@ -25,14 +25,6 @@ public class Player implements Serializable {
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
 
-
-    public String getDateJoined() {
-        return dateJoined;
-    }
-
-    public void setDateJoined(String dateJoined) {
-        this.dateJoined = dateJoined;
-    }
 
     private String dateJoined;
     /**
@@ -124,6 +116,15 @@ public class Player implements Serializable {
         this.region = region;
     }
 
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+
     /**
      * Gets the list of QRCode objects the Player has scanned
      * @return The list containing QRCode objects the Player has scanned
@@ -144,6 +145,7 @@ public class Player implements Serializable {
         }
         return sum;
     }
+
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
@@ -180,5 +182,10 @@ public class Player implements Serializable {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Player other) {
+        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
     }
 }
