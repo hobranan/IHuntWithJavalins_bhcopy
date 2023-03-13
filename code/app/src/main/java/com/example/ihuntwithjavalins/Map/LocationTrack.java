@@ -17,6 +17,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 //https://www.digitalocean.com/community/tutorials/android-location-api-tracking-gps
+/**
+ * The LocationTrack class is used to track the user's location using the device's GPS and network providers.
+ * This class extends Service and implements LocationListener to receive location updates.
+ */
 public class LocationTrack extends Service implements LocationListener {
 
     private final Context mContext;
@@ -29,12 +33,18 @@ public class LocationTrack extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
-
+    /**
+     * Constructs a new LocationTrack object with the specified context and calls getLocation() to start location tracking.
+     * @param mContext the context in which this object is created
+     */
     public LocationTrack(Context mContext) {
         this.mContext = mContext;
         getLocation();
     }
-
+    /**
+     * This method gets the current location using the device's GPS and network providers.
+     * @return the current location of the device
+     */
     private Location getLocation() {
 
         try {
@@ -125,14 +135,20 @@ public class LocationTrack extends Service implements LocationListener {
 
         return loc;
     }
-
+    /**
+     * Returns the longitude of the current location.
+     * @return the longitude of the current location
+     */
     public double getLongitude() {
         if (loc != null) {
             longitude = loc.getLongitude();
         }
         return longitude;
     }
-
+    /**
+     * Returns the latitude of the current location.
+     * @return the latitude of the current location
+     */
     public double getLatitude() {
         if (loc != null) {
             latitude = loc.getLatitude();

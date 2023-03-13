@@ -22,7 +22,12 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-
+/**
+ * Responsible for capturing an image from the camera and detecting any barcodes or QR codes in the image.
+ * Uses the cameraSource from the Google Vision API and the BarcodeDetector.
+ * Extracts the code information and launches another activity to display it.
+ * Includes a private method to initialise the camera and detector.
+ */
 public class PhotoTakeActivity extends AppCompatActivity {
 
         private SurfaceView surfaceView; // box of live camera overlay
@@ -34,7 +39,11 @@ public class PhotoTakeActivity extends AppCompatActivity {
         private String barcodeData;
         public static int cameraFlag;
 
-
+        /**
+         * Overrides the onCreate method of AppCompatActivity to set the layout and initialise the detectors and sources.
+         * Also sets the tone generator and camera flag variables.
+         * @param savedInstanceState saved instance state bundle
+         */
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -45,7 +54,10 @@ public class PhotoTakeActivity extends AppCompatActivity {
                 cameraFlag = 0;
                 initialiseDetectorsAndSources();
         }
-
+        /**
+         * Initialises the barcode detector and camera source by creating new instances of them and setting their properties.
+         * Sets the callback for the surface view to start and stop the camera preview.
+         */
         private void initialiseDetectorsAndSources() {
                 //Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
                 barcodeDetector = new BarcodeDetector.Builder(this)
@@ -134,54 +146,3 @@ public class PhotoTakeActivity extends AppCompatActivity {
 
 
 }
-
-    /*
-    (<-BACK)
-    (Camera app open and scanning for barcodes and qr codes)
-    "Via Camera...Scan the code"
-     */
-
-    /*
-    "Hmm... a familiar face"
-    Name: Shimmering Rock Reptile
-    Points: 445
-    "You have this one. Keep trying for new ones!"
-    Total Points: 6,058
-    Total Codes: 4
-    (Continue Button)
-     */
-
-    /*
-    "Hmm... a familiar face"
-    Name: Shimmering Rock Reptile
-    (Picture)
-    Points: 445
-    "You have this one. Keep trying for new ones!"
-    Total Points: 6,058
-    Total Codes: 4
-    Continue Button
-    */
-
-    /*
-    "Gotcha!"
-    Hashcode: dfgsdgadfg324131421412s3e44r23e42r
-    Name: Shimmering Rock Reptile
-    (Picture)
-    Points: "+" 445 "!!!"
-    "You have this one. Keep trying for new ones!"
-    Total Points: 6,058
-    Total Codes: 4
-    (Photo ask checkbox)    (Photo Button)
-    (Geolocation ask checkbox)    (Geolocation Button)
-    (Continue Button)
-    */
-
-    /*
-    (<-BACK)
-    (Camera app open to take photo)
-    "Via Camera...Take photo"
-    */
-
-    /*
-    (Quick Nav Button)
-    */

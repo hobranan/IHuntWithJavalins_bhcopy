@@ -33,7 +33,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * The QuickNavActivity class is responsible for handling the main navigation screen in the app.
+ * It allows users to navigate to different features of the app by clicking on corresponding buttons.
+ */
 public class QuickNavActivity extends AppCompatActivity {
     private Button cameraButton;
     private Button mapButton;

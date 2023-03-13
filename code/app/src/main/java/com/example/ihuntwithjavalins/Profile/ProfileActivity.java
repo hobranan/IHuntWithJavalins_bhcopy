@@ -28,6 +28,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the activity where the user can view their profile information.
+ * It extends the AppCompatActivity class.
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private Button quickNavButton;

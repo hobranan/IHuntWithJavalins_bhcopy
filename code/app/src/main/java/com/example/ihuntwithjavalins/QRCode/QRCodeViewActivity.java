@@ -24,6 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 
+/**
+ * QRCodeViewActivity is an Activity class that displays details of a QRCode and provides options to delete,
+ * view image, go back to the library, and navigate to the home screen.
+ */
 public class QRCodeViewActivity extends AppCompatActivity {
 
     private ImageButton backButton;

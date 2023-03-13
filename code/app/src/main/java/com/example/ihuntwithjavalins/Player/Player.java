@@ -25,7 +25,9 @@ public class Player implements Serializable, Comparable<Player> {
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
 
-
+    /**
+     * Holds the the date the Player signed up
+     */
     private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned

@@ -28,7 +28,11 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
 import java.util.ArrayList;
-
+/**
+ * The OpenStreetMapActivity class is an activity that displays a map using osmdroid library.
+ * It loads the osmdroid configuration and inflates the map layout, which contains the map and some UI elements.
+ * It also handles location tracking, map zooming and panning, and adding overlays to the map.
+ */
 public class OpenStreetMapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;

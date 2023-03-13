@@ -33,18 +33,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * The activity for displaying and confirming a QR code that has been scanned using the device camera.
+ */
 public class CameraCaughtNewActivity extends AppCompatActivity {
+    /** TextView field that displays the name of the QR code. */
     private TextView codeName;
+    /** TextView field that displays the hash value of the QR code. */
     private TextView codeHash;
+    /** TextView field that displays the points earned from scanning the QR code. */
     private TextView codePoints;
+    /** ImageView field that displays the picture associated with the QR code. */
     private ImageView codePicImage;
+    /** CheckBox field for user to choose whether to save geolocation data associated with the QR code. */
     private CheckBox save_geolocation;
+    /** CheckBox field for user to choose whether to save photo taken of QR code. */
     private CheckBox save_photo;
+    /** Button for user to confirm the scan of the QR code. */
     private Button confirmButton;
-    private String TAG = "Sample"; // used as starter string for debug-log messaging
+    /** String variable used as a starter string for debug-log messaging.*/
+    private String TAG = "Sample";
+    /** Player object representing the current user. */
     private Player player;
-    private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
+    /** ArrayList of QRCode objects that represents the list of scanned QR codes. */
+    private ArrayList<QRCode> codeList = new ArrayList<>();
 
+    /**
+     * Called when the activity is starting. Sets the UI layout, initializes the UI components, and gets the QR code object from the previous activity's intent.
+     * @param savedInstanceState Bundle object containing the activity's previously saved state.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

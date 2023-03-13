@@ -21,7 +21,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+/**
+ * The QRCodeImageViewActivity displays the image and information of a QRCode.
+ * The activity receives a QRCode object as a SerializableExtra from the previous activity.
+ * The image associated with the QRCode is retrieved from Firebase Storage and displayed in an ImageView.
+ * The user can click on buttons to view a photo associated with the QRCode or view the location of the QRCode on a map.
+ * The user can also click on a back button to return to the previous activity.
+ */
 public class QRCodeImageViewActivity extends AppCompatActivity {
     ImageButton backButton;
     Button photoButton;
@@ -31,7 +37,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
     TextView codePoints;
     ImageView codePicImage;
     private QRCode thisCode;
-
+    /**
+     * Initializes the activity and its components.
+     * Retrieves the QRCode object from the previous activity and displays its information.
+     * Retrieves the image associated with the QRCode from Firebase Storage and displays it in an ImageView.
+     * Sets up the buttons to allow the user to view a photo associated with the QRCode or view its location on a map.
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
