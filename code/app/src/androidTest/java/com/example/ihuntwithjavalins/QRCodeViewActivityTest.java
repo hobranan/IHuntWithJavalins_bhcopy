@@ -30,7 +30,8 @@ public class QRCodeViewActivityTest {
     }
 
     @Test
-    public void testName() {
-
+    public void deleteButton() {
+        solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
+        solo.clickOnButton("Remove this Code");
     }
 }
