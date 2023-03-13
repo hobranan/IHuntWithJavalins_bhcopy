@@ -2,6 +2,7 @@ package com.example.ihuntwithjavalins.Player;
 
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,7 @@ import java.util.List;
  * Players in the application.
  * @version 1.0
  */
-public class Player {
-    /**
-     * Holds the unique uuid of the Player
-     */
-    private String uuid;
+public class Player implements Serializable, Comparable<Player> {
     /**
      * Holds the username of the Player
      */
@@ -24,13 +21,12 @@ public class Player {
      */
     private String email;
     /**
-     * Holds the phone number of the Player
-     */
-    private String phoneNumber;
-    /**
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
+
+
+    private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
      */
@@ -41,21 +37,11 @@ public class Player {
      * competing against each other.
      * @param username The username of the Player
      * @param email The email of the Player
-     * @param phoneNumber The phone number of the Player
      * @param region The region the Player is in
      */
-    public Player(String uuid, String username, String email, String phoneNumber, String region) {
-        this.uuid = uuid;
+    public Player(String username, String email, String region) {
         this.username = username;
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.region = region;
-    }
-
-    public Player(String username, String email, String phoneNumber, String region) {
-        this.username = username;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
         this.region = region;
     }
 
@@ -66,18 +52,20 @@ public class Player {
 
     }
 
-
+    /**
+     * Constructor for new instance of Player object without email given
+     * @param username The username of the Player
+     * @param region The region the Player is in
+     */
     public Player(String username, String region) {
         this.username = username;
+        this.email = null;
         this.region = region;
+
     }
 
-    public String getId(){
-        return uuid;
-    }
-
-    public void setId(String uuid){
-        this.uuid = uuid;
+    public Player(String username) {
+        this.username = username;
     }
 
     /**
@@ -113,22 +101,6 @@ public class Player {
     }
 
     /**
-     * Gets the phone number of the Player
-     * @return The String representing the phone number of the Player
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the phone number of the Player
-     * @param phoneNumber The String representing the phone number of the Player
-     */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
      * Gets the region the Player is playing in
      * @return The String representing the region the Player is playing in
      */
@@ -144,6 +116,15 @@ public class Player {
         this.region = region;
     }
 
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+
     /**
      * Gets the list of QRCode objects the Player has scanned
      * @return The list containing QRCode objects the Player has scanned
@@ -151,8 +132,6 @@ public class Player {
     public List<QRCode> getCodes() {
         return codes;
     }
-
-    // I won't write a unit test for Player methods yet, I think it makes more sense for there to be a unit test for a controller using said model class
 
     /**
      * Gets the list of QRCode objects the Player has scanned
@@ -166,6 +145,7 @@ public class Player {
         }
         return sum;
     }
+
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
@@ -204,63 +184,8 @@ public class Player {
         }
     }
 
-    /**
-     * Gets the total points value of all of a players QRcodes
-     * @return the total points value of the QRCodes in the players list
-     */
-    public int getTotalPoints() {
-        int scoreTotal = 0;
-        List<QRCode> allCodes = getCodes();
-        int i = allCodes.size();
-        for (int j = 0; j < i; j++) {
-            scoreTotal = Integer.parseInt(allCodes.get(j).getCodePoints());
-        }
-        return scoreTotal;
-    }
-
-    /**
-     * Finds the lowest points value QRCode in the players list of scanned codes
-     * @return the lowest points value QRCode in the players list
-     */
-    public int getLowestScore() {
-        int scoreMin = 0;
-        List<QRCode> allCodes = getCodes();
-        if (allCodes.size() == 0){
-            return scoreMin;
-        } else if (allCodes.size() == 1) {
-            scoreMin = Integer.parseInt(allCodes.get(1).getCodePoints());
-            return scoreMin;
-        } else {
-            int i = allCodes.size();
-            for (int j = 0; j < i; j++) {
-                if(Integer.parseInt(allCodes.get(j).getCodePoints()) < scoreMin) {
-                    scoreMin = Integer.parseInt(allCodes.get(j).getCodePoints());
-                }
-            }
-        }
-        return scoreMin;
-    }
-
-    /**
-     * Finds the highest value QRCode in the players list of scanned codes
-     * @return the highest value QRCode in the players list
-     */
-    public int getHighestScore() {
-        int scoreMax = 0;
-        List<QRCode> allCodes = getCodes();
-        if (allCodes.size() == 0){
-            return scoreMax;
-        } else if (allCodes.size() == 1) {
-            scoreMax = Integer.parseInt(allCodes.get(1).getCodePoints());
-            return scoreMax;
-        } else {
-            int i = allCodes.size();
-            for (int j = 0; j < i; j++) {
-                if(Integer.parseInt(allCodes.get(j).getCodePoints()) > scoreMax) {
-                    Integer.parseInt(allCodes.get(j).getCodePoints());
-                }
-            }
-        }
-        return scoreMax;
+    @Override
+    public int compareTo(Player other) {
+        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
     }
 }

@@ -126,7 +126,15 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".Profile.ProfileActivity"
+            android:exported="true">
+        </activity>
 
+        <activity
+            android:name=".Scoreboard.ScoreboardActivity"
+            android:exported="true">
+        </activity>
 
     </application>
 

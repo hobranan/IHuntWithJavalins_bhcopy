@@ -37,9 +37,9 @@ public class OpenStreetMapActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
 
-    LocationTrack locationTrack; // location tracker
+    private LocationTrack locationTrack; // location tracker
 
-    Button backButton;
+    private Button backButton;
 
     //custom BACK button control (since back doesnt work when map enabled) (*still doesnt work!!!)
     public void onBackPressed() {
