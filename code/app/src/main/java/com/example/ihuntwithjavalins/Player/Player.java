@@ -34,6 +34,9 @@ public class Player implements Serializable, Comparable<Player> {
      */
     private List<QRCode> codes = new ArrayList<>();    // add QRCode class later
 
+
+
+
     /**
      * Constructor for new instance of Player object representing a Player in the application
      * competing against each other.
@@ -148,6 +151,19 @@ public class Player implements Serializable, Comparable<Player> {
         return sum;
     }
 
+
+    /**
+     * Gets the list of QRCode objects the Player has scanned
+     * @return The list containing QRCode objects the Player has scanned
+     */
+    public int getTotalCodes(){
+        List<QRCode> all_codes = getCodes();
+        int sum = 0;
+        for (QRCode object : all_codes) {
+            sum += Integer.parseInt(object.getPoints());
+        }
+        return sum;
+    }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
