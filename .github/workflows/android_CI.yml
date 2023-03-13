@@ -22,7 +22,7 @@ jobs:
 
     - name: change to code folder and Grant execute permission for gradlew
       run: (cd code && chmod +x gradlew)
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Run Unit Tests
-      run: ./gradlew test
+    - name:  change to code folder and Build with Gradle
+      run: (cd code && ./gradlew build)
+    - name:  change to code folder and Run Unit Tests
+      run: (cd code && ./gradlew test)
