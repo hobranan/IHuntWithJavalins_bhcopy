@@ -35,6 +35,7 @@ import java.util.Random;
 
 /**
  * The activity for displaying and confirming a QR code that has been scanned using the device camera.
+ * TODO: this is used as the only gateway from camera scanning (implement later a distinguishment between new and old captured codes)
  */
 public class CameraCaughtNewActivity extends AppCompatActivity {
     /** TextView field that displays the name of the QR code. */

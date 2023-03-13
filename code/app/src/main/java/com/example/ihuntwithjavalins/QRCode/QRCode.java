@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  * This class represents a QRCode scanned by Players in the application.
- *
+ * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
 public class QRCode implements Serializable {

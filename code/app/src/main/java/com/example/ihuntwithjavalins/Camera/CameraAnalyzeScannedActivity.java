@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 /**
  * This activity analyzes a scanned camera and determines whether it has already been caught by the user or if it's a new camera to be added to the user's collection. It accesses a
  * Cloud Firestore database to retrieve user-specific data and uses Intent objects to switch between activities accordingly.
+ * TODO: implement this with the app (right now the camera cannot distinguish new codes from old QRcodes, and this is intended to be the activity that decides new or old.)
  */
 public class CameraAnalyzeScannedActivity extends AppCompatActivity {
 

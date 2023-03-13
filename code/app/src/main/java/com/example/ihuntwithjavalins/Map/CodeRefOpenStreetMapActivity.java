@@ -30,6 +30,7 @@ import java.util.ArrayList;
 /**
  * Represents an activity that displays a map using OpenStreetMap and allows for displaying the user's location,
  * as well as adding overlays like a scale bar and compass.
+ * TODO: fix issue where map seems to overtake app and nearly-freezes back button action
  */
 public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
 

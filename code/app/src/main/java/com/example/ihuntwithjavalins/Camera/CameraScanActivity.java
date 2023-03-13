@@ -27,6 +27,7 @@ import java.io.Serializable;
 // https://alitalhacoban.medium.com/barcode-scanner-app-android-studio-60f87b5a10cd
 /**
  * Activity that uses the device's camera to scan barcodes and QR codes.
+ * TODO: fix algorithm for code recognition to allow distinguishing between new and old QRcodes
  */
 public class CameraScanActivity extends AppCompatActivity {
 

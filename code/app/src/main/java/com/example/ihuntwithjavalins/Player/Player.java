@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
+ * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
 public class Player implements Serializable, Comparable<Player> {

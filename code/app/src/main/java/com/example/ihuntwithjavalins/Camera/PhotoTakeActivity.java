@@ -27,6 +27,7 @@ import java.io.IOException;
  * Uses the cameraSource from the Google Vision API and the BarcodeDetector.
  * Extracts the code information and launches another activity to display it.
  * Includes a private method to initialise the camera and detector.
+ * TODO: implement this with the app (no photo capture functionality yet)
  */
 public class PhotoTakeActivity extends AppCompatActivity {
 
