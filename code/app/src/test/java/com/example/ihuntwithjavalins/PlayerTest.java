@@ -10,13 +10,31 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Unit tests for Player model class
+ */
 public class PlayerTest {
+    /**
+     * Creates mock player with all fields null
+     * @return the mock player
+     */
     public Player mockPlayer() {return new Player();}
 
+    /**
+     * Creates mock player with only username and region
+     * @return the mock player
+     */
     public Player mockPlayerWithSomeInfo(){return new Player("Sabel Storm", "Canada");}
 
+    /**
+     * Creates mock player with username, region, and email
+     * @return the mock player
+     */
     public Player mockPlayerWithInfo(){return new Player("Sabel Storm", "hblow@ualberta.ca", "Canada");}
 
+    /**
+     * Tests whether a new Player has all null fields
+     */
     @Test
     public void testEmptyPlayer() {
         Player player = mockPlayer();
@@ -25,8 +43,12 @@ public class PlayerTest {
         assertNull(player.getEmail(), "Email should be null");
         assertNull(player.getRegion(), "Region should be null");
         assertEquals(0, player.getCodes().size(), "Code list should be empty");
+        assertNull(player.getDateJoined(), "Date joined should be null");
     }
 
+    /**
+     * Tests whether  Player constructor creates Player object with correct data
+     */
     @Test
     public void testPlayerWithInfo() {
         Player player = mockPlayerWithInfo();
@@ -35,8 +57,12 @@ public class PlayerTest {
         assertEquals("hblow@ualberta.ca", player.getEmail(), "Email should be hblow@ualberta.ca");
         assertEquals("Canada", player.getRegion(), "Region should be Canada");
         assertEquals(0, player.getCodes().size(), "Code list should be empty");
+        assertNull(player.getDateJoined(), "Date joined should be null");
     }
 
+    /**
+     * Tests whether Player constructor creates Player object with correct data
+     */
     @Test
     public void testPlayerWithSomeInfo() {
         Player player = mockPlayerWithSomeInfo();
@@ -45,8 +71,12 @@ public class PlayerTest {
         assertNull(player.getEmail(), "Email should be null");
         assertEquals("Canada", player.getRegion(), "Region should be Canada");
         assertEquals(0, player.getCodes().size(), "Code list should be empty");
+        assertNull(player.getDateJoined(), "Date joined should be null");
     }
 
+    /**
+     * Tests getting and setting username of Player
+     */
     @Test
     public void testUsername() {
         Player player = mockPlayer();
@@ -61,6 +91,9 @@ public class PlayerTest {
         assertEquals("Sabel Storm", player.getUsername(), "Username should be Sabel Storm");
     }
 
+    /**
+     * Tests getting and setting email of Player
+     */
     @Test
     public void testEmail() {
         Player player = mockPlayer();
@@ -75,6 +108,9 @@ public class PlayerTest {
         assertEquals("hblow@ualberta.ca", player.getEmail(), "Email should be hblow@ualberta.ca");
     }
 
+    /**
+     * Tests getting and setting region of Player
+     */
     @Test
     public void testRegion() {
         Player player = mockPlayer();
@@ -89,6 +125,21 @@ public class PlayerTest {
         assertEquals("Canada", player.getRegion(), "Region should be Canada");
     }
 
+    /**
+     * Tests getting and setting date joined of Player
+     */
+    @Test
+    public void testDate() {
+        Player player = mockPlayer();
+
+        assertNull(player.getDateJoined(), "Date joined should be null");
+        player.setDateJoined("Jan 15");
+        assertEquals("Jan 15", player.getDateJoined(), "Date joined should be Jan 15");
+    }
+
+    /**
+     * Tests add one or multiple codes into Player, deleting code and hasCode functionality
+     */
     @Test
     public void testPlayerCodes() {
         // Setup list of codes to have dummy code data

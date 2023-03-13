@@ -24,8 +24,9 @@ public class Player implements Serializable {
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
-
-
+    /**
+     * Holds the date user joined
+     */
     private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
@@ -52,6 +53,10 @@ public class Player implements Serializable {
 
     }
 
+    /**
+     * Constructor for new instance of Player object only initializing username
+     * @param username the username of the Player
+     */
     public Player(String username) {
         this.username = username;
     }
@@ -68,10 +73,18 @@ public class Player implements Serializable {
 
     }
 
+    /**
+     * Gets the date the user joined
+     * @return the date the user joined
+     */
     public String getDateJoined() {
         return dateJoined;
     }
 
+    /**
+     * Sets the date the user joined
+     * @param dateJoined the date to set as the user's join date
+     */
     public void setDateJoined(String dateJoined) {
         this.dateJoined = dateJoined;
     }
