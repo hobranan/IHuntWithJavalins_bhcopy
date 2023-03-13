@@ -2,6 +2,7 @@ package com.example.ihuntwithjavalins.Player;
 
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,9 @@ import java.util.List;
  * Players in the application.
  * @version 1.0
  */
-public class Player {
+public class Player implements Serializable, Comparable<Player> {
     /**
-     * Holds the unique username of the Player
+     * Holds the username of the Player
      */
     private String username;
     /**
@@ -20,13 +21,14 @@ public class Player {
      */
     private String email;
     /**
-     * Holds the phone number of the Player
-     */
-    private String phoneNumber;
-    /**
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
+
+    /**
+     * Holds the the date the Player signed up
+     */
+    private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
      */
@@ -40,14 +42,35 @@ public class Player {
      * competing against each other.
      * @param username The username of the Player
      * @param email The email of the Player
-     * @param phoneNumber The phone number of the Player
      * @param region The region the Player is in
      */
-    public Player(String username, String email, String phoneNumber, String region) {
+    public Player(String username, String email, String region) {
         this.username = username;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.region = region;
+    }
+
+    /**
+     * Constructor for new instance of Player object
+     */
+    public Player() {
+
+    }
+
+    /**
+     * Constructor for new instance of Player object without email given
+     * @param username The username of the Player
+     * @param region The region the Player is in
+     */
+    public Player(String username, String region) {
+        this.username = username;
+        this.email = null;
+        this.region = region;
+
+    }
+
+    public Player(String username) {
+        this.username = username;
     }
 
     /**
@@ -83,22 +106,6 @@ public class Player {
     }
 
     /**
-     * Gets the phone number of the Player
-     * @return The String representing the phone number of the Player
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the phone number of the Player
-     * @param phoneNumber The String representing the phone number of the Player
-     */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
      * Gets the region the Player is playing in
      * @return The String representing the region the Player is playing in
      */
@@ -114,6 +121,15 @@ public class Player {
         this.region = region;
     }
 
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+
     /**
      * Gets the list of QRCode objects the Player has scanned
      * @return The list containing QRCode objects the Player has scanned
@@ -122,7 +138,19 @@ public class Player {
         return codes;
     }
 
-    // I won't write a unit test for Player methods yet, I think it makes more sense for there to be a unit test for a controller using said model class
+    /**
+     * Gets the list of QRCode objects the Player has scanned
+     * @return The list containing QRCode objects the Player has scanned
+     */
+    public int getTotalCodes(){
+        List<QRCode> all_codes = getCodes();
+        int sum = 0;
+        for (QRCode object : all_codes) {
+            sum += Integer.parseInt(object.getCodePoints());
+        }
+        return sum;
+    }
+
 
     /**
      * Gets the list of QRCode objects the Player has scanned
@@ -142,7 +170,15 @@ public class Player {
      * @param code The QRCode the Player scanned to be added to list of codes
      */
     public void addCode(QRCode code) {
-        codes.add(code);
+        this.codes.add(code);
+    }
+
+    /**
+     * Adds all QRCodes from list to Player list of codes
+     * @param codes The list containing QRCode objects to add to Player list
+     */
+    public void addCodes(List<QRCode> codes) {
+        this.codes.addAll(codes);
     }
 
     /**
@@ -164,5 +200,10 @@ public class Player {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Player other) {
+        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
     }
 }

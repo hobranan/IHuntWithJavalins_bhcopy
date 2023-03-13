@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_dynamic_primary30">
+
+
+    <ImageButton
+        android:id="@+id/go_back"
+        android:background="@android:color/transparent"
+
+        android:layout_width="78dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <EditText
+        android:id="@+id/back_text"
+        android:layout_width="92dp"
+        android:layout_height="35dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Back"
+
+        android:textColor="@color/purple_200"
+        android:textSize="80px"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="18dp" />
+
+    <EditText
+        android:id="@+id/qr_code_name"
+        android:textColor="@color/purple_200"
+        android:background="@android:color/transparent"
+        android:textSize="100px"
+
+
+        android:layout_width="268dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Dubious Bar Fly"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <ImageButton
+        android:textColor="@color/purple_200"
+
+        android:id="@+id/display_img"
+        android:layout_width="407dp"
+        android:layout_height="317dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/a_project_x"
+        tools:layout_editor_absoluteY="194dp" />
+
+    <EditText
+        android:id="@+id/total_points"
+        android:background="@android:color/transparent"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="150points"
+        android:textColor="@color/purple_200"
+        android:textSize="80px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="511dp" />
+
+    <Button
+        android:id="@+id/show_attached"
+        android:layout_width="252dp"
+
+        android:layout_height="63dp"
+        android:text="No photo was attached to this"
+        android:textColor="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="580dp" />
+
+    <Button
+        android:id="@+id/no_geo_btn"
+        android:layout_width="257dp"
+        android:layout_height="65dp"
+
+        android:text="No geolocation was saved for this"
+        android:textColor="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_attached" />
+
+    <TextView
+        android:id="@+id/hash_code_"
+        android:layout_width="368dp"
+        android:layout_height="49dp"
+        android:text="jdsfhbgkjsdhfglkjdshflgkjhsdflkgjhsdlkfjghlskdfjhglkdsjfhlkgjshdflkgjhsd"
+        android:textColor="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/display_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qr_code_name" />
+
+    <ImageButton
+        android:id="@+id/menu_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_menu_24"
+        tools:layout_editor_absoluteY="18dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

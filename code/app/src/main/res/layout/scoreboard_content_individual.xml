@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/codeName"
+        android:layout_width="259dp"
+        android:layout_height="40dp"
+        android:paddingLeft="60sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/code_points"
+        android:layout_width="40dp"
+        android:layout_height="40sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/isScanned"
+        android:layout_width="30dp"
+        android:layout_height="40sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:textSize="15sp" />
+
+</LinearLayout>
