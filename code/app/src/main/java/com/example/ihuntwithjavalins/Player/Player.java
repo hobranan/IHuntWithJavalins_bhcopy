@@ -153,19 +153,6 @@ public class Player implements Serializable, Comparable<Player> {
 
 
     /**
-     * Gets the list of QRCode objects the Player has scanned
-     * @return The list containing QRCode objects the Player has scanned
-     */
-    public int getTotalCodes(){
-        List<QRCode> all_codes = getCodes();
-        int sum = 0;
-        for (QRCode object : all_codes) {
-            sum += Integer.parseInt(object.getPoints());
-        }
-        return sum;
-    }
-
-    /**
      * Adds a QRCode to the list of codes the Player has scanned
      * @param code The QRCode the Player scanned to be added to list of codes
      */
