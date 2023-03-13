@@ -11,7 +11,7 @@ import java.util.List;
  * Players in the application.
  * @version 1.0
  */
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
     /**
      * Holds the username of the Player
      */
@@ -146,6 +146,7 @@ public class Player implements Serializable {
         return sum;
     }
 
+
     /**
      * Adds a QRCode to the list of codes the Player has scanned
      * @param code The QRCode the Player scanned to be added to list of codes
@@ -181,5 +182,10 @@ public class Player implements Serializable {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Player other) {
+        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
     }
 }

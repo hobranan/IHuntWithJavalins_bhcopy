@@ -18,6 +18,7 @@ import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.Profile.ProfileActivity;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
+import com.example.ihuntwithjavalins.Scoreboard.ScoreboardActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -157,8 +158,8 @@ public class QuickNavActivity extends AppCompatActivity {
         scoreboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(QuickNavActivity.this, ScoreboardActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(QuickNavActivity.this, ScoreboardActivity.class);
+                startActivity(intent);
             }
         });
 
