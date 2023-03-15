@@ -50,7 +50,8 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/button1"
         android:gravity="left"
-        android:text="Scan A Code" />
+        android:text="Scan A Code"
+        android:textColor="@color/text2_general"/>
 
     <TextView
         android:id="@+id/goto_map"
@@ -71,7 +72,8 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/button1"
         android:gravity="left"
-        android:text="Open The Map" />
+        android:text="Open The Map"
+        android:textColor="@color/text2_general"/>
 
     <TextView
         android:id="@+id/goto_codeLibrary"
@@ -92,7 +94,8 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/button1"
         android:gravity="left"
-        android:text="See My Code Library" />
+        android:text="See My Code Library"
+        android:textColor="@color/text2_general" />
 
     <TextView
         android:id="@+id/goto_scoreboard"
@@ -113,8 +116,7 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/button1"
         android:gravity="left"
-        android:text="See The Scoreboard"
-        android:textColor="@color/text2_general" />
+        android:text="See The Scoreboard" />
 
     <TextView
         android:id="@+id/goto_myProfile"

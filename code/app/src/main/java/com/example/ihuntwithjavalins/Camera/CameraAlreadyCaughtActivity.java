@@ -28,22 +28,28 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/**
+ * This activity is displayed when the user scans a QR code that has already been caught.
+ * It displays the details of the scanned code and the image of the monster associated with it.
+ * TODO: implement this with the app (right now the camera cannot distinguish new codes from old QRcodes)
+ */
 public class CameraAlreadyCaughtActivity extends AppCompatActivity {
 
-    ImageButton backButton;
-//    ImageButton imageButton;
-//    ImageButton quickNavButton;
-
-//    Button deleteButton;
-
-    TextView codeName;
-    TextView codeHash;
-    TextView codePoints;
-//    String codePicRef;
-
+    /** An ImageButton representing a back button. */
+    private ImageButton backButton;
+    /** A TextView displaying the name of the QR code. */
+    private TextView codeName;
+    /** A TextView displaying the hash of the QR code. */
+    private TextView codeHash;
+    /** A TextView displaying the points associated with the QR code. */
+    private TextView codePoints;
+    /** An ImageView displaying the picture associated with the QR code. */
     ImageView codePicImage;
 
-    String myTAG = "Sample"; // used as starter string for debug-log messaging
+    String TAG = "Sample"; // used as starter string for debug-log messaging
+    /**
+     * This activity is displayed when the user scans a QR code that has already been caught. It displays the details of the scanned code and the image of the monster associated with it.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

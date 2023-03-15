@@ -2,19 +2,8 @@ package com.example.ihuntwithjavalins;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class TitleActivity extends Activity {
 
@@ -24,6 +13,7 @@ public class TitleActivity extends Activity {
 
         setContentView(R.layout.title_page);
 
+//        //delay timer to move (used click instead, needs to be improved)
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -35,6 +25,7 @@ public class TitleActivity extends Activity {
 
     }
 
+    // clicks anywhere to advance from the screen
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();

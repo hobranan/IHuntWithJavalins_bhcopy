@@ -14,9 +14,8 @@ import com.example.ihuntwithjavalins.R;
 
 import java.util.ArrayList;
 
-/*
-Adapter (customized) for linking/showing the backend-datalist (of objects) with
-the UI-content-list (in content.xml)
+/**
+ * Adapter (customized) for linking/showing the backend-datalist (of objects) with the UI-content-list (in content.xml)
  */
 public class CustomListForCustomAdapter extends ArrayAdapter<QRCode> {
 

@@ -9,9 +9,10 @@ import java.util.List;
 /**
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
+ * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
     /**
      * Holds the username of the Player
      */
@@ -24,14 +25,19 @@ public class Player implements Serializable {
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
+
+
     /**
-     * Holds the date user joined
+     * Holds the the date the Player signed up
      */
     private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
      */
     private List<QRCode> codes = new ArrayList<>();    // add QRCode class later
+
+
+
 
     /**
      * Constructor for new instance of Player object representing a Player in the application
@@ -137,6 +143,15 @@ public class Player implements Serializable {
         this.region = region;
     }
 
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+
     /**
      * Gets the list of QRCode objects the Player has scanned
      * @return The list containing QRCode objects the Player has scanned
@@ -157,6 +172,7 @@ public class Player implements Serializable {
         }
         return sum;
     }
+
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
@@ -194,5 +210,6 @@ public class Player implements Serializable {
             return false;
         }
     }
+
 
 }

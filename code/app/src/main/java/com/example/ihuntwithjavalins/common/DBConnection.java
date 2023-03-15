@@ -90,7 +90,9 @@ public class DBConnection {
      * @return reference to given subcollection
      */
     public CollectionReference getSubCollection(String subCollection) {
+
         return this.db.collection("Users").document(playerUsername).collection(subCollection);
+
     }
 
     /**
@@ -106,7 +108,11 @@ public class DBConnection {
      * @return reference to the user document
      */
     public DocumentReference getUserDocument() {
+
         return this.db.collection("Users").document(playerUsername);
+
+
+
     }
 
     /**

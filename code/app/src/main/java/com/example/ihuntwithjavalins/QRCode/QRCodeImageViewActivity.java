@@ -21,7 +21,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+/**
+ * The QRCodeImageViewActivity displays the image and information of a QRCode.
+ * The activity receives a QRCode object as a SerializableExtra from the previous activity.
+ * The image associated with the QRCode is retrieved from Firebase Storage and displayed in an ImageView.
+ * The user can click on buttons to view a photo associated with the QRCode or view the location of the QRCode on a map.
+ * The user can also click on a back button to return to the previous activity.
+ */
 public class QRCodeImageViewActivity extends AppCompatActivity {
     ImageButton backButton;
     Button photoButton;
@@ -29,9 +35,15 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
     TextView codeName;
     TextView codeHash;
     TextView codePoints;
-
     ImageView codePicImage;
-
+    private QRCode thisCode;
+    /**
+     * Initializes the activity and its components.
+     * Retrieves the QRCode object from the previous activity and displays its information.
+     * Retrieves the image associated with the QRCode from Firebase Storage and displays it in an ImageView.
+     * Sets up the buttons to allow the user to view a photo associated with the QRCode or view its location on a map.
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -40,32 +52,26 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         backButton = findViewById(R.id.civ_go_back);
         photoButton = findViewById(R.id.civ_show_attached);
         geoButton = findViewById(R.id.civ_no_geo_btn);
-
         codeName = findViewById(R.id.civ_qr_code_name);
         codeHash = findViewById(R.id.civ_hash_code_);
         codePoints = findViewById(R.id.civ_total_points);
         codePicImage = findViewById(R.id.civ_display_img);
 
-        Bundle extras = getIntent().getExtras();
-        String savedCodeName = extras.getString("imageSavedCodeName");//The key argument here must match that used in the other activity
-        String savedCodeHash = extras.getString("imageSavedCodeHash");//The key argument here must match that used in the other activity
-        String savedCodePoints = extras.getString("imageSavedCodePoints");//The key argument here must match that used in the other activity
-        String savedCodeImageRef = extras.getString("imageSavedCodeImageRef");//The key argument here must match that used in the other activity
-        String savedCodeLat = extras.getString("imageSavedCodeLat");//The key argument here must match that used in the other activity
-        String savedCodeLon = extras.getString("imageSavedCodeLon");//The key argument here must match that used in the other activity
-        String savedCodePhotoRef = extras.getString("imageSavedCodePhotoRef");//The key argument here must match that used in the other activity
-        codeName.setText(savedCodeName);
-        codeHash.setText(savedCodeHash);
-        codePoints.setText(savedCodePoints);
+        // Get the intent from the previous activity
+        Intent myIntent = getIntent();
+        thisCode = (QRCode) myIntent.getSerializableExtra("savedItemObjectForImage");
+
+        codeName.setText(thisCode.getCodeName());
+        codeHash.setText(thisCode.getCodeHash());
+        codePoints.setText(thisCode.getCodePoints());
 
         // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
         // Create a storage reference from our app (https://firebase.google.com/docs/storage/android/download-files)
         StorageReference storageRef = storage.getReference();
         // Create a reference with an initial file path and name // use QRcode-object's imgRef string to ref storage
-        String codePicRef = "GendImages/" + savedCodeImageRef;
+        String codePicRef = "GendImages/" + thisCode.getCodeGendImageRef();
         StorageReference pathReference_pic = storageRef.child(codePicRef);
-
 
         // convert pathRef_pic to bytes, then set image bitmap via bytes (https://firebase.google.com/docs/storage/android/download-files)
         //final long ONE_MEGABYTE = 1024 * 1024;
@@ -86,9 +92,9 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!savedCodePhotoRef.equals("")){
+                if (!thisCode.getCodePhotoRef().equals("")){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, PhotoViewActivity.class);
-                    intent.putExtra("imageSavedCodePhotoRef", savedCodePhotoRef);
+                    intent.putExtra("imageSavedCodePhotoRef", thisCode.getCodePhotoRef());
                     startActivity(intent);
                 }
             }
@@ -97,10 +103,10 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         geoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!savedCodeLat.equals("") && !savedCodeLon.equals("") ){
+                if (!thisCode.getCodeLat().equals("") && !thisCode.getCodeLon().equals("") ){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);
-                    intent.putExtra("imageSavedCodeLat", savedCodeLat);
-                    intent.putExtra("imageSavedCodeLon", savedCodeLon);
+                    intent.putExtra("imageSavedCodeLat", thisCode.getCodeLat());
+                    intent.putExtra("imageSavedCodeLon", thisCode.getCodeLon());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);

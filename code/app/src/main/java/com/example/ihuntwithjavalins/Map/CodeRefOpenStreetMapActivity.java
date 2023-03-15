@@ -1,20 +1,16 @@
 package com.example.ihuntwithjavalins.Map;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-//import com.example.ihuntwithjavalins.MainActivity;
 import com.example.ihuntwithjavalins.R;
 
 import org.osmdroid.api.IMapController;
@@ -31,25 +27,39 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
 import java.util.ArrayList;
 
+/**
+ * Represents an activity that displays a map using OpenStreetMap and allows for displaying the user's location,
+ * as well as adding overlays like a scale bar and compass.
+ * TODO: fix issue where map seems to overtake app and nearly-freezes back button action
+ */
 public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
+
+    /** Request code used when requesting permissions. */
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    /** Map view used to display the map. */
     private MapView map = null;
     //    private MyLocationNewOverlay mLocationOverlay;
 //    private GpsMyLocationProvider mGPSLocationProvider;
+    /** Compass overlay used to display a compass on the map. */
     private CompassOverlay mCompassOverlay;
+    /** Scale bar overlay used to display a scale bar on the map. */
     private ScaleBarOverlay mScaleBarOverlay;
-
-    LocationTrack locationTrack; // location tracker
-
+    /** Location tracker used to track the user's location. */
+    LocationTrack locationTrack;
+    /** Back button used to exit the activity. */
     Button backButton;
 
     //custom BACK button control (since back doesnt work when map enabled) (*still doesnt work!!!)
+    /** Overrides the default back button behavior to finish the activity. */
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
     //custom BACK button control (END)
-
+    /**
+     * Called when the activity is created. Initializes the map and its overlays.
+     * @param savedInstanceState A Bundle containing the saved instance state of the activity.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +184,13 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
         //Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
-
+    /**
+     * This method is called when the app requests permissions from the user.
+     * It requests permissions for the app using the provided parameters.
+     * @param requestCode an integer representing the request code
+     * @param permissions an array of strings representing the permissions requested
+     * @param grantResults an array of integers representing the results of the permissions requests
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -189,7 +205,11 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }
-
+    /**
+     * This method requests permissions if necessary for the app to function properly.
+     * If the app does not have the necessary permissions, it requests the permissions using ActivityCompat.requestPermissions.
+     * @param permissions an array of strings representing the permissions the app needs
+     */
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {

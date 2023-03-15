@@ -8,7 +8,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -16,16 +15,30 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 
+/**
+ * This activity analyzes a scanned camera and determines whether it has already been caught by the user or if it's a new camera to be added to the user's collection. It accesses a
+ * Cloud Firestore database to retrieve user-specific data and uses Intent objects to switch between activities accordingly.
+ * TODO: implement this with the app (right now the camera cannot distinguish new codes from old QRcodes, and this is intended to be the activity that decides new or old.)
+ */
 public class CameraAnalyzeScannedActivity extends AppCompatActivity {
 
+    /** Flag to indicate if the QR code has already been caught by the user. */
     private int alreadycaught_flag = 0;
+    /** The hash value of the QR code that was scanned and caught by the user. */
     String savedHash;
+    /** The name of the QR code that was scanned and caught by the user. */
     String savedName;
+    /** The points awarded for catching the QR code that was scanned and caught by the user. */
     String savedPoints;
+    /** The reference to the image associated with the QR code that was scanned and caught by the user. */
     String savedImgRef;
 
+    /**
+     * Called when the activity is starting. This is where most initialization should go:
+     * calling setContentView(int) to inflate the activity's UI, using findViewById(int) to programmatically interact with widgets in the UI, and using savedInstanceState to restore the activity's previously saved state.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise it is null.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

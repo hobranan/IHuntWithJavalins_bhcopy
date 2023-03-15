@@ -1,11 +1,9 @@
 package com.example.ihuntwithjavalins.Camera;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,8 +17,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/**
+ * Activity for displaying a photo taken with a QR code.
+ * The activity retrieves the photo from Firebase Storage and sets it as the image of an ImageView.
+ */
 public class PhotoViewActivity extends Activity {
-
+    /**
+     * Creates the activity layout and retrieves the photo from Firebase Storage to set it as the image of an ImageView.
+     * @param savedInstanceState the saved instance state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

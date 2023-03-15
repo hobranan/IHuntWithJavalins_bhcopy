@@ -5,6 +5,12 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/button_codelib_qn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BACK to QUICK NAV" />
+
+    <Button
         android:id="@+id/button_addHardcodes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,12 +22,8 @@
     <ListView
         android:id="@+id/code_list_listview"
         android:layout_width="match_parent"
-        android:layout_height="327dp" />
+        android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/button_codelib_qn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="QN" />
+
 
 </LinearLayout>

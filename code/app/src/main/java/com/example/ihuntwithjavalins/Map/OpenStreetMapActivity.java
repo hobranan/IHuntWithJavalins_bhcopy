@@ -28,7 +28,13 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
 import java.util.ArrayList;
-
+/**
+ * The OpenStreetMapActivity class is an activity that displays a map using osmdroid library.
+ * It loads the osmdroid configuration and inflates the map layout, which contains the map and some UI elements.
+ * It also handles location tracking, map zooming and panning, and adding overlays to the map.
+ * TODO: fix issue where map seems to overtake app and nearly-freezes back button action.
+ * TODO: add algorithm to find codes within a lat/lon range
+ */
 public class OpenStreetMapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
@@ -37,9 +43,9 @@ public class OpenStreetMapActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
 
-    LocationTrack locationTrack; // location tracker
+    private LocationTrack locationTrack; // location tracker
 
-    Button backButton;
+    private Button backButton;
 
     //custom BACK button control (since back doesnt work when map enabled) (*still doesnt work!!!)
     public void onBackPressed() {
