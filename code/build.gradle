@@ -29,3 +29,8 @@ allprojects { // for firebase functionality
 
     }
 } // for firebase functionality (END)
+
+tasks.named('wrapper') {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = '7.4'
+}
