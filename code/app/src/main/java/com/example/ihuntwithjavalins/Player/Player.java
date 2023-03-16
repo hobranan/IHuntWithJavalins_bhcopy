@@ -26,6 +26,7 @@ public class Player implements Serializable, Comparable<Player> {
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
 
+
     /**
      * Holds the the date the Player signed up
      */
@@ -59,6 +60,14 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     /**
+     * Constructor for new instance of Player object only initializing username
+     * @param username the username of the Player
+     */
+    public Player(String username) {
+        this.username = username;
+    }
+
+    /**
      * Constructor for new instance of Player object without email given
      * @param username The username of the Player
      * @param region The region the Player is in
@@ -70,8 +79,20 @@ public class Player implements Serializable, Comparable<Player> {
 
     }
 
-    public Player(String username) {
-        this.username = username;
+    /**
+     * Gets the date the user joined
+     * @return the date the user joined
+     */
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    /**
+     * Sets the date the user joined
+     * @param dateJoined the date to set as the user's join date
+     */
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
     }
 
     /**
@@ -190,8 +211,5 @@ public class Player implements Serializable, Comparable<Player> {
         }
     }
 
-    @Override
-    public int compareTo(Player other) {
-        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
-    }
+
 }
