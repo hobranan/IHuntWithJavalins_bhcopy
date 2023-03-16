@@ -143,15 +143,6 @@ public class Player implements Serializable, Comparable<Player> {
         this.region = region;
     }
 
-    public String getDateJoined() {
-        return dateJoined;
-    }
-
-    public void setDateJoined(String dateJoined) {
-        this.dateJoined = dateJoined;
-    }
-
-
     /**
      * Gets the list of QRCode objects the Player has scanned
      * @return The list containing QRCode objects the Player has scanned
@@ -211,5 +202,8 @@ public class Player implements Serializable, Comparable<Player> {
         }
     }
 
-
+    @Override
+    public int compareTo(Player other) {
+        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
+    }
 }
