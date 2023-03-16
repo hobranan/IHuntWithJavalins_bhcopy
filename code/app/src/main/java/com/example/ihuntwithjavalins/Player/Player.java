@@ -202,9 +202,9 @@ public class Player implements Serializable, Comparable<Player> {
         }
     }
 
-
     @Override
-    public int compareTo(Player o) {
-        return 0;
+    public int compareTo(Player other) {
+        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
+
     }
 }
