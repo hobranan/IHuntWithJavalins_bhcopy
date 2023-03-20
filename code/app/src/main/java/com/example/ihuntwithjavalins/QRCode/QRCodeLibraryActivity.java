@@ -99,11 +99,13 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ArrayList<String> exText4hashlist = new ArrayList<>();
                 exText4hashlist.addAll(Arrays.asList(
-                        "adsfadsgasga",
-                        "tyurtyurtyu",
-                        "89678kfuykr",
-                        "678567dfghsdfgh",
-                        "1234asdfasdf"
+                        "dfgdfgsdfgs",
+                        "gfdfsgs",
+                        "hgjghjgjg",
+                        "ghiouilghjl",
+                        "erqwerwer",
+                        "tyu7hu56y"
+
                 ));
                 for (int i = 0; i < exText4hashlist.size(); i++) {
                     QRCode temp = new QRCode(exText4hashlist.get(i));

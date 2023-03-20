@@ -152,10 +152,10 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     /**
-     * Gets the list of QRCode objects the Player has scanned
-     * @return The list containing QRCode objects the Player has scanned
+     * Gets the sum of points from QRCode objects the Player has scanned
+     * @return sum of points from QRCode objects the Player has scanned
      */
-    public int getTotalCodes(){
+    public int getSumOfCodePoints(){
         List<QRCode> all_codes = getCodes();
         int sum = 0;
         for (QRCode object : all_codes) {
@@ -164,6 +164,10 @@ public class Player implements Serializable, Comparable<Player> {
         return sum;
     }
 
+
+    public int getSumOfCodes(){
+        return codes.size();
+    }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
@@ -204,7 +208,7 @@ public class Player implements Serializable, Comparable<Player> {
 
     @Override
     public int compareTo(Player other) {
-        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
+        return Integer.compare(this.getSumOfCodePoints(), other.getSumOfCodePoints());
 
     }
 }
