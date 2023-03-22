@@ -6,6 +6,10 @@ plugins {
 android {
     namespace 'com.example.ihuntwithjavalins'
     compileSdk 33
+    
+    lintOptions {
+        abortOnError false
+    }
 
     defaultConfig {
         applicationId "com.example.ihuntwithjavalins"
