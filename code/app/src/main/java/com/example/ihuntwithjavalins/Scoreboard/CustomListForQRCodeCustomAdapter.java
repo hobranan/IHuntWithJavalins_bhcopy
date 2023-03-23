@@ -41,7 +41,11 @@ public class CustomListForQRCodeCustomAdapter extends ArrayAdapter<StoreNamePoin
         TextView isScannedCode = view.findViewById(R.id.isScanned);
         codeName.setText(tempCode.getCodeName());
         codePoints.setText(tempCode.getCodePoints());
-        isScannedCode.setText("1");
+        if (tempCode.isScanned()) {
+            isScannedCode.setText("have");
+        } else {
+            isScannedCode.setText("don't have");
+        }
         return view;
     }
 }

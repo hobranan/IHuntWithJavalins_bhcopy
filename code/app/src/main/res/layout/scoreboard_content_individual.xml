@@ -7,25 +7,25 @@
 
     <TextView
         android:id="@+id/codeName"
-        android:layout_width="259dp"
-        android:layout_height="40dp"
+        android:layout_width="260dp"
+        android:layout_height="70dp"
         android:paddingLeft="60sp"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp"
+        android:paddingTop="3sp"
+        android:paddingBottom="3sp"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/code_points"
-        android:layout_width="40dp"
-        android:layout_height="40sp"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
         android:paddingTop="5sp"
         android:paddingBottom="5sp"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/isScanned"
-        android:layout_width="30dp"
-        android:layout_height="40sp"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
         android:paddingTop="5sp"
         android:paddingBottom="5sp"
         android:textSize="15sp" />

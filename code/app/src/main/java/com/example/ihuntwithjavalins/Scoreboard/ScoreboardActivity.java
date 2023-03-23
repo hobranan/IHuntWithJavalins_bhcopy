@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,12 @@ public class ScoreboardActivity extends AppCompatActivity {
     ArrayList<Player> playerList;
     ArrayAdapter<Player> playerArrayAdapter;
     ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
+    Player myPlayer;
+
+    boolean sortNameAscend = false;
+    boolean sortPointsAscend = false;
+    boolean sortCodeAmountAscend = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,57 +65,6 @@ public class ScoreboardActivity extends AppCompatActivity {
         playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
         listViewPlayerList.setAdapter(playerArrayAdapter);
 
-//        String[] names = {"IAmStan", "MrKatana", "Viraj"};
-//
-//        QRCode q1 = new QRCode("10");
-//        QRCode q2 = new QRCode("2_432100");
-//        QRCode q3 = new QRCode("3_4323405-Jan-0");
-//        QRCode q4 = new QRCode("4_43234168");
-//        QRCode q5 = new QRCode("1_4352");
-//        QRCode q6 = new QRCode("2_491");
-//        QRCode q7 = new QRCode("3_4353");
-//        QRCode q8 = new QRCode("4_432344118");
-//        QRCode q9 = new QRCode("445");
-//        QRCode q10 = new QRCode("683");
-//        QRCode q11 = new QRCode("3_451");
-//        QRCode q12 = new QRCode("4_44568");
-//        QRCode q13 = new QRCode("1_2352");
-//        QRCode q14 = new QRCode("2_432344591");
-//        QRCode q15 = new QRCode("3_43234483");
-//        QRCode q16 = new QRCode("4_43234408");
-//
-//        Player me = new Player("Viraj", "test@gmail.com", "Alberta");
-//        me.addCode(q1);
-//        me.addCode(q2);
-//        me.addCode(q3);
-//
-//        Player player1 = new Player("John Doe", "john.doe@example.com", "New York");
-//        player1.addCode(q1);
-//        player1.addCode(q7);
-//
-//        Player player2 = new Player("Jane Smith", "jane.smith@example.com", "Los Angeles");
-//        player2.addCode(q2);
-//
-//        Player player3 = new Player("Bob Johnson", "bob.johnson@example.com", "Chicago");
-//        player3.addCode(q3);
-//        player3.addCode(q6);
-//        player3.addCode(q9);
-//
-//        Player player4 = new Player("Alice Lee", "alice.lee@example.com", "San Francisco");
-//        player4.addCode(q1);
-//        player4.addCode(q5);
-//        player4.addCode(q9);
-//
-//        Player player5 = new Player("David Kim", "david.kim@example.com", "Seattle");
-//        player5.addCode(q2);
-//        player5.addCode(q10);
-//
-//        PlayerCodeList.add(me);
-//        PlayerCodeList.add(player1);
-//        PlayerCodeList.add(player2);
-//        PlayerCodeList.add(player3);
-//        PlayerCodeList.add(player4);
-//        PlayerCodeList.add(player5);
 
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
@@ -155,6 +111,11 @@ public class ScoreboardActivity extends AppCompatActivity {
                                                     }
                                                     tempPlayer.addCodes(tempCodeList);
                                                     playerList.add(tempPlayer);
+                                                    //if you, also put you in separate obj
+                                                    if ((tempPlayer.getUsername()).equals(mStringU)) {
+                                                        myPlayer = new Player(mStringU);
+                                                        myPlayer.addCodes(tempCodeList);
+                                                    }
                                                 }
                                             }
                                         });
@@ -166,7 +127,6 @@ public class ScoreboardActivity extends AppCompatActivity {
                 });
         playerArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
 
-//        Player myPlayer =
 
         listViewPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -174,17 +134,28 @@ public class ScoreboardActivity extends AppCompatActivity {
                 List<QRCode> codes = playerList.get(position).getCodes();
 //                Toast.makeText(ScoreboardActivity.this,Integer.toString(codes.size()) , Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < codes.size(); i++) {
-                    StoreNamePoints store = new StoreNamePoints(codes.get(i).getCodeName(), codes.get(i).getCodePoints(), true);
+                    int has = 0;
+                    for (QRCode mycode : myPlayer.getCodes()) {
+                        if ((mycode.getCodeHash()).equals(codes.get(i).getCodeHash())) {
+                            has++;
+                            break;
+                        }
+                    }
+                    boolean boolHas = has > 0;
+                    StoreNamePoints store = new StoreNamePoints(codes.get(i).getCodeName(), codes.get(i).getCodePoints(), boolHas);
                     StorageList.add(store);
                 }
 //                Toast.makeText(ScoreboardActivity.this, StorageList.get(1).getCodeName(), Toast.LENGTH_SHORT).show();
+
+
                 Intent intent = new Intent(ScoreboardActivity.this, ShowIndividualCodes.class);
 //                Toast.makeText(ScoreboardActivity.this, PlayerCodeList.get(position).getUsername(), Toast.LENGTH_SHORT).show();
 //                String get_username = playerList.get(position).getUsername();
                 Player focusedPlayer = playerList.get(position);
                 intent.putExtra("focusedPlayer", (Serializable) focusedPlayer);
+                intent.putExtra("myPlayer", (Serializable) myPlayer);
 //                intent.putExtra("USER", get_username);
-                intent.putExtra("codes", StorageList);
+                intent.putExtra("StorageList", StorageList);
                 startActivity(intent);
                 StorageList.clear();
             }
@@ -196,7 +167,10 @@ public class ScoreboardActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(ScoreboardActivity.this, "Sort By Points", Toast.LENGTH_SHORT).show();
                 Collections.sort(playerList);
-                Collections.reverse(playerList);
+                if (sortPointsAscend) {
+                    Collections.reverse(playerList);
+                }
+                sortPointsAscend = !sortPointsAscend;
                 playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
                 listViewPlayerList.setAdapter(playerArrayAdapter);
 
@@ -212,14 +186,19 @@ public class ScoreboardActivity extends AppCompatActivity {
                 Collections.sort(playerList, new Comparator<Player>() {
                     @Override
                     public int compare(Player p1, Player p2) {
-                        return p1.getUsername().compareTo(p2.getUsername());
+                        return (p1.getUsername().toLowerCase()).compareTo(p2.getUsername().toLowerCase());
                     }
                 });
+                if (sortNameAscend) {
+                    Collections.reverse(playerList);
+                }
+                sortNameAscend = !sortNameAscend;
                 // Update the adapter with the sorted list
                 playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
                 listViewPlayerList.setAdapter(playerArrayAdapter);
             }
         });
+
 
         Button numcodes_btn = findViewById(R.id.sort_numcodes_btn);
         numcodes_btn.setOnClickListener(new View.OnClickListener() {
@@ -235,6 +214,10 @@ public class ScoreboardActivity extends AppCompatActivity {
                         return Integer.compare(p2size, p1size);
                     }
                 });
+                if (sortCodeAmountAscend) {
+                    Collections.reverse(playerList);
+                }
+                sortCodeAmountAscend = !sortCodeAmountAscend;
                 // Update the adapter with the sorted list
                 playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
                 listViewPlayerList.setAdapter(playerArrayAdapter);
@@ -255,6 +238,42 @@ public class ScoreboardActivity extends AppCompatActivity {
                 }
                 if (searchResultsList.size() == 0) {
                     Toast.makeText(ScoreboardActivity.this, "Couldn't find any names starting with " + searchQuery, Toast.LENGTH_SHORT).show();
+                } else {
+                    // Display search results in the list view
+                    playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, searchResultsList);
+                    listViewPlayerList.setAdapter(playerArrayAdapter);
+                    playerArrayAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        Button region_btn = findViewById(R.id.region_btn);
+
+        Spinner regionDropdown = (Spinner) findViewById(R.id.spin_region);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> ThisSpinAdapter = ArrayAdapter.createFromResource(this, R.array.queryRegions_array, android.R.layout.simple_spinner_item);
+        ThisSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);// Specify the layout to use when the list of choices appears
+        regionDropdown.setAdapter(ThisSpinAdapter);// Apply the adapter to the spinner
+        region_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Spinner regionDropdown = findViewById(R.id.spin_region);
+                String searchQuery = regionDropdown.getSelectedItem().toString();
+                ArrayList<Player> searchResultsList = new ArrayList<>();
+                if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")){
+
+                    for (Player player : playerList) {
+                            searchResultsList.add(player);
+                    }
+                } else {
+                    for (Player player : playerList) {
+                        if (player.getRegion().contains(searchQuery)) {
+                            searchResultsList.add(player);
+                        }
+                    }
+                }
+                if (searchResultsList.size() == 0) {
+                    Toast.makeText(ScoreboardActivity.this, "Couldn't find any people in region: " + searchQuery, Toast.LENGTH_SHORT).show();
                 } else {
                     // Display search results in the list view
                     playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, searchResultsList);

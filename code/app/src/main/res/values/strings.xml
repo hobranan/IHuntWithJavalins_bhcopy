@@ -9,4 +9,14 @@
             <item>Toronto</item>
             <item>Montreal</item>
         </string-array>
+    <string-array name="queryRegions_array">
+        <item>EVERYWHERE</item>
+        <item>Edmonton</item>
+        <item>Calgary</item>
+        <item>Rural Alberta</item>
+        <item>Vancouver</item>
+        <item>Regina</item>
+        <item>Toronto</item>
+        <item>Montreal</item>
+    </string-array>
 </resources>

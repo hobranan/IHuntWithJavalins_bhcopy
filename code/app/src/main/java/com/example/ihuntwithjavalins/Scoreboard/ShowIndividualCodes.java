@@ -14,6 +14,7 @@ import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.R;
 
 import java.util.ArrayList;
+
 /**
  * ShowIndividualCodes is responsible for showing the details of each QRCode
  */
@@ -31,7 +32,7 @@ public class ShowIndividualCodes extends AppCompatActivity {
         Player thisPlayer = (Player) myIntent.getSerializableExtra("focusedPlayer");
         Toast.makeText(this, thisPlayer.getUsername(), Toast.LENGTH_SHORT).show();
 
-        ArrayList<StoreNamePoints> storageList = (ArrayList<StoreNamePoints>) getIntent().getSerializableExtra("codes");
+        ArrayList<StoreNamePoints> storageList = (ArrayList<StoreNamePoints>) getIntent().getSerializableExtra("StorageList");
         CustomListForQRCodeCustomAdapter storageAdapter = new CustomListForQRCodeCustomAdapter(this, storageList);
 
         ListView listView = findViewById(R.id.code_list);
