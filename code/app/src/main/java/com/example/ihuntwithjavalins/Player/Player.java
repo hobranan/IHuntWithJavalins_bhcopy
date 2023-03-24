@@ -10,7 +10,6 @@ import java.util.List;
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
  * TODO: clean up constructors to allow only kind that we used (lots of variations here)
- *
  * @version 1.0
  */
 public class Player implements Serializable, Comparable<Player> {
@@ -38,13 +37,14 @@ public class Player implements Serializable, Comparable<Player> {
     private List<QRCode> codes = new ArrayList<>();    // add QRCode class later
 
 
+
+
     /**
      * Constructor for new instance of Player object representing a Player in the application
      * competing against each other.
-     *
      * @param username The username of the Player
-     * @param email    The email of the Player
-     * @param region   The region the Player is in
+     * @param email The email of the Player
+     * @param region The region the Player is in
      */
     public Player(String username, String email, String region) {
         this.username = username;
@@ -61,7 +61,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Constructor for new instance of Player object only initializing username
-     *
      * @param username the username of the Player
      */
     public Player(String username) {
@@ -70,9 +69,8 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Constructor for new instance of Player object without email given
-     *
      * @param username The username of the Player
-     * @param region   The region the Player is in
+     * @param region The region the Player is in
      */
     public Player(String username, String region) {
         this.username = username;
@@ -83,7 +81,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Gets the date the user joined
-     *
      * @return the date the user joined
      */
     public String getDateJoined() {
@@ -92,7 +89,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Sets the date the user joined
-     *
      * @param dateJoined the date to set as the user's join date
      */
     public void setDateJoined(String dateJoined) {
@@ -101,7 +97,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Gets the username of the Player
-     *
      * @return The String representing the username of the Player
      */
     public String getUsername() {
@@ -110,7 +105,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Sets the username of the Player
-     *
      * @param username The String representing the username of the Player
      */
     public void setUsername(String username) {     // This setter may be deleted if we decide a Player cannot change their username(although I think the functionality is good if an administrator wishes to get rid of someone's inappropriate name)
@@ -119,7 +113,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Gets the email of the Player
-     *
      * @return The String representing the email of the Player
      */
     public String getEmail() {
@@ -128,7 +121,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Sets the email of the Player
-     *
      * @param email The String representing the email of the Player
      */
     public void setEmail(String email) {
@@ -137,7 +129,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Gets the region the Player is playing in
-     *
      * @return The String representing the region the Player is playing in
      */
     public String getRegion() {
@@ -146,7 +137,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Sets the region the Player is playing in
-     *
      * @param region The String representing the region the Player is playing in
      */
     public void setRegion(String region) {
@@ -155,7 +145,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Gets the list of QRCode objects the Player has scanned
-     *
      * @return The list containing QRCode objects the Player has scanned
      */
     public List<QRCode> getCodes() {
@@ -164,10 +153,9 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Gets the sum of points from QRCode objects the Player has scanned
-     *
      * @return sum of points from QRCode objects the Player has scanned
      */
-    public int getSumOfCodePoints() {
+    public int getSumOfCodePoints(){
         List<QRCode> all_codes = getCodes();
         int sum = 0;
         for (QRCode object : all_codes) {
@@ -177,25 +165,12 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
 
-    public QRCode getHighestCode() {
-        List<QRCode> all_codes = getCodes();
-        QRCode highestCode = all_codes.get(0);
-        for (QRCode object : all_codes) {
-            if (Integer.parseInt(object.getCodePoints()) >= Integer.parseInt(highestCode.getCodePoints())) {
-                highestCode = object;
-            }
-        }
-        return highestCode;
-    }
-
-
-    public int getSumOfCodes() {
+    public int getSumOfCodes(){
         return codes.size();
     }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
-     *
      * @param code The QRCode the Player scanned to be added to list of codes
      */
     public void addCode(QRCode code) {
@@ -204,7 +179,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Adds all QRCodes from list to Player list of codes
-     *
      * @param codes The list containing QRCode objects to add to Player list
      */
     public void addCodes(List<QRCode> codes) {
@@ -213,7 +187,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Deletes a QRCode from the list of codes the Player has scanned
-     *
      * @param code The QRCode to be removed from list of codes Player has scanned
      */
     public void delCode(QRCode code) {
@@ -222,7 +195,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     /**
      * Checks if the QRCode given is a QRCode the Player has scanned
-     *
      * @param code The QRCode to be searched for in the Player's list of codes
      * @return True if the QRCode is in the Player list of codes, false otherwise
      */
