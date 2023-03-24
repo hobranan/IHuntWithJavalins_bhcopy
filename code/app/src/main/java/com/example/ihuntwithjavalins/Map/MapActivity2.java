@@ -1,19 +1,33 @@
 package com.example.ihuntwithjavalins.Map;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -29,7 +43,7 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
 import java.util.ArrayList;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity2 extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
 //    private MyLocationNewOverlay mLocationOverlay;
@@ -37,6 +51,7 @@ public class MapActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
 
+    ArrayList<Player> playerList;
     LocationTrack locationTrack; // location tracker
 
     Button backButton;
@@ -70,6 +85,65 @@ public class MapActivity extends AppCompatActivity {
 
         backButton = findViewById(R.id.map_backButton);
 
+        // grabbed any store username variables within app local date storage
+        SharedPreferences mPrefs = getSharedPreferences("Login", 0);
+        String mStringU = mPrefs.getString("UsernameTag", "default_username_not_found");
+
+        // Access a Firestore instance
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionRef_Users = db.collection("Users");
+        DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
+        CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
+        // grab all players and their codes from firebase and put into player list
+        collectionRef_Users
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                Player tempPlayer = new Player(doc.getId());
+                                tempPlayer.setEmail((String) doc.getData().get("Email"));
+                                tempPlayer.setRegion((String) doc.getData().get("Region"));
+                                tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));
+                                DocumentReference docRef_thisPlayer = collectionRef_Users.document(doc.getId());
+                                CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
+                                ArrayList<QRCode> tempCodeList = new ArrayList<>();
+                                subColRef_Codes
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                        String codeHash = doc.getId();
+                                                        String codeName = (String) doc.getData().get("Code Name");
+                                                        String codePoints = (String) doc.getData().get("Point Value");
+                                                        String codeImgRef = (String) doc.getData().get("Img Ref");
+                                                        String codeLatValue = (String) doc.getData().get("Lat Value");
+                                                        String codeLonValue = (String) doc.getData().get("Lon Value");
+                                                        String codePhotoRef = (String) doc.getData().get("Photo Ref");
+                                                        String codeDate = (String) doc.getData().get("Code Date:");
+                                                        tempCodeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
+                                                    }
+                                                    tempPlayer.addCodes(tempCodeList);
+                                                    //if you, also put you in separate obj
+                                                    if (!(tempPlayer.getUsername()).equals(mStringU)) {
+                                                        playerList.add(tempPlayer);
+                                                    }
+                                                }
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+
         map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
@@ -87,7 +161,7 @@ public class MapActivity extends AppCompatActivity {
         requestPermissionsIfNecessary(permissions);
 
         // location tracker https://www.digitalocean.com/community/tutorials/android-location-api-tracking-gps
-        locationTrack = new LocationTrack(MapActivity.this);
+        locationTrack = new LocationTrack(MapActivity2.this);
         double longitude = 53.5;
         double latitude = -113.5;
         if (locationTrack.canGetLocation()) {
@@ -128,10 +202,17 @@ public class MapActivity extends AppCompatActivity {
         //example map points
         ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
 //        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
-        items.add(new OverlayItem("quad poster2", "1250", new GeoPoint(53.52724, -113.52779))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
-        items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
+//        items.add(new OverlayItem("quad poster2", "1250", new GeoPoint(53.52724, -113.52779))); // Lat/Lon decimal degrees
+//        items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
+//        items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
+//        items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
+for ( Player player : playerList){
+    for ( QRCode code : player.getCodes()){
+        items.add(new OverlayItem(code.getCodeName(), code.getCodePoints(), new GeoPoint(Float.parseFloat(code.getCodeLat()), Float.parseFloat(code.getCodeLon())))); // Lat/Lon decimal degrees
+    }
+}
+        items.add(new OverlayItem("tree poster4", "24", new GeoPoint(53.52745, -113.52722))); // Lat/Lon decimal degrees
+
 
         //my location map point 'item'
         OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point);

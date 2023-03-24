@@ -85,6 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
+                                //if new player (i.e. not in firebase)
                                 if (!document.exists()) {
 
                                     Log.d(TAG, "Document does not exist! New player, signing up");
@@ -116,13 +117,14 @@ public class SignUpActivity extends AppCompatActivity {
                                                     toast.show(); // display the Toast popup
                                                 }
                                             });
+                                //else old player (i.e. is in firebase)
                                 } else {
                                     Log.d(TAG, "Document does exists! Old player, logging in");
 
                                     Toast toast = Toast.makeText(getApplicationContext(), "Player exists, logging in", Toast.LENGTH_LONG);
                                     toast.show(); // display the Toast popup
 
-                                    // set saved tag as savedUser so when app reopen you can recall this info and skip signup
+                                    // set saved tag as firebase savedUser so when app reopens you can recall this info and skip signup (and use to grab more user firebase data)
                                     SharedPreferences mPrefs = getSharedPreferences("Login", 0);
                                     mPrefs.edit().putString("UsernameTag", document.getId()).apply();
 

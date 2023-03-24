@@ -47,7 +47,7 @@ public class ScoreboardActivity extends AppCompatActivity {
     ArrayList<Player> playerList;
     ArrayAdapter<Player> playerArrayAdapter;
     ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
-    Player myPlayer;
+    private Player myPlayer;
 
     boolean sortNameAscend = false;
     boolean sortPointsAscend = false;
@@ -73,10 +73,8 @@ public class ScoreboardActivity extends AppCompatActivity {
         // Access a Firestore instance
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionRef_Users = db.collection("Users");
-
         DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
         CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
-
         // grab all players and their codes from firebase and put into player list
         collectionRef_Users
                 .get()
@@ -160,6 +158,22 @@ public class ScoreboardActivity extends AppCompatActivity {
                 StorageList.clear();
             }
         });
+
+        // do initial name sort (doenst work?)
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player p1, Player p2) {
+                return (p1.getUsername().toLowerCase()).compareTo(p2.getUsername().toLowerCase());
+            }
+        });
+        if (sortNameAscend) {
+            Collections.reverse(playerList);
+        }
+        sortNameAscend = !sortNameAscend;
+        // Update the adapter with the sorted list
+        playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
+        listViewPlayerList.setAdapter(playerArrayAdapter);
+
 
         Button points_btn = findViewById(R.id.sort_points_btn);
         points_btn.setOnClickListener(new View.OnClickListener() {
@@ -260,10 +274,10 @@ public class ScoreboardActivity extends AppCompatActivity {
 //                Spinner regionDropdown = findViewById(R.id.spin_region);
                 String searchQuery = regionDropdown.getSelectedItem().toString();
                 ArrayList<Player> searchResultsList = new ArrayList<>();
-                if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")){
+                if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")) {
 
                     for (Player player : playerList) {
-                            searchResultsList.add(player);
+                        searchResultsList.add(player);
                     }
                 } else {
                     for (Player player : playerList) {

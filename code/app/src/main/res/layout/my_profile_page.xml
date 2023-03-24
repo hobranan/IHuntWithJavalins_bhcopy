@@ -174,4 +174,15 @@
         android:gravity="left"
         android:text="Quick Nav"
         android:textColor="@color/text2_general" />
+
+    <Button
+        android:id="@+id/button_prf_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/button1"
+        android:gravity="left"
+        android:text="LOGOUT"
+        android:textColor="@color/text2_general" />
 </LinearLayout>

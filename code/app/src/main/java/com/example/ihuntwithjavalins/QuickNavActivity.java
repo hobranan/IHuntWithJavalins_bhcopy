@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Camera.CameraScanActivity;
+import com.example.ihuntwithjavalins.Map.MapsActivity;
 import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.Profile.ProfileActivity;
@@ -46,7 +47,7 @@ public class QuickNavActivity extends AppCompatActivity {
     private TextView userNameDisplay;
     private TextView userTotalPoints;
     private TextView userTotalCodes;
-    private Player player;
+    private Player myPlayer;
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
     private String TAG = "Sample"; // used as starter string for debug-log messaging
 
@@ -66,18 +67,18 @@ public class QuickNavActivity extends AppCompatActivity {
         // grabbed any device stored username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
-        // open signup activity
+        // open signup activity if no saved Login
         if (Arrays.asList("default_username_not_found", "Enter a new Username:", " ", "").contains(mString)) {
             Intent intent = new Intent(this, SignUpActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+        // skip SignUp Activity if have saved Login; then grab firestore
         } else {
-            player = new Player(mString);
-
+            myPlayer = new Player(mString);
             // Access a Firestore instance
             final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
             final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
-            final DocumentReference docRef_thisPlayer = collectionRef_Users.document(player.getUsername()); // pull instance of specific collection in firestore
+            final DocumentReference docRef_thisPlayer = collectionRef_Users.document(myPlayer.getUsername()); // pull instance of specific collection in firestore
             //https://firebase.google.com/docs/firestore/query-data/get-data
             docRef_thisPlayer.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -86,9 +87,9 @@ public class QuickNavActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data" + document.getData());
-                            player.setEmail(document.getString("Email"));
-                            player.setRegion(document.getString("Region"));
-                            player.setDateJoined(document.getString("Date Joined"));
+                            myPlayer.setEmail(document.getString("Email"));
+                            myPlayer.setRegion(document.getString("Region"));
+                            myPlayer.setDateJoined(document.getString("Date Joined"));
                         } else {
                             Log.d(TAG, "No such document");
                         }
@@ -97,7 +98,7 @@ public class QuickNavActivity extends AppCompatActivity {
                     }
                 }
             });
-            userNameDisplay.setText(player.getUsername());
+            userNameDisplay.setText(myPlayer.getUsername());
             final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
             // This listener will pull the firestore data into your android app (if you reopen the app)
             subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -143,7 +144,8 @@ public class QuickNavActivity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, OpenStreetMapActivity.class);
+//                Intent intent = new Intent(QuickNavActivity.this, OpenStreetMapActivity.class);
+                Intent intent = new Intent(QuickNavActivity.this, MapsActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -170,9 +172,9 @@ public class QuickNavActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
-                Player player = new Player(mString);
+//                Player player = new Player(mString);
                 // Add the custom object as an extra to the Intent
-                intent.putExtra("savedPlayerObject", (Serializable) player);
+                intent.putExtra("myPlayer", (Serializable) myPlayer);
                 startActivity(intent);
             }
         });
