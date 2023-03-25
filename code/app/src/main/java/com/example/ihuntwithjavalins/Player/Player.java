@@ -1,5 +1,6 @@
 package com.example.ihuntwithjavalins.Player;
 
+import com.example.ihuntwithjavalins.Comment.Comment;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
 import java.io.Serializable;
@@ -36,7 +37,7 @@ public class Player implements Serializable, Comparable<Player> {
      */
     private List<QRCode> codes = new ArrayList<>();    // add QRCode class later
 
-
+    private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
 
 
     /**
@@ -77,6 +78,10 @@ public class Player implements Serializable, Comparable<Player> {
         this.email = null;
         this.region = region;
 
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
     }
 
     /**
