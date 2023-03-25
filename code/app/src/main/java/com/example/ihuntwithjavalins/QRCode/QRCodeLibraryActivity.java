@@ -32,7 +32,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
-
+/**
+ * The QRCodeLibraryActivity is responsible for displaying a list of QR codes in the user's library.
+ * It retrieves QR codes data from a Firestore database, and displays them in a ListView using a custom ArrayAdapter.
+ * It also allows the user to add preloaded QR codes to their library for testing purposes.
+ * This class extends AppCompatActivity, which is a base class for activities that use the support library action bar features.
+ */
 public class QRCodeLibraryActivity extends AppCompatActivity {
 
     private Button codeLib_quickNav;
@@ -52,7 +57,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
 
         codeLib_quickNav = findViewById(R.id.button_codelib_qn);
         addExamplesButton = findViewById(R.id.button_addHardcodes);
-        addExamplesButton.setVisibility(View.VISIBLE);
+        addExamplesButton.setVisibility(View.INVISIBLE); //*for testing
 
         // Setup/link list to new adapter for linking data and UI
         libraryList = findViewById(R.id.code_list_listview); // grab UI-datalist var
@@ -94,11 +99,13 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ArrayList<String> exText4hashlist = new ArrayList<>();
                 exText4hashlist.addAll(Arrays.asList(
-                        "adsfadsgasga",
-                        "tyurtyurtyu",
-                        "89678kfuykr",
-                        "678567dfghsdfgh",
-                        "1234asdfasdf"
+                        "dfgdfgsdfgs",
+                        "gfdfsgs",
+                        "hgjghjgjg",
+                        "ghiouilghjl",
+                        "erqwerwer",
+                        "tyu7hu56y"
+
                 ));
                 for (int i = 0; i < exText4hashlist.size(); i++) {
                     QRCode temp = new QRCode(exText4hashlist.get(i));

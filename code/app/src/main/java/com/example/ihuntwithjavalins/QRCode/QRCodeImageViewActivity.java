@@ -22,6 +22,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
+
+/**
+ * The QRCodeImageViewActivity displays the image and information of a QRCode.
+ * The activity receives a QRCode object as a SerializableExtra from the previous activity.
+ * The image associated with the QRCode is retrieved from Firebase Storage and displayed in an ImageView.
+ * The user can click on buttons to view a photo associated with the QRCode or view the location of the QRCode on a map.
+ * The user can also click on a back button to return to the previous activity.
+ */
 public class QRCodeImageViewActivity extends AppCompatActivity {
     ImageButton backButton;
     Button photoButton;
@@ -31,7 +40,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
     TextView codePoints;
     ImageView codePicImage;
     private QRCode thisCode;
-
+    /**
+     * Initializes the activity and its components.
+     * Retrieves the QRCode object from the previous activity and displays its information.
+     * Retrieves the image associated with the QRCode from Firebase Storage and displays it in an ImageView.
+     * Sets up the buttons to allow the user to view a photo associated with the QRCode or view its location on a map.
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -80,10 +95,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!thisCode.getCodePhotoRef().equals("")){
+                if ( (thisCode.getCodePhotoRef() != null) || (!thisCode.getCodePhotoRef().equals(""))){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, PhotoViewActivity.class);
                     intent.putExtra("imageSavedCodePhotoRef", thisCode.getCodePhotoRef());
                     startActivity(intent);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "No photo taken for this code.", Toast.LENGTH_LONG);
+                    toast.show(); // display the Toast popup
                 }
             }
         });
@@ -93,14 +111,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!thisCode.getCodeLat().equals("") && !thisCode.getCodeLon().equals("") ){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);
-                    intent.putExtra("imageSavedCodeLat", thisCode.getCodeLat());
-                    intent.putExtra("imageSavedCodeLon", thisCode.getCodeLon());
+//                    intent.putExtra("imageSavedCodeLat", thisCode.getCodeLat());
+//                    intent.putExtra("imageSavedCodeLon", thisCode.getCodeLon());
+                    intent.putExtra("imageSavedCode", (Serializable) thisCode);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);
-                    intent.putExtra("imageSavedCodeLat", String.valueOf(53.52670));
-                    intent.putExtra("imageSavedCodeLon", String.valueOf(-113.52895));
-                    startActivity(intent);
+                    Toast toast = Toast.makeText(getApplicationContext(), "No geolocation saved for this code.", Toast.LENGTH_LONG);
+                    toast.show(); // display the Toast popup
                 }
             }
         });

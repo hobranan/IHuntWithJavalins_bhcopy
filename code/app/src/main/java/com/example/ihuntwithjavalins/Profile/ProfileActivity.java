@@ -28,6 +28,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the activity where the user can view their profile information.
+ * It extends the AppCompatActivity class.
+ * TODO: add algorithms for rankings
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private Button quickNavButton;
@@ -64,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         highestCodeValuePlacing= findViewById(R.id.prf_highestcodevalueplacing_data);
 
 
-        // Get the intent from the previous acitvity
+        // Get the intent from the previous activity
         Intent myIntent = getIntent();
         player = (Player) myIntent.getSerializableExtra("savedPlayerObject");
 

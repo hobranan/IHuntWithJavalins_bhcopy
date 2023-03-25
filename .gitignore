@@ -2,8 +2,7 @@
 # IntelliJ
 *.iml
 .idea
-#'project build folder'?
-#(more android studio stuff will need to go here)
+.gradle
 # end of Android-Studio gitignore stuff
 
 # start of JAVA-template gitignore stuff

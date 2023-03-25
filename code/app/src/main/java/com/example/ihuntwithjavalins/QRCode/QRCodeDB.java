@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * TODO: Add fields added to QRCode class to this one
+ *
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
  *

@@ -1,5 +1,6 @@
 package com.example.ihuntwithjavalins.Player;
 
+import com.example.ihuntwithjavalins.Comment.Comment;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
+ * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
 public class Player implements Serializable, Comparable<Player> {
@@ -26,11 +28,17 @@ public class Player implements Serializable, Comparable<Player> {
     private String region;    // in login activity, there should be limits so user does not enter invalid region
 
 
+    /**
+     * Holds the the date the Player signed up
+     */
     private String dateJoined;
     /**
      * Holds the QRCodes the Player has scanned
      */
     private List<QRCode> codes = new ArrayList<>();    // add QRCode class later
+
+    private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
+
 
     /**
      * Constructor for new instance of Player object representing a Player in the application
@@ -53,6 +61,14 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     /**
+     * Constructor for new instance of Player object only initializing username
+     * @param username the username of the Player
+     */
+    public Player(String username) {
+        this.username = username;
+    }
+
+    /**
      * Constructor for new instance of Player object without email given
      * @param username The username of the Player
      * @param region The region the Player is in
@@ -64,8 +80,24 @@ public class Player implements Serializable, Comparable<Player> {
 
     }
 
-    public Player(String username) {
-        this.username = username;
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    /**
+     * Gets the date the user joined
+     * @return the date the user joined
+     */
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    /**
+     * Sets the date the user joined
+     * @param dateJoined the date to set as the user's join date
+     */
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
     }
 
     /**
@@ -116,15 +148,6 @@ public class Player implements Serializable, Comparable<Player> {
         this.region = region;
     }
 
-    public String getDateJoined() {
-        return dateJoined;
-    }
-
-    public void setDateJoined(String dateJoined) {
-        this.dateJoined = dateJoined;
-    }
-
-
     /**
      * Gets the list of QRCode objects the Player has scanned
      * @return The list containing QRCode objects the Player has scanned
@@ -134,10 +157,10 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     /**
-     * Gets the list of QRCode objects the Player has scanned
-     * @return The list containing QRCode objects the Player has scanned
+     * Gets the sum of points from QRCode objects the Player has scanned
+     * @return sum of points from QRCode objects the Player has scanned
      */
-    public int getTotalCodes(){
+    public int getSumOfCodePoints(){
         List<QRCode> all_codes = getCodes();
         int sum = 0;
         for (QRCode object : all_codes) {
@@ -146,6 +169,10 @@ public class Player implements Serializable, Comparable<Player> {
         return sum;
     }
 
+
+    public int getSumOfCodes(){
+        return codes.size();
+    }
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
@@ -186,6 +213,7 @@ public class Player implements Serializable, Comparable<Player> {
 
     @Override
     public int compareTo(Player other) {
-        return Integer.compare(this.getTotalCodes(), other.getTotalCodes());
+        return Integer.compare(this.getSumOfCodePoints(), other.getSumOfCodePoints());
+
     }
 }

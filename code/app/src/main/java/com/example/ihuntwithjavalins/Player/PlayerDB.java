@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * TODO: Add added Player class fields(like date) to this
+ *
  * PlayerDB is a class which handles all database operations for Player objects.
  * Much functionality is derived from Well Fed project example given by TA
  *
@@ -81,7 +83,7 @@ public class PlayerDB {
         item.put("Region", player.getRegion());
         //item.put("highest score", 0);
         //item.put("total score", 0);
-        batch.update(playerRef, item);
+        batch.set(playerRef, item);
 
         // commits batch writes to firebase
         batch.commit().addOnCompleteListener(task -> {

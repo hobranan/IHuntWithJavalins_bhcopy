@@ -6,23 +6,28 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/place"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="30sp"></TextView>
+        android:id="@+id/codeName"
+        android:layout_width="260dp"
+        android:layout_height="70dp"
+        android:paddingLeft="60sp"
+        android:paddingTop="3sp"
+        android:paddingBottom="3sp"
+        android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/name"
-        android:layout_width="218dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="20dp"
-        android:textSize="30sp"></TextView>
+        android:id="@+id/code_points"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/isScanned"
-        android:layout_width="wrap_content"
-        android:layout_height="39dp"
-        android:layout_weight="1" />
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:textSize="15sp" />
 
 </LinearLayout>

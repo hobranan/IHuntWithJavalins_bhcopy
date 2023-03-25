@@ -1,17 +1,28 @@
 package com.example.ihuntwithjavalins.Map;
 
+import static android.content.ContentValues.TAG;
+import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
+import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.QRCode.QRCode;
+
 import com.example.ihuntwithjavalins.R;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -27,30 +38,28 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
 import java.util.ArrayList;
 
+/**
+ * The OpenStreetMapActivity class is an activity that displays a map using osmdroid library.
+ * It loads the osmdroid configuration and inflates the map layout, which contains the map and some UI elements.
+ * It also handles location tracking, map zooming and panning, and adding overlays to the map.
+ * TODO: fix issue where map seems to overtake app and nearly-freezes back button action.
+ * TODO: add algorithm to find codes within a lat/lon range
+ */
 public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
-    private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    private String TAGmap = "Sample"; // used as string tag for debug-log messaging
     private MapView map = null;
-    //    private MyLocationNewOverlay mLocationOverlay;
-//    private GpsMyLocationProvider mGPSLocationProvider;
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
-
-    LocationTrack locationTrack; // location tracker
-
-    Button backButton;
-
-    //custom BACK button control (since back doesnt work when map enabled) (*still doesnt work!!!)
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-    //custom BACK button control (END)
+    private Button backButton;
+    private FusedLocationProviderClient fusedLocationClient;
+    private Player myPlayer;
+    private ArrayList<Player> playerList;
+    private QRCode focusedCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        Log.d(TAGmap, "playerlist 1");
         //(handle permissions first, before map is created. not depicted here)
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
@@ -62,27 +71,91 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
         //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's
         //tile servers will get you banned based on this string
 
+        // Get the intent from the previous activity
+        Intent myIntent = getIntent();
+        focusedCode = (QRCode) myIntent.getSerializableExtra("imageSavedCode");
+
+//        // grabbed any store username variables within app local date storage
+//        SharedPreferences mPrefs = getSharedPreferences("Login", 0);
+//        String mStringU = mPrefs.getString("UsernameTag", "default_username_not_found");
+//        // Access a Firestore instance
+//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        final CollectionReference collectionRef_Users = db.collection("Users");
+////        DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
+////        CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
+//        // grab all players and their codes from firebase and put into player list
+//        Log.d(TAGmap, "playerlist 2");
+//        playerList = new ArrayList<>();
+//        collectionRef_Users
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        Log.d(TAGmap, "playerlist 3");
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAGmap, "playerlist 4");
+//                            for (QueryDocumentSnapshot doc : task.getResult()) {
+//                                Log.d(TAGmap, "playerlist 5");
+//                                Player tempPlayer = new Player(doc.getId());
+//                                tempPlayer.setEmail((String) doc.getData().get("Email"));
+//                                tempPlayer.setRegion((String) doc.getData().get("Region"));
+//                                tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));
+//                                DocumentReference docRef_thisPlayer = collectionRef_Users.document(doc.getId());
+//                                CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
+//                                ArrayList<QRCode> tempCodeList = new ArrayList<>();
+//                                subColRef_Codes
+//                                        .get()
+//                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                Log.d(TAGmap, "playerlist 6");
+//                                                if (task.isSuccessful()) {
+//
+//                                                    Log.d(TAGmap, "playerlist 7");
+//                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+//                                                        Log.d(TAGmap, "playerlist 8");
+//                                                        String codeHash = doc.getId();
+//                                                        String codeName = (String) doc.getData().get("Code Name");
+//                                                        String codePoints = (String) doc.getData().get("Point Value");
+//                                                        String codeImgRef = (String) doc.getData().get("Img Ref");
+//                                                        String codeLatValue = (String) doc.getData().get("Lat Value");
+//                                                        String codeLonValue = (String) doc.getData().get("Lon Value");
+//                                                        String codePhotoRef = (String) doc.getData().get("Photo Ref");
+//                                                        String codeDate = (String) doc.getData().get("Code Date:");
+//                                                        tempCodeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
+//                                                    }
+//                                                    tempPlayer.addCodes(tempCodeList);
+//                                                    playerList.add(tempPlayer);
+//                                                    //if you, also put you in separate obj
+//                                                    if ((tempPlayer.getUsername()).equals(mStringU)) {
+//                                                        myPlayer = new Player(mStringU);
+//                                                        myPlayer.addCodes(tempCodeList);
+//                                                    }
+//                                                    Log.d(TAGmap, "playerlist 9 size: " + playerList.size());
+//                                                }
+//                                            }
+//                                        });
+//                            }
+//                            Log.d(TAGmap, "playerlist 10 size: " + playerList.size());
+//                        } else {
+//                            Log.d(TAGmap, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
+
         //inflate and create the map
         setContentView(R.layout.open_street_map);
 
         backButton = findViewById(R.id.map_backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
-
-        String[] permissions = {
-                // if you need to show the current location, uncomment the line below
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                // WRITE_EXTERNAL_STORAGE is required in order to show the map
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-
-                android.Manifest.permission.ACCESS_COARSE_LOCATION //added
-//                android.Manifest.permission.ACCESS_WIFI_STATE,
-//                android.Manifest.permission.INTERNET,
-//                android.Manifest.permission.ACCESS_NETWORK_STATE,
-        };
-        requestPermissionsIfNecessary(permissions);
-
 
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
@@ -105,49 +178,92 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
         //Map controller
         IMapController mapController = map.getController();
         mapController.setZoom(18.5);
-//        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
-
-        double latitude = -113.5;
-        double longitude = 53.5;
-        Bundle extras = getIntent().getExtras();
-        String savedCodeLat = extras.getString("imageSavedCodeLat");//The key argument here must match that used in the other activity
-        String savedCodeLon = extras.getString("imageSavedCodeLon");//The key argument here must match that used in the other activity
-        latitude = Double.parseDouble(savedCodeLat);
-        longitude = Double.parseDouble(savedCodeLon);
-        GeoPoint myGPS_point = new GeoPoint(latitude, longitude); // current 'location tracker' point
-        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-//        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
-        //this item's location map point 'item'
-        OverlayItem myGPSoverlayItem = new OverlayItem("Code Location", "here", myGPS_point);
-        items.add(myGPSoverlayItem);
-
-        //the overlay
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
-                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                    @Override
-                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                        //do something
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onItemLongPress(final int index, final OverlayItem item) {
-                        mapController.setCenter(item.getPoint());
-                        return false;
-                    }
-                }, ctx);
-        mOverlay.setFocusItemsOnTap(true);
-        map.getOverlays().add(mOverlay); // add 'item' array of points
-        mapController.setCenter(myGPS_point);
 
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        // tracking my location
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //delay timer to move (used click instead, needs to be improved)
+        new Handler().postDelayed(new Runnable() {
+            @SuppressLint("MissingPermission")
             @Override
-            public void onClick(View view) {
-                finish();
+            public void run() {
+                //example map points (adding to array of points)
+                ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+//        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
+//        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
+                items.add(new OverlayItem(focusedCode.getCodeName(), focusedCode.getCodePoints(), new GeoPoint(Float.parseFloat(focusedCode.getCodeLat()), Float.parseFloat(focusedCode.getCodeLon())))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
+//
+//                ArrayList<QRCode> pointsCodeList = new ArrayList<>();
+//                ArrayList<String> pointsCodeListStrings = new ArrayList<>();
+//                for (Player player : playerList) {
+////                    items.add(new OverlayItem(player.getUsername(), player.getRegion(), new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
+//                    ArrayList<QRCode> tempCodeList = (ArrayList<QRCode>) player.getCodes();
+//                    for (QRCode code : tempCodeList) {
+//                        if (!pointsCodeListStrings.contains(code.getCodeHash())) {
+//                            pointsCodeListStrings.add(code.getCodeHash());
+//                            pointsCodeList.add(code);
+//                        }
+//                    }
+//                }
+//                Log.d(TAGmap, "geopoints size: " + pointsCodeListStrings.size());
+//                for (QRCode code : pointsCodeList) {
+//                    items.add(new OverlayItem(code.getCodeName(), code.getCodePoints(), new GeoPoint(Float.parseFloat(code.getCodeLat()), Float.parseFloat(code.getCodeLon())))); // Lat/Lon decimal degrees
+//                }
 
+//                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+//                final GeoPoint[] myGPS_point = new GeoPoint[1];
+//                fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken()) // ignore this error
+//                        .addOnSuccessListener(OpenStreetMapActivity.this, new OnSuccessListener<Location>() {
+//                            @Override
+//                            public void onSuccess(Location location) {
+//                                // Got last known location. In some rare situations this can be null.
+//                                if (location != null) {
+//                                    myGPS_point[0] = new GeoPoint(location.getLatitude(), location.getLongitude()); // current 'location tracker' point
+//                                    //my location map point 'item'
+//                                    OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
+//                                    items.add(myGPSoverlayItem);
+//                                    mapController.setCenter(myGPS_point[0]);
+//                                } else {
+////                            Log.w(TAG, "No current location could be found");
+//                                }
+//                            }
+//                        });
+
+
+                //the overlay
+                ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
+                        new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                            @Override
+                            public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                                mapController.setCenter(item.getPoint());
+                                return true;
+                            }
+
+                            @Override
+                            public boolean onItemLongPress(final int index, final OverlayItem item) {
+                                mapController.setCenter(item.getPoint());
+                                return false;
+                            }
+                        }, ctx);
+                mOverlay.setFocusItemsOnTap(true);
+                map.getOverlays().add(mOverlay); // add 'item' array of points
+
+//                OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
+//                items.add(myGPSoverlayItem);
+                mapController.setCenter(items.get(0).getPoint());
             }
-        });
+        }, 1000);
+
+
+
     }
 
 
@@ -170,39 +286,6 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
         //Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        ArrayList<String> permissionsToRequest = new ArrayList<>();
-        for (int i = 0; i < grantResults.length; i++) {
-            permissionsToRequest.add(permissions[i]);
-        }
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
-
-    private void requestPermissionsIfNecessary(String[] permissions) {
-        ArrayList<String> permissionsToRequest = new ArrayList<>();
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // Permission is not granted
-                permissionsToRequest.add(permission);
-            }
-        }
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
-
 
 }
 

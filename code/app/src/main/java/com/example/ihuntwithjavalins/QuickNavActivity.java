@@ -33,7 +33,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * The QuickNavActivity class is responsible for handling the main navigation screen in the app.
+ * It allows users to navigate to different features of the app by clicking on corresponding buttons.
+ */
 public class QuickNavActivity extends AppCompatActivity {
     private Button cameraButton;
     private Button mapButton;
@@ -45,7 +48,7 @@ public class QuickNavActivity extends AppCompatActivity {
     private TextView userTotalCodes;
     private Player player;
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
-    private String TAG = "Sample"; // used as starter string for debug-log messaging
+    private String TAG = "Sample"; // used as string tag for debug-log messaging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,6 @@ public class QuickNavActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             player = new Player(mString);
-
             // Access a Firestore instance
             final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
             final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore

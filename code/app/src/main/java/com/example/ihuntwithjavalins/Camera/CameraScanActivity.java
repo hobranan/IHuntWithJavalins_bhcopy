@@ -25,6 +25,10 @@ import java.io.Serializable;
 
 // https://medium.com/analytics-vidhya/creating-a-barcode-scanner-using-android-studio-71cff11800a2
 // https://alitalhacoban.medium.com/barcode-scanner-app-android-studio-60f87b5a10cd
+/**
+ * Activity that uses the device's camera to scan barcodes and QR codes.
+ * TODO: fix algorithm for code recognition to allow distinguishing between new and old QRcodes
+ */
 public class CameraScanActivity extends AppCompatActivity {
 
         private SurfaceView surfaceView; // box of live camera overlay
@@ -37,7 +41,10 @@ public class CameraScanActivity extends AppCompatActivity {
 
         public static int cameraFlag;
 
-
+        /**
+         * Sets up the UI and initializes the barcode detector and camera source.
+         * @param savedInstanceState the saved state of the activity, if any
+         */
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -50,7 +57,9 @@ public class CameraScanActivity extends AppCompatActivity {
 
                 initialiseDetectorsAndSources();
         }
-
+        /**
+         * Initializes the barcode detector and camera source.
+         */
         private void initialiseDetectorsAndSources() {
                 //Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
                 barcodeDetector = new BarcodeDetector.Builder(this)
