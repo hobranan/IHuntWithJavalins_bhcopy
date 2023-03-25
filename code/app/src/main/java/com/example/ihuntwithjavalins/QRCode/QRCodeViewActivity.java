@@ -47,7 +47,6 @@ import java.util.List;
  * view image, go back to the library, and navigate to the home screen.
  */
 public class QRCodeViewActivity extends AppCompatActivity {
-
     private ImageButton backButton;
     private ImageButton imageButton;
     private ImageButton quickNavButton;
