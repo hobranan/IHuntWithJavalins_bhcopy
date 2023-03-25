@@ -48,7 +48,7 @@ public class QuickNavActivity extends AppCompatActivity {
     private TextView userTotalCodes;
     private Player player;
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
-    private String TAG = "Sample"; // used as starter string for debug-log messaging
+    private String TAG = "Sample"; // used as string tag for debug-log messaging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,6 @@ public class QuickNavActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             player = new Player(mString);
-
             // Access a Firestore instance
             final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
             final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore

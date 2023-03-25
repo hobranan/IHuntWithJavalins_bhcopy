@@ -44,8 +44,7 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     /** Scale bar overlay used to display a scale bar on the map. */
     private ScaleBarOverlay mScaleBarOverlay;
-    /** Location tracker used to track the user's location. */
-    LocationTrack locationTrack;
+
     /** Back button used to exit the activity. */
     Button backButton;
 
