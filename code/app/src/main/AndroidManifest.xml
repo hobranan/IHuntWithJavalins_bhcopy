@@ -79,6 +79,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".Camera.PhotoTakeActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".Map.OpenStreetMapActivity"
             android:exported="true" />
 

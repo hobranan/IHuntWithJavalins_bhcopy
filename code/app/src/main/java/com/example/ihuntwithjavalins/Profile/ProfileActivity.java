@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         highestCodeValuePlacing= findViewById(R.id.prf_highestcodevalueplacing_data);
 
 
-        // Get the intent from the previous acitvity
+        // Get the intent from the previous activity
         Intent myIntent = getIntent();
         player = (Player) myIntent.getSerializableExtra("savedPlayerObject");
 

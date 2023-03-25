@@ -37,9 +37,9 @@ public class PhotoViewActivity extends Activity {
         ImageView codePicImage = findViewById(R.id.code_photo_taken);
 
         Bundle extras = getIntent().getExtras();
-//        String savedCodePhotoRef = extras.getString("imageSavedCodePhotoRef");//The key argument here must match that used in the other activity
+        String savedCodePhotoRef = extras.getString("imageSavedCodePhotoRef");//The key argument here must match that used in the other activity
+//        String savedCodePhotoRef = "20230311_115608.jpg"; // testing
 
-        String savedCodePhotoRef = "20230311_115608.jpg"; // testing
         // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
         // Create a storage reference from our app (https://firebase.google.com/docs/storage/android/download-files)

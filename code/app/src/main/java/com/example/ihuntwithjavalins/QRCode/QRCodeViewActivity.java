@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 
@@ -55,7 +57,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
         codeHash = findViewById(R.id.player_hash);
         codePoints = findViewById(R.id.player_points);
 
-        // Get the intent from the previous acitvity
+        // Get the intent from the previous activity
         Intent myIntent = getIntent();
         thisCode = (QRCode) myIntent.getSerializableExtra("savedItemObject");
 
@@ -89,6 +91,32 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 // These are a method which gets executed when the task is succeeded
                                                 Log.d(TAG, "Data has been deleted successfully!");
+
+
+                                                // https://firebase.google.com/docs/storage/android/delete-files
+                                                // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
+                                                FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
+                                                // Create a storage reference from our app
+                                                StorageReference storageRef = storage.getReference();
+                                                // Create a reference with an initial file path and name // use QRcode-object's imgRef string to ref storage
+                                                String codePicRef = "UserPhotos/" + thisCode.getCodePhotoRef();
+                                                StorageReference pathReference_pic = storageRef.child(codePicRef);
+                                                // Delete the file
+                                                pathReference_pic.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        // File deleted successfully
+                                                        Log.d(TAG, "Photo has been deleted successfully!");
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception exception) {
+                                                        // Uh-oh, an error occurred!
+                                                        Log.d(TAG, "Photo could not be deleted!" + exception.toString());
+                                                    }
+                                                });
+
+
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

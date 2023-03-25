@@ -3,6 +3,7 @@ package com.example.ihuntwithjavalins.Map;
 import static android.content.ContentValues.TAG;
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -199,6 +200,7 @@ public class OpenStreetMapActivity extends AppCompatActivity {
 
         //delay timer to move (used click instead, needs to be improved)
         new Handler().postDelayed(new Runnable() {
+            @SuppressLint("MissingPermission")
             @Override
             public void run() {
                 //example map points (adding to array of points)
@@ -226,8 +228,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 for (QRCode code : pointsCodeList) {
                     items.add(new OverlayItem(code.getCodeName(), code.getCodePoints(), new GeoPoint(Float.parseFloat(code.getCodeLat()), Float.parseFloat(code.getCodeLon())))); // Lat/Lon decimal degrees
                 }
-
-
 
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
                 final GeoPoint[] myGPS_point = new GeoPoint[1];

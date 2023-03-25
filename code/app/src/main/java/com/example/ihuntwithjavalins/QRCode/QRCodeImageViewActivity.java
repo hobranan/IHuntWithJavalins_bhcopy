@@ -21,6 +21,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.Serializable;
+
 /**
  * The QRCodeImageViewActivity displays the image and information of a QRCode.
  * The activity receives a QRCode object as a SerializableExtra from the previous activity.
@@ -92,10 +95,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!thisCode.getCodePhotoRef().equals("")){
+                if ( (thisCode.getCodePhotoRef() != null) || (!thisCode.getCodePhotoRef().equals(""))){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, PhotoViewActivity.class);
                     intent.putExtra("imageSavedCodePhotoRef", thisCode.getCodePhotoRef());
                     startActivity(intent);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "No photo taken for this code.", Toast.LENGTH_LONG);
+                    toast.show(); // display the Toast popup
                 }
             }
         });
@@ -105,14 +111,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!thisCode.getCodeLat().equals("") && !thisCode.getCodeLon().equals("") ){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);
-                    intent.putExtra("imageSavedCodeLat", thisCode.getCodeLat());
-                    intent.putExtra("imageSavedCodeLon", thisCode.getCodeLon());
+//                    intent.putExtra("imageSavedCodeLat", thisCode.getCodeLat());
+//                    intent.putExtra("imageSavedCodeLon", thisCode.getCodeLon());
+                    intent.putExtra("imageSavedCode", (Serializable) thisCode);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);
-                    intent.putExtra("imageSavedCodeLat", String.valueOf(53.52670));
-                    intent.putExtra("imageSavedCodeLon", String.valueOf(-113.52895));
-                    startActivity(intent);
+                    Toast toast = Toast.makeText(getApplicationContext(), "No geolocation saved for this code.", Toast.LENGTH_LONG);
+                    toast.show(); // display the Toast popup
                 }
             }
         });
