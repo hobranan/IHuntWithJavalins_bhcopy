@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
+import com.example.ihuntwithjavalins.TitleActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -292,6 +294,29 @@ public class ScoreboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //delay timer to show list automatically after 2 seconds (otherwise you have to press button)
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
+                // Sort the player list by name
+                Collections.sort(playerList, new Comparator<Player>() {
+                    @Override
+                    public int compare(Player p1, Player p2) {
+                        return (p1.getUsername().toLowerCase()).compareTo(p2.getUsername().toLowerCase());
+                    }
+                });
+                if (sortNameAscend) {
+                    Collections.reverse(playerList);
+                }
+                sortNameAscend = !sortNameAscend;
+                // Update the adapter with the sorted list
+                playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
+                listViewPlayerList.setAdapter(playerArrayAdapter);
+                playerArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
+            }
+        }, 2000);
 
     }
 

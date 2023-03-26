@@ -112,6 +112,7 @@
 
         <activity
             android:name=".Scoreboard.ScoreboardActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="true" />
 
         <activity

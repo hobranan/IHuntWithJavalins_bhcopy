@@ -1,6 +1,7 @@
 package com.example.ihuntwithjavalins.Profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 public class ProfileActivity extends AppCompatActivity {
 
     private Button quickNavButton;
+    private Button logoutButton;
     private TextView username;
     private TextView userdateJoined;
     private TextView userregion;
@@ -57,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.my_profile_page);
 
         quickNavButton= findViewById(R.id.button_prf_quicknav);
+        logoutButton= findViewById(R.id.button_prf_logout);
         username= findViewById(R.id.prf_username_data);
         userEmail= findViewById(R.id.prf_email_data);
         userdateJoined= findViewById(R.id.prf_datejoined_data);
@@ -144,6 +147,19 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // https://stackoverflow.com/questions/3687315/how-to-delete-shared-preferences-data-from-app-in-android
+                SharedPreferences preferences = getSharedPreferences("Login", 0);
+                preferences.edit().remove("UsernameTag").commit();
+                preferences.edit().remove("UsernameTag").apply();
+
+                Intent intent = new Intent(ProfileActivity.this, QuickNavActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
     }
 }

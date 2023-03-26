@@ -47,15 +47,15 @@ import java.util.List;
  * view image, go back to the library, and navigate to the home screen.
  */
 public class QRCodeViewActivity extends AppCompatActivity {
-
-    private ImageButton backButton;
+    private Button backButton;
     private ImageButton imageButton;
-    private ImageButton quickNavButton;
+    private Button quickNavButton;
     private Button deleteButton;
     private Button commentButton;
     private TextView codeName;
     private TextView codeHash;
     private TextView codePoints;
+    private TextView codeDateCaught;
     private QRCode thisCode;
     private String TAG = "Sample"; // used as starter string for debug-log messaging
 
@@ -68,15 +68,16 @@ public class QRCodeViewActivity extends AppCompatActivity {
 
         setContentView(R.layout.code_view_individ_owned);
 
-        backButton = findViewById(R.id.go_back);
-        quickNavButton = findViewById(R.id.imageButton);
-        imageButton = findViewById(R.id.image_button);
+        backButton = findViewById(R.id.btn_cvi_back);
+        quickNavButton = findViewById(R.id.btn_cvi_quicknav);
+        imageButton = findViewById(R.id.btn_cvi_image);
         deleteButton = findViewById(R.id.btn_remove_code);
         commentButton = findViewById(R.id.comment_btn);
 
         codeName = findViewById(R.id.player_name);
         codeHash = findViewById(R.id.player_hash);
         codePoints = findViewById(R.id.player_points);
+        codeDateCaught = findViewById(R.id.player_date_caught);
 
         // Get the intent from the previous activity
         Intent myIntent = getIntent();
@@ -85,6 +86,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
         codeName.setText(thisCode.getCodeName());
         codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
+        codeDateCaught.setText(thisCode.getCodeDate());
 
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
