@@ -66,7 +66,7 @@ public class QRCodeViewActivityTest {
     @Test
     public void quickNavButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
-        solo.clickOnButton(R.id.imageButton);
+        solo.clickOnButton(R.id.btn_cvi_image);
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
     }
 
