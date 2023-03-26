@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    android:gravity="center">
 
     <org.osmdroid.views.MapView
         android:id="@+id/map"
@@ -17,7 +19,11 @@
         android:id="@+id/map_backButton"
         android:layout_width="190dp"
         android:layout_height="51dp"
-        android:text="BACK" />
+        android:text="BACK"
+        android:textSize="15sp"
+        android:backgroundTint="@color/button1"
+        android:textColor="@color/text2_general"
+        />
 
     <!--    <org.osmdroid.views.MapView-->
 <!--        android:id="@+id/mapview"-->

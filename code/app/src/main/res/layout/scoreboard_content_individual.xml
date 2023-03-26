@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:background="@color/black"
     android:layout_height="match_parent">
 
     <TextView
@@ -12,6 +13,7 @@
         android:paddingLeft="60sp"
         android:paddingTop="3sp"
         android:paddingBottom="3sp"
+        android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
     <TextView
@@ -19,6 +21,7 @@
         android:layout_width="60dp"
         android:layout_height="70dp"
         android:paddingTop="5sp"
+        android:textColor="@color/text1_bolded"
         android:paddingBottom="5sp"
         android:textSize="15sp" />
 
@@ -26,6 +29,7 @@
         android:id="@+id/isScanned"
         android:layout_width="80dp"
         android:layout_height="70dp"
+        android:textColor="@color/text1_bolded"
         android:paddingTop="5sp"
         android:paddingBottom="5sp"
         android:textSize="15sp" />

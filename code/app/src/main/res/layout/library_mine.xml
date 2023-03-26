@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:gravity="center">
+    <!--    android:layout_width="fill_parent"-->
+    <!--    android:layout_height="fill_parent"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
     <Button
         android:id="@+id/button_codelib_qn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BACK to QUICK NAV" />
+        android:text="BACK to QUICK NAV"
+        android:textSize="15sp"
+        android:backgroundTint="@color/button1"
+        android:textColor="@color/text2_general"
+        />
 
     <Button
         android:id="@+id/button_addHardcodes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="add ex codes" />
 
@@ -23,7 +30,5 @@
         android:id="@+id/code_list_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-
 
 </LinearLayout>
