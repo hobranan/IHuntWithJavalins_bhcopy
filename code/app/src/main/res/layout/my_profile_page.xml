@@ -1,217 +1,306 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/black"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center">
 
-    <TextView
-        android:id="@+id/prf_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_username_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_datejoined"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Date Joined:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_datejoined_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_email_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_region"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Region:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_region_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="region"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalpoints"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Points:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalpoints_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="points"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalpointsplacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Points Placing:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalpointsplacing_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="tp placing"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalcodes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Codes:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalcodes_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="t codes"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalcodesplacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Codes Placing:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_totalcodesplacing_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="tc place"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_highestcodevalue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Highest Code Value:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_highestcodevalue_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="hc val"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/prf_highestcodevalueplacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Highest Code Value Placing:"
-        android:textColor="@color/text1_bolded"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/prf_highestcodevalueplacing_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="hc val place"
-        android:textColor="@color/text4_caught_have"
-        android:gravity="center"
-        android:textSize="15sp" />
     <Button
         android:id="@+id/button_prf_quicknav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
-        android:text="Quick Nav"
-        android:textColor="@color/text2_general" />
+        android:gravity="center"
+        android:text="QUICK NAV"
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_prf_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_highestcodevalueplacing_data"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <TextView
+        android:id="@+id/prf_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Name:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_username_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/prf_username_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Username"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_datejoined"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_username" />
+
+    <TextView
+        android:id="@+id/prf_datejoined"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Date Joined:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_datejoined_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_username_data" />
+
+    <TextView
+        android:id="@+id/prf_datejoined_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Date"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_datejoined" />
+
+    <TextView
+        android:id="@+id/prf_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Email:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_email_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_datejoined_data" />
+
+    <TextView
+        android:id="@+id/prf_email_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Email"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_region"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_email" />
+
+    <TextView
+        android:id="@+id/prf_region"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Region:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_region_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_email_data" />
+
+    <TextView
+        android:id="@+id/prf_region_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="region"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalpoints"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_region" />
+
+    <TextView
+        android:id="@+id/prf_totalpoints"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="26dp"
+        android:gravity="center"
+        android:text="Total Points:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalpointsplacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_region_data" />
+
+    <TextView
+        android:id="@+id/prf_totalpoints_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="points"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalpoints" />
+
+    <TextView
+        android:id="@+id/prf_totalpointsplacing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Total Points Placing:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalpointsplacing_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalpoints" />
+
+    <TextView
+        android:id="@+id/prf_totalpointsplacing_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="tp placing"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalcodes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalpointsplacing" />
+
+    <TextView
+        android:id="@+id/prf_totalcodes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Total Codes:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalcodes_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalpointsplacing_data" />
+
+    <TextView
+        android:id="@+id/prf_totalcodes_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="t codes"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalcodesplacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalcodes" />
+
+    <TextView
+        android:id="@+id/prf_totalcodesplacing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Total Codes Placing:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_totalcodesplacing_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalcodes_data" />
+
+    <TextView
+        android:id="@+id/prf_totalcodesplacing_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="tc place"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_highestcodevalue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalcodesplacing" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Highest Code Value:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_highestcodevalue_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_totalcodesplacing_data" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalue_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="hc val"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_highestcodevalueplacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_highestcodevalue" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalueplacing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Highest Code Value Placing:"
+        android:textColor="@color/text1_bolded"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/prf_highestcodevalueplacing_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_highestcodevalue_data" />
+
+    <TextView
+        android:id="@+id/prf_highestcodevalueplacing_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="hc val place"
+        android:textColor="@color/text4_caught_have"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_prf_quicknav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prf_highestcodevalueplacing" />
+
 
     <Button
         android:id="@+id/button_prf_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
-        android:text="LOGOUT"
-        android:textColor="@color/text2_general" />
-
-    <LinearLayout
-        android:id="@+id/linearlayout_blankblack"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/black"
         android:gravity="center"
-        android:orientation="vertical" />
+        android:text="LOGOUT"
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_prf_quicknav"
+        app:layout_constraintWidth_percent="0.7" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,8 +54,8 @@ public class CustomListScoreBoard extends ArrayAdapter<Player> {
 
         player_pos.setText(Integer.toString(position+1));
         player_name.setText(player_details.getUsername());
-        player_points.setText(Integer.toString(player_details.getSumOfCodePoints()));
-        player_numcodes.setText(Integer.toString(player_details.getCodes().size()));
+        player_points.setText(Integer.toString(player_details.getSumOfCodePoints()) + " pts");
+        player_numcodes.setText(Integer.toString(player_details.getCodes().size()) + " codes");
 
         return view;
 
