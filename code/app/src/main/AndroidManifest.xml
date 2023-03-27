@@ -119,6 +119,9 @@
             android:name=".Scoreboard.ShowIndividualCodes"
             android:exported="true" />
 
+        <activity
+            android:name=".Scoreboard.ShowUserProfile"
+            android:exported="true" />
     </application>
 
 </manifest>

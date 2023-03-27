@@ -44,7 +44,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
     private Button addExamplesButton; //testing//added lots of preloaded codes instantly
     private int captureOfSavedPosition; // captures UI-list position (when clicked)
     private ListView libraryList; // activity_main.xml's object for holding the UI-datalist (within content.xml)
-    private ArrayAdapter<QRCode> customAdapter; // adapter (custom child class of Adapter) to link/use on backend-datalist
+    private ArrayAdapter<QRCode> libraryAdapter; // adapter (custom child class of Adapter) to link/use on backend-datalist
 
     private Player player;
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
@@ -61,8 +61,8 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
 
         // Setup/link list to new adapter for linking data and UI
         libraryList = findViewById(R.id.code_list_listview); // grab UI-datalist var
-        customAdapter = new CustomListForCustomAdapter(this, codeList); // create adapter (custom child class of Adapter) to link/use on backend-datalist
-        libraryList.setAdapter(customAdapter);// Set the adapter for backend-datalist to be used with UI-datalist
+        libraryAdapter = new LibraryListForLibraryAdapter(this, codeList); // create adapter (custom child class of Adapter) to link/use on backend-datalist
+        libraryList.setAdapter(libraryAdapter);// Set the adapter for backend-datalist to be used with UI-datalist
 
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
@@ -91,7 +91,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
                     String codeDate = (String) doc.getData().get("Code Date:");
                     codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
                 }
-                customAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
+                libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
         });
         addExamplesButton.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +148,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 captureOfSavedPosition = position; // capture list item's position
-                QRCode item = customAdapter.getItem(captureOfSavedPosition);
+                QRCode item = libraryAdapter.getItem(captureOfSavedPosition);
                 Intent intent = new Intent(QRCodeLibraryActivity.this, QRCodeViewActivity.class);
                 intent.putExtra("savedItemObject", (Serializable) item);
                 startActivity(intent);

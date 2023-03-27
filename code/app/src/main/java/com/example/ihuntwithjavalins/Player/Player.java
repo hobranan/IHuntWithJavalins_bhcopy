@@ -216,4 +216,15 @@ public class Player implements Serializable, Comparable<Player> {
         return Integer.compare(this.getSumOfCodePoints(), other.getSumOfCodePoints());
 
     }
+
+    public int getHighestCode() {
+        List<QRCode> all_codes = getCodes();
+        int max_code = 0;
+        for (QRCode object : all_codes) {
+            if (Integer.parseInt(object.getCodePoints())>max_code){
+                max_code = Integer.parseInt(object.getCodePoints());
+            }
+        }
+        return max_code;
+    }
 }

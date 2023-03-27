@@ -156,7 +156,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 Player focusedPlayer = playerList.get(position);
                 intent.putExtra("focusedPlayer", (Serializable) focusedPlayer);
                 intent.putExtra("myPlayer", (Serializable) myPlayer);
-//                intent.putExtra("USER", get_username);
+                intent.putExtra("playerList",playerList);
                 intent.putExtra("StorageList", StorageList);
                 startActivity(intent);
                 StorageList.clear();
@@ -316,7 +316,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 listViewPlayerList.setAdapter(playerArrayAdapter);
                 playerArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
-        }, 2000);
+        }, 1500);
 
     }
 

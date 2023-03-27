@@ -38,7 +38,6 @@ public class CameraScanActivity extends AppCompatActivity {
         private ToneGenerator toneGen1;//This class provides methods to play DTMF tones
         private TextView barcodeText;
         private String barcodeData;
-
         public static int cameraFlag;
 
         /**
