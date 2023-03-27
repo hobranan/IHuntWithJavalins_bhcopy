@@ -81,6 +81,7 @@ public class PlayerDB {
         Map<String, Object> item = new HashMap<>();
         item.put("Email", player.getEmail());
         item.put("Region", player.getRegion());
+        item.put("Date Joined", player.getDateJoined());
         //item.put("highest score", 0);
         //item.put("total score", 0);
         batch.set(playerRef, item);
@@ -116,6 +117,7 @@ public class PlayerDB {
                     player.setUsername(document.getId());
                     player.setEmail(document.getString("Email"));
                     player.setRegion(document.getString("Region"));
+                    player.setDateJoined(document.getString("Date Joined"));
                     listener.onComplete(player, true);
                 } else {
                     Log.d(myTAG, ":notExists:" + playerUsername);
@@ -208,34 +210,6 @@ public class PlayerDB {
                     }
                 });
     }
-
-//    /**
-//     * Updates the given player's phone number in the database
-//     * @param player the given player to update
-//     * @param newContact the new phone number
-//     * @param listener the listener to call when the player is updated
-//     */
-//    public void updatePlayerPhoneNumber(Player player, String newContact, OnCompleteListener<Player> listener) {
-//        String playerUsername = player.getUsername();
-//        DocumentReference playerRef = collection.document(playerUsername);
-//        playerRef
-//                .update("Phone Number", newContact)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        player.setPhoneNumber(newContact);
-//                        listener.onComplete(player, true);
-//                        Log.d(myTAG, "Phone Number successfully updated!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        listener.onComplete(player, false);
-//                        Log.w(myTAG, "Error updating document", e);
-//                    }
-//                });
-//    }
 
     /**
      * Updates the given player's phone number in the database

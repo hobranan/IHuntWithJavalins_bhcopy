@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 /**
  * TODO: Add fields added to QRCode class to this one
+ * TODO: getCodes is not passing the unit test, fix it
  *
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
@@ -50,7 +52,7 @@ public class QRCodeDB {
      * @param connection the DBConnection object used to access the database
      */
     public QRCodeDB(DBConnection connection) {
-        collection = connection.getSubCollection("QRCodes");
+        collection = connection.getSubCollection("QRCodesSubCollection");
         db = connection.getDB();
     }
 
@@ -164,25 +166,28 @@ public class QRCodeDB {
      */
     public List<QRCode> getCodes() {
         List<QRCode> codeList = new ArrayList<>();
-        collection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
-                    Log.d(TAG, (String) doc.getData().get("Name"));
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Log.d(TAG, doc.getId() + " => " + doc.getData());
 
-                    QRCode newCode = new QRCode();
-                    newCode.setCodeHash(doc.getId());
-                    newCode.setCodeName((String) doc.getData().get("Name"));
-                    newCode.setCodePoints((String) doc.getData().get("Point Value"));
-                    newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
-                    newCode.setCodeLon((String) doc.getData().get("Longitude"));
-                    newCode.setCodeLat((String) doc.getData().get("Latitude"));
-                    newCode.setCodeGendImageRef((String) doc.getData().get("Img Ref"));
-                    codeList.add(newCode);
+                        QRCode newCode = new QRCode();
+                        newCode.setCodeHash(doc.getId());
+                        newCode.setCodeName((String) doc.getData().get("Name"));
+                        newCode.setCodePoints((String) doc.getData().get("Point Value"));
+                        newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
+                        newCode.setCodeLon((String) doc.getData().get("Longitude"));
+                        newCode.setCodeLat((String) doc.getData().get("Latitude"));
+                        newCode.setCodeGendImageRef((String) doc.getData().get("Img Ref"));
+                        codeList.add(newCode);
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
-
         return codeList;
     }
 

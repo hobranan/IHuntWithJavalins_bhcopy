@@ -72,7 +72,8 @@ public class QuickNavActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
-            player = new Player(mString);
+            player = new Player();
+            player.setUsername(mString);
             // Access a Firestore instance
             final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
             final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
@@ -169,7 +170,8 @@ public class QuickNavActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
-                Player player = new Player(mString);
+                Player player = new Player();
+                player.setUsername(mString);
                 // Add the custom object as an extra to the Intent
                 intent.putExtra("savedPlayerObject", (Serializable) player);
                 startActivity(intent);
