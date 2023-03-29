@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins.Camera;
+package com.example.ihuntwithjavalins;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -7,7 +7,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -80,5 +85,33 @@ public class MonsterID {
             throw new IllegalArgumentException("Image size too large: " + size);
         }
     }
+
+    public static void generateAndSetImage(View view, String hash) {
+        AssetManager assetManager = view.getContext().getAssets();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            generate(baos, hash, 0, assetManager);
+        } catch (IOException e) {
+            Toast.makeText(view.getContext(), "Failed to generate monster image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        byte[] monsterData = baos.toByteArray();
+        Bitmap monsterBitmap = BitmapFactory.decodeByteArray(monsterData, 0, monsterData.length);
+
+        if (view instanceof ImageView) {
+            ((ImageView) view).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ((ImageView) view).setImageBitmap(monsterBitmap);
+        } else if (view instanceof ImageButton) {
+            ((ImageButton) view).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ((ImageButton) view).setImageBitmap(monsterBitmap);
+        } else {
+            throw new IllegalArgumentException("View must be either an ImageView or ImageButton");
+        }
+
+        Toast.makeText(view.getContext(), "Monster generated successfully!", Toast.LENGTH_SHORT).show();
+    }
+
+
 
 }

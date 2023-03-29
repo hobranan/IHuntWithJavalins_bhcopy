@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QuickNavActivity;
@@ -33,11 +34,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -287,7 +285,6 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
     private void onPictureTaken(QRCode code) {
         String hashCode = code.getCodeHash();
         MonsterID monsterID = new MonsterID();
-
         // Get the AssetManager object
         AssetManager assetManager = getAssets();
 
@@ -301,23 +298,9 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
         byte[] monsterData = baos.toByteArray();
         Bitmap monsterBitmap = BitmapFactory.decodeByteArray(monsterData, 0, monsterData.length);
 
-        String monsterRef = "monsters/" + System.currentTimeMillis() + ".jpg";
-
-        // Store the monster image in Firestore
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        StorageReference monsterImageRef = storageRef.child(monsterRef);
-        monsterImageRef.putBytes(monsterData)
-                .addOnSuccessListener(taskSnapshot -> {
-                    // Update the QR code object to include the monster image reference
-                    code.setCodeGendImageRef(monsterRef);
-
-                    // Display the monster image in the ImageView
-                    codePicImage.setImageBitmap(monsterBitmap);
-                    Toast.makeText(CameraCaughtNewActivity.this, "Monster generated successfully!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(CameraCaughtNewActivity.this, "Failed to store monster image", Toast.LENGTH_SHORT).show();
-                });
+        // Display the monster image in the ImageView
+        codePicImage.setImageBitmap(monsterBitmap);
+        Toast.makeText(CameraCaughtNewActivity.this, "Monster generated successfully!", Toast.LENGTH_SHORT).show();
     }
+
 }

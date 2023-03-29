@@ -6,6 +6,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,11 +19,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ihuntwithjavalins.Camera.CameraCaughtNewActivity;
 import com.example.ihuntwithjavalins.Comment.Comment;
+import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
@@ -37,6 +43,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +95,13 @@ public class QRCodeViewActivity extends AppCompatActivity {
         codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
         codeDateCaught.setText(thisCode.getCodeDate());
+
+
+        /** Portion reponsble for generating an image of the monster from the hashcode */
+        MonsterID monsterID = new MonsterID();
+        // Get the AssetManager object
+        AssetManager assetManager = getAssets();
+        monsterID.generateAndSetImage(imageButton, thisCode.getCodeHash());
 
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
