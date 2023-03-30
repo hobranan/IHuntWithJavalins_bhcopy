@@ -85,6 +85,7 @@ public class QuickNavActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
+
             // grab all players from firebase into ArrayList<Player> playerList;
             // calculate rankings/stats from playerlist (
             // pull myPlayer from playerList;
@@ -187,7 +188,8 @@ public class QuickNavActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
-                Player player = new Player(mString);
+                Player player = new Player();
+                player.setUsername(mString);
                 // Add the custom object as an extra to the Intent
                 intent.putExtra("savedPlayerObject", (Serializable) player);
                 startActivity(intent);

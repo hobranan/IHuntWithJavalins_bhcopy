@@ -5,8 +5,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: Add fields added to QRCode class to this one
  *
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
@@ -39,7 +40,7 @@ public class QRCodeDB {
     /**
      * Holds the instance of the Firebase Firestore database
      */
-    private final FirebaseFirestore db;
+    private FirebaseFirestore db;
     /**
      * Holds the CollectionReference for the user collection
      */
@@ -50,7 +51,7 @@ public class QRCodeDB {
      * @param connection the DBConnection object used to access the database
      */
     public QRCodeDB(DBConnection connection) {
-        collection = connection.getSubCollection("QRCodes");
+        collection = connection.getSubCollection("QRCodesSubCollection");
         db = connection.getDB();
     }
 
@@ -81,6 +82,7 @@ public class QRCodeDB {
         item.put("Longitude", code.getCodeLon());
         item.put("Photo Ref", code.getCodePhotoRef());
         item.put("Point Value", code.getCodePoints());
+        item.put("Code Date", code.getCodeDate());
         batch.set(codeRef, item);
 
         // commits batch writes to firebase
@@ -119,6 +121,7 @@ public class QRCodeDB {
                     foundCode.setCodePhotoRef(document.getString("Photo Ref"));
                     foundCode.setCodePoints(document.getString("Point Value"));
                     foundCode.setCodeGendImageRef(document.getString("Img Ref"));
+                    foundCode.setCodeDate(document.getString("Code Date"));
                     listener.onComplete(foundCode, true);
                 } else {
                     Log.d(TAG, ":notExists:" + hashValue);
@@ -162,28 +165,33 @@ public class QRCodeDB {
      * Citation: How to get data from firestore https://firebase.google.com/docs/firestore/query-data/get-data#java_14
      * @return list of QRCodes from the database collection
      */
-    public List<QRCode> getCodes() {
-        List<QRCode> codeList = new ArrayList<>();
-        collection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+    public void getCodes(OnCompleteListener<List<QRCode>> listener) {
+        collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
-                    Log.d(TAG, (String) doc.getData().get("Name"));
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<QRCode> codeList = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Log.d(TAG, doc.getId() + " => " + doc.getData());
 
-                    QRCode newCode = new QRCode();
-                    newCode.setCodeHash(doc.getId());
-                    newCode.setCodeName((String) doc.getData().get("Name"));
-                    newCode.setCodePoints((String) doc.getData().get("Point Value"));
-                    newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
-                    newCode.setCodeLon((String) doc.getData().get("Longitude"));
-                    newCode.setCodeLat((String) doc.getData().get("Latitude"));
-                    newCode.setCodeGendImageRef((String) doc.getData().get("Img Ref"));
-                    codeList.add(newCode);
+                        QRCode newCode = new QRCode();
+                        newCode.setCodeHash(doc.getId());
+                        newCode.setCodeName((String) doc.getData().get("Name"));
+                        newCode.setCodePoints((String) doc.getData().get("Point Value"));
+                        newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
+                        newCode.setCodeLon((String) doc.getData().get("Longitude"));
+                        newCode.setCodeLat((String) doc.getData().get("Latitude"));
+                        newCode.setCodeGendImageRef((String) doc.getData().get("Img Ref"));
+                        newCode.setCodeDate((String) doc.getData().get("Code Date"));
+                        codeList.add(newCode);
+                    }
+                    listener.onComplete(codeList, true);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                    listener.onComplete(null, false);
                 }
             }
         });
-
-        return codeList;
     }
 
     /**
