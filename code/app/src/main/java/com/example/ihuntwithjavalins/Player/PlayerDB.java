@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * TODO: Add added Player class fields(like date) to this
+ * TODO: Fix getPlayerCodes to use lambda expressions
  *
  * PlayerDB is a class which handles all database operations for Player objects.
  * Much functionality is derived from Well Fed project example given by TA
@@ -37,7 +38,7 @@ public class PlayerDB {
     /**
      * Holds the instance of the Firebase Firestore database
      */
-    private final FirebaseFirestore db;
+    private FirebaseFirestore db;
     /**
      * Holds the instance of the QRCodeDB
      */
@@ -81,6 +82,7 @@ public class PlayerDB {
         Map<String, Object> item = new HashMap<>();
         item.put("Email", player.getEmail());
         item.put("Region", player.getRegion());
+        item.put("Date Joined", player.getDateJoined());
         //item.put("highest score", 0);
         //item.put("total score", 0);
         batch.set(playerRef, item);
@@ -116,6 +118,7 @@ public class PlayerDB {
                     player.setUsername(document.getId());
                     player.setEmail(document.getString("Email"));
                     player.setRegion(document.getString("Region"));
+                    player.setDateJoined(document.getString("Date Joined"));
                     listener.onComplete(player, true);
                 } else {
                     Log.d(myTAG, ":notExists:" + playerUsername);
@@ -209,34 +212,6 @@ public class PlayerDB {
                 });
     }
 
-//    /**
-//     * Updates the given player's phone number in the database
-//     * @param player the given player to update
-//     * @param newContact the new phone number
-//     * @param listener the listener to call when the player is updated
-//     */
-//    public void updatePlayerPhoneNumber(Player player, String newContact, OnCompleteListener<Player> listener) {
-//        String playerUsername = player.getUsername();
-//        DocumentReference playerRef = collection.document(playerUsername);
-//        playerRef
-//                .update("Phone Number", newContact)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        player.setPhoneNumber(newContact);
-//                        listener.onComplete(player, true);
-//                        Log.d(myTAG, "Phone Number successfully updated!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        listener.onComplete(player, false);
-//                        Log.w(myTAG, "Error updating document", e);
-//                    }
-//                });
-//    }
-
     /**
      * Updates the given player's phone number in the database
      * @param player the given player
@@ -326,21 +301,28 @@ public class PlayerDB {
      * Returns a list of QRCodes the user owns
      * @return list of user owned QRCodes
      */
-    public List<QRCode> getUserCodes (){
-        return codeDB.getCodes();
+    public void getUserCodes (OnCompleteListener<List> listener){
+        codeDB.getCodes((codeList, success)->{
+            if (success) {
+                Log.d("Banana", "Hello");
+                listener.onComplete(codeList, true);
+            } else {
+                listener.onComplete(null, false);
+            }
+        });
     }
 
-    /**
-     * Returns a list of QRCodes the given player owns
-     * @param player the given player who owns the codes
-     * @return list of player owned QRCodes
-     */
-    public List<QRCode> getPlayerCodes(Player player){
-        String playerUsername = player.getUsername();
-        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
-        List<QRCode> codeList = codeDB.getCodes();
-        codeDB.switchFromPlayerToPlayerCodes(userUsername);
-        return codeList;
-    }
+//    /**
+//     * Returns a list of QRCodes the given player owns
+//     * @param player the given player who owns the codes
+//     * @return list of player owned QRCodes
+//     */
+//    public List<QRCode> getPlayerCodes(Player player){
+//        String playerUsername = player.getUsername();
+//        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
+//        List<QRCode> codeList = codeDB.getCodes();
+//        codeDB.switchFromPlayerToPlayerCodes(userUsername);
+//        return codeList;
+//    }
 
 }
