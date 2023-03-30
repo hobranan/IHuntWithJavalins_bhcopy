@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * TODO: Add added Player class fields(like date) to this
+ * TODO: Fix getPlayerCodes to use lambda expressions
  *
  * PlayerDB is a class which handles all database operations for Player objects.
  * Much functionality is derived from Well Fed project example given by TA
@@ -37,7 +38,7 @@ public class PlayerDB {
     /**
      * Holds the instance of the Firebase Firestore database
      */
-    private final FirebaseFirestore db;
+    private FirebaseFirestore db;
     /**
      * Holds the instance of the QRCodeDB
      */
@@ -300,21 +301,28 @@ public class PlayerDB {
      * Returns a list of QRCodes the user owns
      * @return list of user owned QRCodes
      */
-    public List<QRCode> getUserCodes (){
-        return codeDB.getCodes();
+    public void getUserCodes (OnCompleteListener<List> listener){
+        codeDB.getCodes((codeList, success)->{
+            if (success) {
+                Log.d("Banana", "Hello");
+                listener.onComplete(codeList, true);
+            } else {
+                listener.onComplete(null, false);
+            }
+        });
     }
 
-    /**
-     * Returns a list of QRCodes the given player owns
-     * @param player the given player who owns the codes
-     * @return list of player owned QRCodes
-     */
-    public List<QRCode> getPlayerCodes(Player player){
-        String playerUsername = player.getUsername();
-        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
-        List<QRCode> codeList = codeDB.getCodes();
-        codeDB.switchFromPlayerToPlayerCodes(userUsername);
-        return codeList;
-    }
+//    /**
+//     * Returns a list of QRCodes the given player owns
+//     * @param player the given player who owns the codes
+//     * @return list of player owned QRCodes
+//     */
+//    public List<QRCode> getPlayerCodes(Player player){
+//        String playerUsername = player.getUsername();
+//        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
+//        List<QRCode> codeList = codeDB.getCodes();
+//        codeDB.switchFromPlayerToPlayerCodes(userUsername);
+//        return codeList;
+//    }
 
 }

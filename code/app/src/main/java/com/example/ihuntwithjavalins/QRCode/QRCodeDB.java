@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: Add fields added to QRCode class to this one
- * TODO: getCodes is not passing the unit test, fix it
  *
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
@@ -41,7 +40,7 @@ public class QRCodeDB {
     /**
      * Holds the instance of the Firebase Firestore database
      */
-    private final FirebaseFirestore db;
+    private FirebaseFirestore db;
     /**
      * Holds the CollectionReference for the user collection
      */
@@ -83,6 +82,7 @@ public class QRCodeDB {
         item.put("Longitude", code.getCodeLon());
         item.put("Photo Ref", code.getCodePhotoRef());
         item.put("Point Value", code.getCodePoints());
+        item.put("Code Date", code.getCodeDate());
         batch.set(codeRef, item);
 
         // commits batch writes to firebase
@@ -121,6 +121,7 @@ public class QRCodeDB {
                     foundCode.setCodePhotoRef(document.getString("Photo Ref"));
                     foundCode.setCodePoints(document.getString("Point Value"));
                     foundCode.setCodeGendImageRef(document.getString("Img Ref"));
+                    foundCode.setCodeDate(document.getString("Code Date"));
                     listener.onComplete(foundCode, true);
                 } else {
                     Log.d(TAG, ":notExists:" + hashValue);
@@ -164,12 +165,12 @@ public class QRCodeDB {
      * Citation: How to get data from firestore https://firebase.google.com/docs/firestore/query-data/get-data#java_14
      * @return list of QRCodes from the database collection
      */
-    public List<QRCode> getCodes() {
-        List<QRCode> codeList = new ArrayList<>();
+    public void getCodes(OnCompleteListener<List<QRCode>> listener) {
         collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    List<QRCode> codeList = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Log.d(TAG, doc.getId() + " => " + doc.getData());
 
@@ -181,14 +182,16 @@ public class QRCodeDB {
                         newCode.setCodeLon((String) doc.getData().get("Longitude"));
                         newCode.setCodeLat((String) doc.getData().get("Latitude"));
                         newCode.setCodeGendImageRef((String) doc.getData().get("Img Ref"));
+                        newCode.setCodeDate((String) doc.getData().get("Code Date"));
                         codeList.add(newCode);
                     }
+                    listener.onComplete(codeList, true);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
+                    listener.onComplete(null, false);
                 }
             }
         });
-        return codeList;
     }
 
     /**

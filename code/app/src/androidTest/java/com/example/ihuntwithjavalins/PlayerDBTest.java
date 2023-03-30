@@ -352,7 +352,13 @@ public class PlayerDBTest {
     @Test
     public void testPlayerGetCodes() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
-        List<QRCode> codeList1 = playerDB.getUserCodes();
+        CountDownLatch getLatch = new CountDownLatch(1);
+        List<QRCode> codeList1 = new ArrayList<>();
+        playerDB.getUserCodes((foundCodes, success) ->{
+            if (success) {
+                codeList1.addAll(foundCodes);
+            }
+        });
         assertEquals(0, codeList1.size());
 
         AtomicReference<Boolean> successAtomic = new AtomicReference<>();
@@ -370,17 +376,26 @@ public class PlayerDBTest {
 
         assertTrue(successAtomic.get());
 
-        List<QRCode> codeList2 = playerDB.getUserCodes();
+        playerDB.getUserCodes((foundCodes, success) ->{
+            if (success) {
+                codeList1.addAll(foundCodes);
+                getLatch.countDown();
+            }
+        });
 
-        assertEquals(1, codeList2.size());
-        assertEquals(mockCode.getCodeName(), codeList2.get(0).getCodeName());
-        assertEquals(mockCode.getCodeDate(), codeList2.get(0).getCodeDate());
-        assertEquals(mockCode.getCodeHash(), codeList2.get(0).getCodeHash());
-        assertEquals(mockCode.getCodeLat(), codeList2.get(0).getCodeLat());
-        assertEquals(mockCode.getCodeLon(), codeList2.get(0).getCodeLon());
-        assertEquals(mockCode.getCodeGendImageRef(), codeList2.get(0).getCodeGendImageRef());
-        assertEquals(mockCode.getCodePhotoRef(), codeList2.get(0).getCodePhotoRef());
-        assertEquals(mockCode.getCodePoints(), codeList2.get(0).getCodePoints());
+        if (!getLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertEquals(1, codeList1.size());
+        assertEquals(mockCode.getCodeName(), codeList1.get(0).getCodeName());
+        assertEquals(mockCode.getCodeDate(), codeList1.get(0).getCodeDate());
+        assertEquals(mockCode.getCodeHash(), codeList1.get(0).getCodeHash());
+        assertEquals(mockCode.getCodeLat(), codeList1.get(0).getCodeLat());
+        assertEquals(mockCode.getCodeLon(), codeList1.get(0).getCodeLon());
+        assertEquals(mockCode.getCodeGendImageRef(), codeList1.get(0).getCodeGendImageRef());
+        assertEquals(mockCode.getCodePhotoRef(), codeList1.get(0).getCodePhotoRef());
+        assertEquals(mockCode.getCodePoints(), codeList1.get(0).getCodePoints());
 
         removeCode(mockCode);
     }
