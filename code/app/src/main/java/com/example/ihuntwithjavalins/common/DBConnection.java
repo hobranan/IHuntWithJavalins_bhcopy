@@ -110,9 +110,6 @@ public class DBConnection {
     public DocumentReference getUserDocument() {
 
         return this.db.collection("Users").document(playerUsername);
-
-
-
     }
 
     /**

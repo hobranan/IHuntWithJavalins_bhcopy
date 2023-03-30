@@ -39,20 +39,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
 
-
-    /**
-     * Constructor for new instance of Player object representing a Player in the application
-     * competing against each other.
-     * @param username The username of the Player
-     * @param email The email of the Player
-     * @param region The region the Player is in
-     */
-    public Player(String username, String email, String region) {
-        this.username = username;
-        this.email = email;
-        this.region = region;
-    }
-
     /**
      * Constructor for new instance of Player object
      */
@@ -61,23 +47,15 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     /**
-     * Constructor for new instance of Player object only initializing username
-     * @param username the username of the Player
-     */
-    public Player(String username) {
-        this.username = username;
-    }
-
-    /**
      * Constructor for new instance of Player object without email given
      * @param username The username of the Player
      * @param region The region the Player is in
      */
-    public Player(String username, String region) {
+    public Player(String username, String email, String region, String dateJoined) {
         this.username = username;
-        this.email = null;
+        this.email = email;
         this.region = region;
-
+        this.dateJoined = dateJoined;
     }
 
     public ArrayList<Comment> getComments() {

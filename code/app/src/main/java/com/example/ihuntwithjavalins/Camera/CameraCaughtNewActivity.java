@@ -303,4 +303,9 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
         Toast.makeText(CameraCaughtNewActivity.this, "Monster generated successfully!", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+// do nothing
+    }
+
 }

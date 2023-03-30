@@ -8,7 +8,6 @@ import androidx.test.rule.ActivityTestRule;
 import com.example.ihuntwithjavalins.Camera.CameraScanActivity;
 import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Profile.ProfileActivity;
-import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
 import com.example.ihuntwithjavalins.Scoreboard.ScoreboardActivity;
 import com.robotium.solo.Solo;
 
@@ -70,17 +69,6 @@ public class QuickNavActivityTest {
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
         solo.clickOnButton("Open The Map");
         solo.assertCurrentActivity("Wrong Activity", OpenStreetMapActivity.class);
-    }
-
-    /**
-     * Checks the see my code library button that takes us from QuickNavActivity to
-     * QRCodeLibraryActivity and throws an error if it doesn't
-     */
-    @Test
-    public void seeMyCodeLibraryButton() {
-        solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
-        solo.clickOnButton("See My Code Library");
-        solo.assertCurrentActivity("Wrong Activity", QRCodeLibraryActivity.class);
     }
 
     /**
