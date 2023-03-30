@@ -1,9 +1,8 @@
 package com.example.ihuntwithjavalins;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import com.example.ihuntwithjavalins.Comment.Comment;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 

@@ -87,7 +87,8 @@ public class ScoreboardActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                Player tempPlayer = new Player(doc.getId());
+                                Player tempPlayer = new Player();
+                                tempPlayer.setUsername(doc.getId());
                                 tempPlayer.setEmail((String) doc.getData().get("Email"));
                                 tempPlayer.setRegion((String) doc.getData().get("Region"));
                                 tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));
@@ -115,7 +116,8 @@ public class ScoreboardActivity extends AppCompatActivity {
                                                     playerList.add(tempPlayer);
                                                     //if you, also put you in separate obj
                                                     if ((tempPlayer.getUsername()).equals(mStringU)) {
-                                                        myPlayer = new Player(mStringU);
+                                                        myPlayer = new Player();
+                                                        myPlayer.setUsername(mStringU);
                                                         myPlayer.addCodes(tempCodeList);
                                                     }
                                                 }

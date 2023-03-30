@@ -42,7 +42,7 @@
             android:id="@+id/search_user"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:background="@color/fill5_edittext"
+            android:background="@color/fill2_unavailable"
             android:inputType="textPersonName"
             android:textColor="@color/black"
             android:textSize="15sp" />

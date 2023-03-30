@@ -106,8 +106,10 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 //                            Log.d(TAGmap, "playerlist 4");
                             for (QueryDocumentSnapshot doc : task.getResult()) {
+
 //                                Log.d(TAGmap, "playerlist 5");
                                 Player tempPlayer = new Player(doc.getId());
+
                                 tempPlayer.setEmail((String) doc.getData().get("Email"));
                                 tempPlayer.setRegion((String) doc.getData().get("Region"));
                                 tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));
@@ -139,7 +141,8 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                                     playerList.add(tempPlayer);
                                                     //if you, also put you in separate obj
                                                     if ((tempPlayer.getUsername()).equals(mStringU)) {
-                                                        myPlayer = new Player(mStringU);
+                                                        myPlayer = new Player();
+                                                        myPlayer.setUsername(mStringU);
                                                         myPlayer.addCodes(tempCodeList);
                                                     }
 //                                                    Log.d(TAGmap, "playerlist 9 size: " + playerList.size());
