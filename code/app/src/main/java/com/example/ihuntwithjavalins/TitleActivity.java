@@ -34,5 +34,10 @@ public class TitleActivity extends Activity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+// do nothing
+    }
+
 }
 

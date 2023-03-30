@@ -46,37 +46,54 @@ public class QuickNavActivity extends AppCompatActivity {
     private TextView userNameDisplay;
     private TextView userTotalPoints;
     private TextView userTotalCodes;
-    private Player player;
-    private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
+    private Player player = new Player();
+    private ArrayList<Player> playerList = new ArrayList<>();
+    private ArrayList<QRCode> codeList = new ArrayList<>();
     private String TAG = "Sample"; // used as string tag for debug-log messaging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // MODEL
+        // grabbed any device stored username variables within app local date storage
+        SharedPreferences mPrefs = getSharedPreferences("Login", 0);
+        String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
+
+
+
+        // VIEW
         setContentView(R.layout.quick_navigation);
-        userNameDisplay = findViewById(R.id.tv_userNameDisplay);
-        userTotalPoints = findViewById(R.id.tv_userTotalPoints);
-        userTotalCodes = findViewById(R.id.tv_userTotalCodes);
+
         cameraButton = findViewById(R.id.button_qn_scanCode);
         mapButton = findViewById(R.id.button_qn_map);
         libraryButton = findViewById(R.id.button_qn_cl);
         scoreboardButton = findViewById(R.id.button_qn_sb);
         profileButton = findViewById(R.id.button_qn_profile);
 
-        // grabbed any device stored username variables within app local date storage
-        SharedPreferences mPrefs = getSharedPreferences("Login", 0);
-        String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
-        // open signup activity
+        userNameDisplay = findViewById(R.id.tv_userNameDisplay);
+        userTotalPoints = findViewById(R.id.tv_userTotalPoints);
+        userTotalCodes = findViewById(R.id.tv_userTotalCodes);
+
+
+        // CONTROLLER
+
+
+        // open signup/login activity if shared pref not there, otherwise: grab database data
         if (Arrays.asList("default_username_not_found", "Enter a new Username:", " ", "").contains(mString)) {
             Intent intent = new Intent(this, SignUpActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
-            player = new Player(mString);
+            // grab all players from firebase into ArrayList<Player> playerList;
+            // calculate rankings/stats from playerlist (
+            // pull myPlayer from playerList;
+
             // Access a Firestore instance
             final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
             final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
-            final DocumentReference docRef_thisPlayer = collectionRef_Users.document(player.getUsername()); // pull instance of specific collection in firestore
+            final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mString); // pull instance of specific collection in firestore
+            player = new Player(mString);
             //https://firebase.google.com/docs/firestore/query-data/get-data
             docRef_thisPlayer.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -85,6 +102,7 @@ public class QuickNavActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data" + document.getData());
+                            player.setUsername(document.getId());
                             player.setEmail(document.getString("Email"));
                             player.setRegion(document.getString("Region"));
                             player.setDateJoined(document.getString("Date Joined"));
