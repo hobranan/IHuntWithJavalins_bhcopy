@@ -39,6 +39,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -140,7 +142,13 @@ public class QRCodeViewActivity extends AppCompatActivity {
         ArrayAdapter<Comment> customCommentAdapter = new CommentListForCommentAdapter(this, commentsForThisCode); // create adapter (custom child class of Adapter) to link/use on backend-datalist
         commentList.setAdapter(customCommentAdapter);// Set the adapter for backend-datalist to be used with UI-datalist
         customCommentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-
+        Collections.sort(commentsForThisCode, new Comparator<Comment>() {
+            @Override
+            public int compare(Comment o1, Comment o2) {
+                return o1.getUnixMillis_DateTime().compareTo(o2.getUnixMillis_DateTime());
+            }
+        });
+        customCommentAdapter.notifyDataSetChanged();
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +237,13 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                                 // These are a method which gets executed when the task is succeeded
                                                 Log.d(TAG, "Comment has been added successfully!");
                                                 customCommentAdapter.notifyDataSetChanged();
+                                                Collections.sort(commentsForThisCode, new Comparator<Comment>() {
+                                                    @Override
+                                                    public int compare(Comment o1, Comment o2) {
+                                                        return o1.getUnixMillis_DateTime().compareTo(o2.getUnixMillis_DateTime());
+                                                    }
+                                                });
+                                                customCommentAdapter.notifyDataSetChanged();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() { // log the failure on your console (if sending-action failed)
@@ -280,6 +295,13 @@ public class QRCodeViewActivity extends AppCompatActivity {
             @Override
             public void run() {
                 customCommentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
+                Collections.sort(commentsForThisCode, new Comparator<Comment>() {
+                    @Override
+                    public int compare(Comment o1, Comment o2) {
+                        return o1.getUnixMillis_DateTime().compareTo(o2.getUnixMillis_DateTime());
+                    }
+                });
+                customCommentAdapter.notifyDataSetChanged();
             }
         }, 1000);
 

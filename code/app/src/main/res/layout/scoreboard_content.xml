@@ -2,32 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50sp"
+    android:background="@color/black"
+    android:gravity="center"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/place"
         android:layout_width="30sp"
-        android:layout_height="60sp"
-        android:paddingLeft="10sp"
+        android:layout_height="30sp"
+        android:paddingLeft="0sp"
+        android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="120sp"
-        android:layout_height="60sp"
+        android:layout_height="30sp"
+        android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/points"
-        android:layout_width="60sp"
-        android:layout_height="60sp"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/num_of_codes"
-        android:layout_width="30sp"
-        android:layout_height="60sp"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
 </LinearLayout>

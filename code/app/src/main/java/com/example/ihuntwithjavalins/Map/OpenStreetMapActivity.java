@@ -95,20 +95,21 @@ public class OpenStreetMapActivity extends AppCompatActivity {
 //        DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
 //        CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
         // grab all players and their codes from firebase and put into player list
-        Log.d(TAGmap, "playerlist 2");
+//        Log.d(TAGmap, "playerlist 2");
         playerList = new ArrayList<>();
         collectionRef_Users
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.d(TAGmap, "playerlist 3");
+//                        Log.d(TAGmap, "playerlist 3");
                         if (task.isSuccessful()) {
-                            Log.d(TAGmap, "playerlist 4");
+//                            Log.d(TAGmap, "playerlist 4");
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                Log.d(TAGmap, "playerlist 5");
-                                Player tempPlayer = new Player();
-                                tempPlayer.setUsername(doc.getId());
+
+//                                Log.d(TAGmap, "playerlist 5");
+                                Player tempPlayer = new Player(doc.getId());
+
                                 tempPlayer.setEmail((String) doc.getData().get("Email"));
                                 tempPlayer.setRegion((String) doc.getData().get("Region"));
                                 tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));
@@ -120,12 +121,12 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                Log.d(TAGmap, "playerlist 6");
+//                                                Log.d(TAGmap, "playerlist 6");
                                                 if (task.isSuccessful()) {
 
-                                                    Log.d(TAGmap, "playerlist 7");
+//                                                    Log.d(TAGmap, "playerlist 7");
                                                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                        Log.d(TAGmap, "playerlist 8");
+//                                                        Log.d(TAGmap, "playerlist 8");
                                                         String codeHash = doc.getId();
                                                         String codeName = (String) doc.getData().get("Code Name");
                                                         String codePoints = (String) doc.getData().get("Point Value");
@@ -144,7 +145,7 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                                         myPlayer.setUsername(mStringU);
                                                         myPlayer.addCodes(tempCodeList);
                                                     }
-                                                    Log.d(TAGmap, "playerlist 9 size: " + playerList.size());
+//                                                    Log.d(TAGmap, "playerlist 9 size: " + playerList.size());
                                                 }
                                             }
                                         });
@@ -193,14 +194,10 @@ public class OpenStreetMapActivity extends AppCompatActivity {
         mapController.setZoom(18.5);
 
 
-
-
-
-
         // tracking my location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //delay timer to move (used click instead, needs to be improved)
+        //delay timer since so code on this page lags behinds others, so this must be done last (timer ensures its done last)
         new Handler().postDelayed(new Runnable() {
             @SuppressLint("MissingPermission")
             @Override
@@ -209,10 +206,10 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
 //        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
 //        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
-                items.add(new OverlayItem("quad poster2", "1250", new GeoPoint(53.52724, -113.52779))); // Lat/Lon decimal degrees
-                items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
-                items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
-                items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("quad poster2", "1250", new GeoPoint(53.52724, -113.52779))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
+//                items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
 
                 ArrayList<QRCode> pointsCodeList = new ArrayList<>();
                 ArrayList<String> pointsCodeListStrings = new ArrayList<>();
@@ -228,7 +225,11 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 }
                 Log.d(TAGmap, "geopoints size: " + pointsCodeListStrings.size());
                 for (QRCode code : pointsCodeList) {
-                    items.add(new OverlayItem(code.getCodeName(), code.getCodePoints(), new GeoPoint(Float.parseFloat(code.getCodeLat()), Float.parseFloat(code.getCodeLon())))); // Lat/Lon decimal degrees
+                    if (code.getCodeLat() != null) {
+                        if (!(code.getCodeLat()).equals("")) {
+                            items.add(new OverlayItem(code.getCodeName(), code.getCodePoints(), new GeoPoint(Float.parseFloat(code.getCodeLat()), Float.parseFloat(code.getCodeLon())))); // Lat/Lon decimal degrees
+                        }
+                    }
                 }
 
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -241,6 +242,9 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                 if (location != null) {
                                     myGPS_point[0] = new GeoPoint(location.getLatitude(), location.getLongitude()); // current 'location tracker' point
                                     //my location map point 'item'
+                                    if ((location.getLatitude() < 0.05f) & (location.getLatitude() > -0.05f)) { //setup for emulator going to 0lat, 0long
+                                        myGPS_point[0] = new GeoPoint(53.52730, -113.52841); //     GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
+                                    }
                                     OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
                                     items.add(myGPSoverlayItem);
                                     mapController.setCenter(myGPS_point[0]);
@@ -268,13 +272,13 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                         }, ctx);
                 mOverlay.setFocusItemsOnTap(true);
                 map.getOverlays().add(mOverlay); // add 'item' array of points
-
+                myGPS_point[0] = new GeoPoint(53.52730, -113.52841); // testing uofa
                 OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
                 items.add(myGPSoverlayItem);
                 mapController.setCenter(myGPS_point[0]);
+
             }
         }, 1000);
-
 
 
     }

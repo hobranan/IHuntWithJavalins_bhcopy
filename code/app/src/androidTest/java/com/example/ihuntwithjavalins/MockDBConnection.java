@@ -57,5 +57,4 @@ public class MockDBConnection extends DBConnection {
     public DocumentReference getUserDocument() {
         return this.db.collection("TestUsers").document(playerUsername);
     }
-
 }

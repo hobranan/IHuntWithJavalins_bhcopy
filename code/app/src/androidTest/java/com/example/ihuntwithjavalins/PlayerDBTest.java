@@ -1,7 +1,6 @@
 package com.example.ihuntwithjavalins;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -14,9 +13,10 @@ import com.example.ihuntwithjavalins.QRCode.QRCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
@@ -352,6 +352,7 @@ public class PlayerDBTest {
     @Test
     public void testPlayerGetCodes() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
+
         CountDownLatch getLatch = new CountDownLatch(1);
         List<QRCode> codeList1 = new ArrayList<>();
         playerDB.getUserCodes((foundCodes, success) ->{
@@ -359,6 +360,7 @@ public class PlayerDBTest {
                 codeList1.addAll(foundCodes);
             }
         });
+
         assertEquals(0, codeList1.size());
 
         AtomicReference<Boolean> successAtomic = new AtomicReference<>();
@@ -396,6 +398,7 @@ public class PlayerDBTest {
         assertEquals(mockCode.getCodeGendImageRef(), codeList1.get(0).getCodeGendImageRef());
         assertEquals(mockCode.getCodePhotoRef(), codeList1.get(0).getCodePhotoRef());
         assertEquals(mockCode.getCodePoints(), codeList1.get(0).getCodePoints());
+
 
         removeCode(mockCode);
     }
