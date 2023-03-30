@@ -42,8 +42,16 @@ public class Player implements Serializable, Comparable<Player> {
     /**
      * Constructor for new instance of Player object
      */
-    public Player() {
+    public Player() {}
 
+    public Player(String username) {
+        this.username = username;
+    }
+
+    public Player(String username, String email, String region) {
+        this.username = username;
+        this.email = email;
+        this.region = region;
     }
 
     /**
@@ -57,6 +65,7 @@ public class Player implements Serializable, Comparable<Player> {
         this.region = region;
         this.dateJoined = dateJoined;
     }
+
 
     public ArrayList<Comment> getComments() {
         return comments;

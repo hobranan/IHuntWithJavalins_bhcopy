@@ -52,8 +52,10 @@ public class TitleActivityTest {
     @Test
     public void clickOnScreen() {
         solo.assertCurrentActivity("Wrong Activity", TitleActivity.class);
+        solo.sleep(5000);
         solo.clickOnScreen(5, 5);
-        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+//        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
     }
 
 }

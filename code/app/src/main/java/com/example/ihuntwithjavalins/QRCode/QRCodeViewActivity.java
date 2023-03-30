@@ -251,7 +251,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 // These are a method which gets executed when the task is succeeded
                                                 Log.d(TAG, "Comment has been added successfully!");
-                                                customCommentAdapter.notifyDataSetChanged();
+//                                                customCommentAdapter.notifyDataSetChanged();
                                                 Collections.sort(commentsForThisCode, new Comparator<Comment>() {
                                                     @Override
                                                     public int compare(Comment o1, Comment o2) {
@@ -268,6 +268,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                                 Log.d(TAG, "Comment could not be added!" + e.toString());
                                             }
                                         });
+                                customCommentAdapter.notifyDataSetChanged();
                             }
 
                         })
