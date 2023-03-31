@@ -277,4 +277,9 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+// do nothing
+    }
+
 }
