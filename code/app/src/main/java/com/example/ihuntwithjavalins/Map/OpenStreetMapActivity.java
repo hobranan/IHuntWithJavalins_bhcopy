@@ -108,7 +108,8 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
 
 //                                Log.d(TAGmap, "playerlist 5");
-                                Player tempPlayer = new Player(doc.getId());
+                                Player tempPlayer = new Player();
+                                tempPlayer.setUsername(doc.getId());
 
                                 tempPlayer.setEmail((String) doc.getData().get("Email"));
                                 tempPlayer.setRegion((String) doc.getData().get("Region"));

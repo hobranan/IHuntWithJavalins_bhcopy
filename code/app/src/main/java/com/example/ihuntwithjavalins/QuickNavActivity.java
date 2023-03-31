@@ -94,7 +94,8 @@ public class QuickNavActivity extends AppCompatActivity {
             final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
             final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
             final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mString); // pull instance of specific collection in firestore
-            player = new Player(mString);
+            player = new Player();
+            player.setUsername(mString);
             //https://firebase.google.com/docs/firestore/query-data/get-data
             docRef_thisPlayer.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override

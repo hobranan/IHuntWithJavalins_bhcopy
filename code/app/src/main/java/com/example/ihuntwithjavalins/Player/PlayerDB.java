@@ -67,6 +67,14 @@ public class PlayerDB {
     }
 
     /**
+     * Switches the codeDB connection to a new user based on username
+     * @param username Username to switch codeDB connection to
+     */
+    public void switchPlayerDBConnection(String username) {
+        codeDB.switchFromPlayerToPlayerCodes(username);
+    }
+
+    /**
      * Adds a player to the database(Use lambda to retrieve)
      * Citation: Batch Update Info https://cloud.google.com/firestore/docs/samples/firestore-data-batch-writes
      * @param player the Player object being added to the database
