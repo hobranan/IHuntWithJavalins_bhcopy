@@ -32,7 +32,7 @@ import java.io.Serializable;
  * The user can also click on a back button to return to the previous activity.
  */
 public class QRCodeImageViewActivity extends AppCompatActivity {
-    ImageButton backButton;
+    Button backButton;
     Button photoButton;
     Button geoButton;
     TextView codeName;
@@ -56,7 +56,7 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         photoButton = findViewById(R.id.civ_show_attached);
         geoButton = findViewById(R.id.civ_no_geo_btn);
         codeName = findViewById(R.id.civ_qr_code_name);
-        codeHash = findViewById(R.id.civ_hash_code_);
+//        codeHash = findViewById(R.id.civ_hash_code_);
         codePoints = findViewById(R.id.civ_total_points);
         codePicImage = findViewById(R.id.civ_display_img);
 
@@ -65,7 +65,7 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         thisCode = (QRCode) myIntent.getSerializableExtra("savedItemObjectForImage");
 
         codeName.setText(thisCode.getCodeName());
-        codeHash.setText(thisCode.getCodeHash());
+//        codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
 
         // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)

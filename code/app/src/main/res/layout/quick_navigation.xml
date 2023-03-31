@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
@@ -12,38 +11,99 @@
         android:id="@+id/tv_userNameDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="TV username"
-        android:gravity="center"
         android:textColor="@color/text1_bolded"
         android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/tv_userTotalPoints"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TV total points"
         android:gravity="center"
-        android:textColor="@color/text1_bolded"
-        android:textSize="24sp" />
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_userNameDisplay"
+        app:layout_constraintWidth_percent="0.4">
 
-    <TextView
-        android:id="@+id/tv_userTotalCodes"
+        <TextView
+            android:id="@+id/tv_userTotalPointsDescript"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Total Points: "
+            android:textColor="@color/text1_bolded"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_userNameDisplay"
+            app:layout_constraintWidth_percent="0.5"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_userTotalPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="TV total points"
+            android:textColor="@color/text1_bolded"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_userNameDisplay"
+            app:layout_constraintWidth_percent="0.5" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TV total codes"
         android:gravity="center"
-        android:textColor="@color/text1_bolded"
-        android:textSize="24sp" />
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_userTotalPointsDescript"
+        app:layout_constraintWidth_percent="0.4">
+
+        <TextView
+            android:id="@+id/tv_userTotalCodesDescript"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Total Codes: "
+            android:textColor="@color/text1_bolded"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_userTotalPointsDescript"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <TextView
+            android:id="@+id/tv_userTotalCodes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="TV total codes"
+            android:textColor="@color/text1_bolded"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_userTotalPointsDescript"
+            app:layout_constraintWidth_percent="0.4" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/goto_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
-        android:gravity="left"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="\nI see prey, let's hunt!"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
@@ -51,21 +111,24 @@
         android:id="@+id/button_qn_scanCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
+        android:gravity="center"
         android:text="Scan A Code"
-        android:textColor="@color/text2_general"/>
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
 
     <TextView
         android:id="@+id/goto_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:gravity="left"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="What's nearby?"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
@@ -73,21 +136,27 @@
         android:id="@+id/button_qn_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
+        android:gravity="center"
         android:text="Open The Map"
-        android:textColor="@color/text2_general"/>
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7"
+
+
+        />
 
     <TextView
         android:id="@+id/goto_codeLibrary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:gravity="left"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Let me see my precious codes..."
-        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
@@ -95,17 +164,22 @@
         android:id="@+id/button_qn_cl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
+        android:gravity="center"
         android:text="See My Code Library"
-        android:textColor="@color/text2_general" />
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
 
     <TextView
         android:id="@+id/goto_scoreboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="I know I'm the best,\nbut what about others..."
         android:textColor="@color/text1_bolded"
@@ -115,20 +189,24 @@
         android:id="@+id/button_qn_sb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
-        android:text="See The Scoreboard" />
+        android:gravity="center"
+        android:text="See The Scoreboard"
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
 
     <TextView
         android:id="@+id/goto_myProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:gravity="left"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Who am I?"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
@@ -136,10 +214,14 @@
         android:id="@+id/button_qn_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/button1"
-        android:gravity="left"
+        android:gravity="center"
         android:text="Look At My Profile"
-        android:textColor="@color/text2_general" />
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
 </LinearLayout>

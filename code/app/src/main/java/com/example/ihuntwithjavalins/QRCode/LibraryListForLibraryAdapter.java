@@ -17,12 +17,12 @@ import java.util.ArrayList;
 /**
  * Adapter (customized) for linking/showing the backend-datalist (of objects) with the UI-content-list (in content.xml)
  */
-public class CustomListForCustomAdapter extends ArrayAdapter<QRCode> {
+public class LibraryListForLibraryAdapter extends ArrayAdapter<QRCode> {
 
     private ArrayList<QRCode> codes;
     private Context context;
 
-    public CustomListForCustomAdapter(Context context, ArrayList<QRCode> codes){
+    public LibraryListForLibraryAdapter(Context context, ArrayList<QRCode> codes){
         super(context,0, codes);
         this.codes = codes;
         this.context = context;
@@ -40,8 +40,9 @@ public class CustomListForCustomAdapter extends ArrayAdapter<QRCode> {
         TextView codePoints = view.findViewById(R.id.code_points_text);
         TextView codeHash = view.findViewById(R.id.code_hash_text);
         codeName.setText(tempCode.getCodeName());
-        codePoints.setText(tempCode.getCodePoints());
-        codeHash.setText(tempCode.getCodeHash());
+        codePoints.setText(tempCode.getCodePoints() + " points");
+//        codeHash.setText(tempCode.getCodeHash());
+        codeHash.setText("");
         return view;
     }
 }

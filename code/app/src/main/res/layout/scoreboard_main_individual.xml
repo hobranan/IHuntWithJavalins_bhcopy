@@ -5,129 +5,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <Button
+        android:id="@+id/go_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="@color/button1"
+        android:gravity="center"
+        android:text="Back"
+        android:textColor="@color/text2_general"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="75dp"
-            android:layout_height="51dp"
-            android:text="Sort By:"
-            android:textSize="20sp"
-            android:textColor="@color/text1_bolded"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/go_back_btn"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/have_btn"
-            android:layout_width="77dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="4dp"
-            android:text="Have"
-            android:backgroundTint="@color/button1"
-            android:textColor="@color/text2_general"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.086" />
-
-        <Button
-            android:id="@+id/dont_have_btn"
-            android:layout_width="91dp"
-            android:layout_height="53dp"
-            android:text="Dont Have"
-            android:backgroundTint="@color/button1"
-            android:textColor="@color/text2_general"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/have_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.086" />
-
-        <Button
-            android:id="@+id/ou_points"
-            android:layout_width="91dp"
-            android:layout_height="56dp"
-            android:text="Points"
-            android:backgroundTint="@color/button1"
-            android:textColor="@color/text2_general"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/dont_have_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.086" />
-
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="228dp"
-            android:layout_height="40dp"
-            android:textSize="30sp"
-            android:textColor="@color/text1_bolded"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textname"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.027" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/go_back_btn">
 
         <TextView
             android:id="@+id/textname"
-            android:layout_width="84dp"
-            android:layout_height="40dp"
-            android:text="User:"
-            android:textSize="20sp"
-            android:textColor="@color/text1_bolded"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/go_back_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.027" />
-
-        <ImageButton
-            android:id="@+id/go_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.044"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.023"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+            android:text="User: "
+            android:textColor="@color/text1_bolded"
+            android:textSize="25sp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/have_btn"
-            app:layout_constraintVertical_bias="0.906">
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text1_bolded"
+            android:textSize="25sp" />
+    </LinearLayout>
 
-            <ListView
-                android:id="@+id/code_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:choiceMode="singleChoice"
-                android:listSelector="#999999" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textname">
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Sort By: "
+            android:textColor="@color/text1_bolded"
+            android:textSize="20sp" />
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/have_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="@color/button1"
+            android:text="Have"
+            android:textColor="@color/text2_general" />
 
+        <!--        <Button-->
+        <!--            android:id="@+id/dont_have_btn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:backgroundTint="@color/button1"-->
+        <!--            android:text="Dont Have"-->
+        <!--            android:textColor="@color/text2_general" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/ou_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button1"
+            android:text="Points"
+            android:textColor="@color/text2_general" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/code_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:listSelector="#999999" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/player_profile_btn"
+        android:layout_width="276dp"
+        android:layout_height="69dp"
+        android:backgroundTint="@color/button1"
+        android:textColor="@color/text2_general"
+        android:text="See players profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </LinearLayout>

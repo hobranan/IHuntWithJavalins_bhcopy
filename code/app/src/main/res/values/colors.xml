@@ -19,6 +19,7 @@
 
     <color name="fill1_dark">#000000</color>
     <color name="fill2_unavailable">#7A7171</color>
+    <color name="fill5_edittext">#AEA2A2</color>
     <color name="fill3_light">#FFFFFF</color>
     <color name="fill4_spinner">#B29700</color>
 
