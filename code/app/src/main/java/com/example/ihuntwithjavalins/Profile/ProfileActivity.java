@@ -94,12 +94,16 @@ public class ProfileActivity extends AppCompatActivity {
         // add regional list
         ArrayList<Player> all_players = playerList;
         ArrayList<Player> regional_players = new ArrayList<>();
+        Log.d(TAG, "profile : regional_players.add(plr): NEW");
         for (Player plr : playerList) {
-            if ((plr.getRegion()).equals(myPlayer.getRegion())) {
+            if ((myPlayer.getRegion()).equals(plr.getRegion())) {
                 regional_players.add(plr);
-                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
+                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " "+ plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
             }
         }
+        float goldLevel = 0.05f;
+        float silverLevel = 0.10f;
+        float bronzeLevel = 0.25f;
 
 
         // sort both list by points
@@ -124,13 +128,13 @@ public class ProfileActivity extends AppCompatActivity {
             if ((plr.getUsername()).equals(myPlayer.getUsername())) {
                 pointsString = "Everywhere: #" + (playerList.indexOf(plr) + 1);
                 String rankString = "";
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.25f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= bronzeLevel) {
                     rankString = " Bronze Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.10f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= silverLevel) {
                     rankString = " Silver Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.05f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= goldLevel) {
                     rankString = " Gold Level";
                 }
                 if (playerList.indexOf(plr) == 0) {
@@ -142,18 +146,18 @@ public class ProfileActivity extends AppCompatActivity {
         }
         for (Player plr : regional_players) {
             if ((plr.getUsername()).equals(myPlayer.getUsername())) {
-                pointsString = pointsString + "\n" + "Regional: #" + (playerList.indexOf(plr) + 1);
+                pointsString = pointsString + "\n" + "Regional: #" + (regional_players.indexOf(plr) + 1);
                 String rankString = "";
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.25f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= bronzeLevel) {
                     rankString = " Bronze Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.10f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= silverLevel) {
                     rankString = " Silver Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.05f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= goldLevel) {
                     rankString = " Gold Level";
                 }
-                if (playerList.indexOf(plr) == 0) {
+                if (regional_players.indexOf(plr) == 0) {
                     rankString = " Leader!";
                 }
                 pointsString = pointsString + rankString;
@@ -183,13 +187,13 @@ public class ProfileActivity extends AppCompatActivity {
             if ((plr.getUsername()).equals(myPlayer.getUsername())) {
                 numCodesString = "Everywhere: #" + (playerList.indexOf(plr) + 1);
                 String rankString = "";
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.25f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= bronzeLevel) {
                     rankString = " Bronze Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.10f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= silverLevel) {
                     rankString = " Silver Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.05f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= goldLevel) {
                     rankString = " Gold Level";
                 }
                 if (playerList.indexOf(plr) == 0) {
@@ -201,18 +205,18 @@ public class ProfileActivity extends AppCompatActivity {
         }
         for (Player plr : regional_players) {
             if ((plr.getUsername()).equals(myPlayer.getUsername())) {
-                numCodesString = numCodesString + "\n" + "Regional: #" + (playerList.indexOf(plr) + 1);
+                numCodesString = numCodesString + "\n" + "Regional: #" + (regional_players.indexOf(plr) + 1);
                 String rankString = "";
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.25f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= bronzeLevel) {
                     rankString = " Bronze Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.10f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= silverLevel) {
                     rankString = " Silver Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.05f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= goldLevel) {
                     rankString = " Gold Level";
                 }
-                if (playerList.indexOf(plr) == 0) {
+                if (regional_players.indexOf(plr) == 0) {
                     rankString = " Leader!";
                 }
                 numCodesString = numCodesString + rankString;
@@ -242,13 +246,13 @@ public class ProfileActivity extends AppCompatActivity {
             if ((plr.getUsername()).equals(myPlayer.getUsername())) {
                 highestCodeString = "Everywhere: #" + (playerList.indexOf(plr) + 1);
                 String rankString = "";
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.25f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= bronzeLevel) {
                     rankString = " Bronze Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.10f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= silverLevel) {
                     rankString = " Silver Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.05f) {
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= goldLevel) {
                     rankString = " Gold Level";
                 }
                 if (playerList.indexOf(plr) == 0) {
@@ -260,18 +264,18 @@ public class ProfileActivity extends AppCompatActivity {
         }
         for (Player plr : regional_players) {
             if ((plr.getUsername()).equals(myPlayer.getUsername())) {
-                highestCodeString = highestCodeString + "\n" + "Regional: #" + (playerList.indexOf(plr) + 1);
+                highestCodeString = highestCodeString + "\n" + "Regional: #" + (regional_players.indexOf(plr) + 1);
                 String rankString = "";
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.25f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= bronzeLevel) {
                     rankString = " Bronze Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.10f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= silverLevel) {
                     rankString = " Silver Level";
                 }
-                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= 0.05f) {
+                if (((float) (regional_players.indexOf(plr) + 1) / (float) regional_players.size()) <= goldLevel) {
                     rankString = " Gold Level";
                 }
-                if (playerList.indexOf(plr) == 0) {
+                if (regional_players.indexOf(plr) == 0) {
                     rankString = " Leader!";
                 }
                 highestCodeString = highestCodeString + rankString;
