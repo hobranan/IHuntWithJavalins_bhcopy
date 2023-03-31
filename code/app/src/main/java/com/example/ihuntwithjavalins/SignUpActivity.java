@@ -48,11 +48,11 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup_login);
 
         confirmSignup = findViewById(R.id.button_signup_confirm);
+
         editText_signup_Username = findViewById(R.id.edittext_signup_username);
         editText_signup_Email = findViewById(R.id.edittext_signup_email);
 
         spinnerRegion = (Spinner) findViewById(R.id.spinner_signup_region);
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> SpinAdapter = ArrayAdapter.createFromResource(this, R.array.regions_array, android.R.layout.simple_spinner_item);
         SpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);// Specify the layout to use when the list of choices appears
         spinnerRegion.setAdapter(SpinAdapter);// Apply the adapter to the spinner
@@ -65,10 +65,9 @@ public class SignUpActivity extends AppCompatActivity {
                 userEmail = editText_signup_Email.getText().toString().trim();
                 userRegion = spinnerRegion.getSelectedItem().toString();
 
-                if ( !Arrays.asList("Enter your username", "").contains(username) &
-                !Arrays.asList("Enter your email", "").contains(userEmail) &
-                !Arrays.asList("").contains(userRegion) )
-                {
+                if (!Arrays.asList("Enter your username", "", " ").contains(username) &
+                        !Arrays.asList("Enter your email", "", " ").contains(userEmail) &
+                        !Arrays.asList("", " ").contains(userRegion)) {
                     // https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
                     String pattern = "yyyyMMdd"; //String pattern = "MM/dd/yyyy HH:mm:ss";
                     DateFormat df = new SimpleDateFormat(pattern);
@@ -85,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
+                                // if new player
                                 if (!document.exists()) {
 
                                     Log.d(TAG, "Document does not exist! New player, signing up");
@@ -116,6 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                     toast.show(); // display the Toast popup
                                                 }
                                             });
+                                    // if old player (already in firebaseO
                                 } else {
                                     Log.d(TAG, "Document does exists! Old player, logging in");
 
@@ -150,6 +151,11 @@ public class SignUpActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QuickNavActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+// do nothing
     }
 
 }

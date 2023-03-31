@@ -13,7 +13,8 @@ import java.util.List;
  * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
-public class Player implements Serializable, Comparable<Player> {
+//public class Player implements Serializable, Comparable<Player> {
+    public class Player implements Serializable {
     /**
      * Holds the username of the Player
      */
@@ -26,7 +27,6 @@ public class Player implements Serializable, Comparable<Player> {
      * Holds the region the Player competes/lives in
      */
     private String region;    // in login activity, there should be limits so user does not enter invalid region
-
 
     /**
      * Holds the the date the Player signed up
@@ -65,7 +65,6 @@ public class Player implements Serializable, Comparable<Player> {
         this.region = region;
         this.dateJoined = dateJoined;
     }
-
 
     public ArrayList<Comment> getComments() {
         return comments;
@@ -144,24 +143,6 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     /**
-     * Gets the sum of points from QRCode objects the Player has scanned
-     * @return sum of points from QRCode objects the Player has scanned
-     */
-    public int getSumOfCodePoints(){
-        List<QRCode> all_codes = getCodes();
-        int sum = 0;
-        for (QRCode object : all_codes) {
-            sum += Integer.parseInt(object.getCodePoints());
-        }
-        return sum;
-    }
-
-
-    public int getSumOfCodes(){
-        return codes.size();
-    }
-
-    /**
      * Adds a QRCode to the list of codes the Player has scanned
      * @param code The QRCode the Player scanned to be added to list of codes
      */
@@ -185,6 +166,8 @@ public class Player implements Serializable, Comparable<Player> {
         codes.remove(code);    // May want to have an exception thrown if trying to remove a QRCode that does not exist
     }
 
+
+    //this compares whole code, we need to just compare bode hash (dates will almost almost be different)
     /**
      * Checks if the QRCode given is a QRCode the Player has scanned
      * @param code The QRCode to be searched for in the Player's list of codes
@@ -198,10 +181,30 @@ public class Player implements Serializable, Comparable<Player> {
         }
     }
 
-    @Override
-    public int compareTo(Player other) {
-        return Integer.compare(this.getSumOfCodePoints(), other.getSumOfCodePoints());
+//    //unneccasry comapre to since there are other factors to comapre
+//    @Override
+//    public int compareTo(Player other) {
+//        return Integer.compare(this.getSumOfCodePoints(), other.getSumOfCodePoints());
+//
+//    }
 
+
+    /**
+     * Gets the sum of points from QRCode objects the Player has scanned
+     * @return sum of points from QRCode objects the Player has scanned
+     */
+    public int getSumOfCodePoints(){
+        List<QRCode> all_codes = getCodes();
+        int sum = 0;
+        for (QRCode object : all_codes) {
+            sum += Integer.parseInt(object.getCodePoints());
+        }
+        return sum;
+    }
+
+
+    public int getSumOfCodes(){
+        return codes.size();
     }
 
     public int getHighestCode() {
@@ -214,4 +217,8 @@ public class Player implements Serializable, Comparable<Player> {
         }
         return max_code;
     }
+
+
+
+
 }

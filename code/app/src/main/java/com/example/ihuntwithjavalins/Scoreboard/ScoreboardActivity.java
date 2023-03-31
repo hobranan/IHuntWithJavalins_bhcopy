@@ -75,7 +75,6 @@ public class ScoreboardActivity extends AppCompatActivity {
         // Access a Firestore instance
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionRef_Users = db.collection("Users");
-
         DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
         CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
 
@@ -170,7 +169,14 @@ public class ScoreboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(ScoreboardActivity.this, "Sort By Points", Toast.LENGTH_SHORT).show();
-                Collections.sort(playerList);
+                Collections.sort(playerList, new Comparator<Player>() {
+                    @Override
+                    public int compare(Player p1, Player p2) {
+                            int p1size = p1.getSumOfCodePoints();
+                            int p2size = p2.getSumOfCodePoints();
+                            return Integer.compare(p2size, p1size);
+                        }
+                });
                 if (sortPointsAscend) {
                     Collections.reverse(playerList);
                 }
@@ -297,11 +303,11 @@ public class ScoreboardActivity extends AppCompatActivity {
             }
         });
 
-        //delay timer to show list automatically after 2 seconds (otherwise you have to press button)
+        //delay timer to show list automatically after 2 seconds (otherwise you have to press 'sort by' button)
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by name
                 Collections.sort(playerList, new Comparator<Player>() {
                     @Override
