@@ -68,6 +68,14 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/ou_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button1"
+            android:text="Name"
+            android:textColor="@color/text2_general" />
+
+        <Button
             android:id="@+id/have_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,6 +99,8 @@
             android:backgroundTint="@color/button1"
             android:text="Points"
             android:textColor="@color/text2_general" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -105,15 +115,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:listSelector="#999999" />
+            android:listSelector="#999999"
+            android:divider="#555450"
+            android:dividerHeight="2dp" />
+
     </LinearLayout>
+
     <Button
         android:id="@+id/player_profile_btn"
         android:layout_width="276dp"
         android:layout_height="69dp"
         android:backgroundTint="@color/button1"
-        android:textColor="@color/text2_general"
         android:text="See players profile"
+        android:textColor="@color/text2_general"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

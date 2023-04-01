@@ -136,7 +136,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/button1"
-            android:text="Code Amount"
+            android:text="Codes"
+            android:textColor="@color/text2_general" />
+
+        <Button
+            android:id="@+id/sort_highestcode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button1"
+            android:text="High Code"
             android:textColor="@color/text2_general" />
 
     </LinearLayout>

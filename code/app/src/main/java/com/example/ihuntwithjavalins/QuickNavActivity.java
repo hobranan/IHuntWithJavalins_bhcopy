@@ -260,6 +260,7 @@ public class QuickNavActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuickNavActivity.this, ScoreboardActivity.class);
                 // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("myPlayer", (Serializable) myPlayer);
                 intent.putExtra("playerList", (Serializable) playerList);
                 startActivity(intent);
             }
@@ -278,4 +279,10 @@ public class QuickNavActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+// do nothing
+    }
+
 }

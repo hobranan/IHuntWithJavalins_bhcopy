@@ -27,6 +27,8 @@ import java.util.List;
 public class ShowIndividualCodes extends AppCompatActivity {
     boolean sortPointAmountAscend = false;
     boolean sortHaveAscend = false;
+
+    boolean sortNameAscend = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class ShowIndividualCodes extends AppCompatActivity {
 
         Button btn_have = findViewById(R.id.have_btn);
         Button btn_points = findViewById(R.id.ou_points);
+        Button btn_name = findViewById(R.id.ou_name);
 
 
 
@@ -62,6 +65,28 @@ public class ShowIndividualCodes extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btn_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
+                // Sort the player list by num of codes
+                Collections.sort(storageList, new Comparator<StoreNamePoints>() {
+                    @Override
+                    public int compare(StoreNamePoints c1, StoreNamePoints c2) {
+                            return (c1.getCodeName()).compareTo(c2.getCodeName());
+                    }
+                });
+                if (sortNameAscend) {
+                    Collections.reverse(storageList);
+                }
+                sortNameAscend = !sortNameAscend;
+                // Update the adapter with the sorted list
+//                playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
+////                listViewPlayerList.setAdapter(playerArrayAdapter);
+                storageAdapter.notifyDataSetChanged();
             }
         });
 
@@ -96,7 +121,7 @@ public class ShowIndividualCodes extends AppCompatActivity {
                 Collections.sort(storageList, new Comparator<StoreNamePoints>() {
                     @Override
                     public int compare(StoreNamePoints c1, StoreNamePoints c2) {
-                        return Integer.compare(Integer.parseInt(c1.getCodePoints()), Integer.parseInt(c1.getCodePoints()));
+                        return Integer.compare(Integer.parseInt(c1.getCodePoints()), Integer.parseInt(c2.getCodePoints()));
                     }
                 });
                 if (sortPointAmountAscend) {
@@ -106,7 +131,7 @@ public class ShowIndividualCodes extends AppCompatActivity {
                 // Update the adapter with the sorted list
 //                playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
 ////                listViewPlayerList.setAdapter(playerArrayAdapter);
-//                storageAdapter.notifyDataSetChanged();
+                storageAdapter.notifyDataSetChanged();
             }
         });
 
