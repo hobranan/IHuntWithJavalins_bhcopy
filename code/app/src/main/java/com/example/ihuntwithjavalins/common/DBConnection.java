@@ -55,7 +55,6 @@ public class DBConnection {
 
         String foundUsername = sharedPreferences.getString("UsernameTag", null);    // second value null means return null if preference UUID does not exist
 
-        Log.d(myTAG, "BANANA" + foundUsername);
         if (foundUsername == null) {
             sharedPreferences.edit().putString("UsernameTag", username).apply();
         }
@@ -90,7 +89,7 @@ public class DBConnection {
      */
     public CollectionReference getSubCollection(String subCollection) {
 
-        return this.db.collection("TestingUsers").document(playerUsername).collection(subCollection);
+        return this.db.collection("Users").document(playerUsername).collection(subCollection);
 
     }
 
@@ -98,7 +97,7 @@ public class DBConnection {
      * Gets the reference to the collection of users of the application
      * @return reference to user collection
      */
-    public CollectionReference getUserCollection() {return this.db.collection("TestingUsers");
+    public CollectionReference getUserCollection() {return this.db.collection("Users");
     }
 
     /**
@@ -109,7 +108,7 @@ public class DBConnection {
         if (playerUsername == null) {
             return null;
         } else {
-            return this.db.collection("TestingUsers").document(playerUsername);
+            return this.db.collection("Users").document(playerUsername);
         }
     }
 

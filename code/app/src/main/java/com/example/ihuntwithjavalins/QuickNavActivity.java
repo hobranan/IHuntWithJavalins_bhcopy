@@ -1,5 +1,7 @@
 package com.example.ihuntwithjavalins;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ihuntwithjavalins.Camera.CameraScanActivity;
 import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.Profile.ProfileActivity;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
@@ -34,6 +37,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
+
 /**
  * The QuickNavActivity class is responsible for handling the main navigation screen in the app.
  * It allows users to navigate to different features of the app by clicking on corresponding buttons.
@@ -51,14 +56,16 @@ public class QuickNavActivity extends AppCompatActivity {
     private ArrayList<Player> playerList = new ArrayList<>();
     private ArrayList<QRCode> codeList = new ArrayList<>();
     private String TAG = "Sample"; // used as string tag for debug-log messaging
+    private PlayerController playerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        playerController = new PlayerController(this);
         // MODEL
         // grabbed any device stored username variables within app local date storage
         SharedPreferences mPrefs = this.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
+//        mPrefs.edit().clear().commit();
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
 
 
@@ -92,61 +99,25 @@ public class QuickNavActivity extends AppCompatActivity {
             // pull myPlayer from playerList;
 
             // Access a Firestore instance
-            final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
-            final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
-            final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mString); // pull instance of specific collection in firestore
             player = new Player();
             player.setUsername(mString);
-            //https://firebase.google.com/docs/firestore/query-data/get-data
-            docRef_thisPlayer.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d(TAG, "DocumentSnapshot data" + document.getData());
-                            player.setUsername(document.getId());
-                            player.setEmail(document.getString("Email"));
-                            player.setRegion(document.getString("Region"));
-                            player.setDateJoined(document.getString("Date Joined"));
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
+            playerController.getPlayerData(player, (foundPlayer, success) -> {
+                if (success) {
+                    player = foundPlayer;
+                } else {
+                    Log.d(TAG, "Error finding player data");
                 }
             });
             userNameDisplay.setText(player.getUsername());
-            final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
-            // This listener will pull the firestore data into your android app (if you reopen the app)
-            subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-                FirebaseFirestoreException error) {
-                    codeList.clear(); // Clear the old list
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
-                        String codeHash = doc.getId();
-                        String codeName = (String) doc.getData().get("Code Name");
-                        String codePoints = (String) doc.getData().get("Point Value");
-                        String codeImgRef = (String) doc.getData().get("Img Ref");
-                        String codeLatValue = (String) doc.getData().get("Lat Value");
-                        String codeLonValue = (String) doc.getData().get("Lon Value");
-                        String codePhotoRef = (String) doc.getData().get("Photo Ref");
-                        String codeDate = (String) doc.getData().get("Date:");
-                        codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
-                    }
-                    // calc most codes and points
-                    int totalPointsInt = 0;
-                    int highestcodeval = 0;
-                    for (QRCode code: codeList ) {
-                        totalPointsInt = totalPointsInt + Integer.parseInt(code.getCodePoints());
-                        if (Integer.parseInt(code.getCodePoints()) > highestcodeval) {
-                            highestcodeval = Integer.parseInt(code.getCodePoints());
-                        }
-                    }
-                    userTotalPoints.setText(String.valueOf(totalPointsInt));
-                    userTotalCodes.setText(String.valueOf(codeList.size()));
+
+
+            playerController.getPlayerCodes(player.getUsername(), (foundCodes, success) -> {
+                if (success) {
+                    codeList.addAll(foundCodes);
+                    userTotalPoints.setText(String.valueOf(playerController.calculateTotalPoints(codeList)));
+                    userTotalCodes.setText(String.valueOf(playerController.getTotalCodes(codeList)));
+                } else {
+                    Log.d(TAG, "Error getting code data from database");
                 }
             });
         }

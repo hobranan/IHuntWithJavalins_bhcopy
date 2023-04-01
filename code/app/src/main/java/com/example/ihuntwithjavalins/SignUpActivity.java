@@ -82,8 +82,12 @@ public class SignUpActivity extends AppCompatActivity {
                     Player newUser = new Player(username, userEmail, userRegion, userDateJoined);
                     playerController.addUser(newUser, (addedUser, success) -> {
                         if (success) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "User Data Found, Signing In...", Toast.LENGTH_LONG);
+                            toast.show();
                             switchToMain();
                         } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Sign In Failed, Please Try Again", Toast.LENGTH_LONG);
+                            toast.show();
                             Log.d(TAG, "Adding Failed");
                         }
                     });

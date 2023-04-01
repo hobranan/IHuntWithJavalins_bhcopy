@@ -38,7 +38,7 @@ public class QRCodeDB {
     /**
      * Holds the tag for logging
      */
-    private final static String TAG = "PlayerDB";
+    private final static String TAG = "QRCodeDB";
     /**
      * Holds the instance of the Firebase Firestore database
      */
