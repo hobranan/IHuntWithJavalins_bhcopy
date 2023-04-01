@@ -105,7 +105,7 @@
         android:gravity="center"
         android:text="\nI see prey, let's hunt!"
         android:textColor="@color/text1_bolded"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_qn_scanCode"
@@ -130,7 +130,7 @@
         android:gravity="center"
         android:text="What's nearby?"
         android:textColor="@color/text1_bolded"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_qn_map"
@@ -145,10 +145,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.7"
-
-
-        />
+        app:layout_constraintWidth_percent="0.7" />
 
     <TextView
         android:id="@+id/goto_codeLibrary"
@@ -158,7 +155,7 @@
         android:gravity="center"
         android:text="Let me see my precious codes..."
         android:textColor="@color/text1_bolded"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_qn_cl"
@@ -183,7 +180,7 @@
         android:gravity="center"
         android:text="I know I'm the best,\nbut what about others..."
         android:textColor="@color/text1_bolded"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_qn_sb"
@@ -208,7 +205,7 @@
         android:gravity="center"
         android:text="Who am I?"
         android:textColor="@color/text1_bolded"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_qn_profile"

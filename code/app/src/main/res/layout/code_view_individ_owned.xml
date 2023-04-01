@@ -172,7 +172,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/player_date_caught"
+            android:id="@+id/cvi_code_date_caught"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

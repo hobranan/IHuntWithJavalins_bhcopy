@@ -14,7 +14,9 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,6 +77,7 @@ public class OpenStreetMapActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAGmap, "playerlist 1");
+
         //(handle permissions first, before map is created. not depicted here)
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
@@ -160,6 +163,15 @@ public class OpenStreetMapActivity extends AppCompatActivity {
 
         //inflate and create the map
         setContentView(R.layout.open_street_map);
+
+        Button region_btn = findViewById(R.id.map_region_btn);
+        Spinner regionDropdown = (Spinner) findViewById(R.id.map_spin_region);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> ThisSpinAdapter = ArrayAdapter.createFromResource(this, R.array.regions_array, android.R.layout.simple_spinner_item);
+        ThisSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);// Specify the layout to use when the list of choices appears
+        regionDropdown.setAdapter(ThisSpinAdapter);// Apply the adapter to the spinner
+
+
 
         backButton = findViewById(R.id.map_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -281,7 +293,32 @@ public class OpenStreetMapActivity extends AppCompatActivity {
             }
         }, 1000);
 
-
+        region_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String region = regionDropdown.getSelectedItem().toString();
+                float zoomlevel = 12.0f;
+                mapController.setZoom(zoomlevel);
+                if (region.equals("Edmonton")){
+                    mapController.setCenter( new GeoPoint(53.5461, -113.4937));
+                } else if (region.equals("Calgary")){
+                    mapController.setCenter( new GeoPoint(51.0447, -114.0719));
+                } else if (region.equals("Rural Alberta")){
+                    mapController.setZoom(9.0f);
+                    mapController.setCenter( new GeoPoint(52.2690, -113.8115));
+                } else if (region.equals("Vancouver")){
+                    mapController.setCenter( new GeoPoint(49.2827, -123.1207));
+                } else if (region.equals("Regina")){
+                    mapController.setCenter( new GeoPoint(50.4452, -104.6189));
+                } else if (region.equals("Toronto")){
+                    mapController.setCenter( new GeoPoint(43.6532, -79.3832));
+                } else if (region.equals("Montreal")){
+                    mapController.setCenter( new GeoPoint(45.5019, -73.5674));
+                } else {
+                    mapController.setCenter( new GeoPoint(53.5461, -113.4937)); // edmonton
+                }
+            }
+        });
     }
 
 

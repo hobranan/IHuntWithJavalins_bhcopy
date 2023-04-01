@@ -36,4 +36,11 @@
         android:textColor="@color/text1_bolded"
         android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/highest_code"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:textColor="@color/text1_bolded"
+        android:textSize="15sp" />
+
 </LinearLayout>

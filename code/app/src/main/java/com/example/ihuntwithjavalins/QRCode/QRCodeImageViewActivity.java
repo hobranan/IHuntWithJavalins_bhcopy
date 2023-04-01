@@ -1,8 +1,11 @@
 package com.example.ihuntwithjavalins.QRCode;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Map.CodeRefOpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Camera.PhotoViewActivity;
+import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,34 +72,50 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
 //        codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
 
+        /** Portion reponsble for generating an image of the monster from the hashcode */
+        MonsterID monsterID = new MonsterID();
+        // Get the AssetManager object
+        AssetManager assetManager = getAssets();
+        monsterID.generateAndSetImage(codePicImage, thisCode.getCodeHash());
+
+        // https://stackoverflow.com/questions/29801031/how-to-add-button-tint-programmatically
+        if ( (thisCode.getCodePhotoRef() == null) || (thisCode.getCodePhotoRef().equals(""))){
+//            photoButton.setBackgroundTintColor(Color.GRAY);
+            photoButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+        }
+        if ( (thisCode.getCodeLat() == null) || (thisCode.getCodeLat().equals(""))){
+//            geoButton.setBackgroundColor(Color.GRAY);
+            geoButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+        }
+
         // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
         // Create a storage reference from our app (https://firebase.google.com/docs/storage/android/download-files)
         StorageReference storageRef = storage.getReference();
         // Create a reference with an initial file path and name // use QRcode-object's imgRef string to ref storage
-        String codePicRef = "GendImages/" + thisCode.getCodeGendImageRef();
-        StorageReference pathReference_pic = storageRef.child(codePicRef);
-
-        // convert pathRef_pic to bytes, then set image bitmap via bytes (https://firebase.google.com/docs/storage/android/download-files)
-        //final long ONE_MEGABYTE = 1024 * 1024;
-        final long ONE_POINT_FIVE_MEGABYTE = 1536 * 1536; // made this to get the .getBytes() limit larger (all pics are less than 1.5MB)
-        pathReference_pic.getBytes(ONE_POINT_FIVE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                codePicImage.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
-            }
-        });
+//        String codePicRef = "GendImages/" + thisCode.getCodeGendImageRef();
+//        StorageReference pathReference_pic = storageRef.child(codePicRef);
+//
+//        // convert pathRef_pic to bytes, then set image bitmap via bytes (https://firebase.google.com/docs/storage/android/download-files)
+//        //final long ONE_MEGABYTE = 1024 * 1024;
+//        final long ONE_POINT_FIVE_MEGABYTE = 1536 * 1536; // made this to get the .getBytes() limit larger (all pics are less than 1.5MB)
+//        pathReference_pic.getBytes(ONE_POINT_FIVE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//            @Override
+//            public void onSuccess(byte[] bytes) {
+//                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                codePicImage.setImageBitmap(bmp);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( (thisCode.getCodePhotoRef() != null) || (!thisCode.getCodePhotoRef().equals(""))){
+                if ( (thisCode.getCodePhotoRef() != null) && (!thisCode.getCodePhotoRef().equals(""))){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, PhotoViewActivity.class);
                     intent.putExtra("imageSavedCodePhotoRef", thisCode.getCodePhotoRef());
                     startActivity(intent);

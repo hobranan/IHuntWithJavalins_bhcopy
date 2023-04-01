@@ -5,6 +5,7 @@ import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QuickNavActivity;
@@ -32,9 +34,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,9 +102,9 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        setContentView(R.layout.scanned_code_new);
+        setContentView(R.layout.scannedcode_new);
         codeName = findViewById(R.id.civ_qr_code_name);
-        codeHash = findViewById(R.id.civ_hash_code_);
+        codeHash = findViewById(R.id.player_hash);
         codePoints = findViewById(R.id.civ_total_points);
         codePicImage = findViewById(R.id.civ_display_img);
         save_geolocation = (CheckBox) findViewById(R.id.checkbox_geolocation);
@@ -117,6 +119,8 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
         codeName.setText(thisCode.getCodeName());
         codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
+
+        onPictureTaken(thisCode);
 
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
@@ -155,6 +159,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                 });
 
 
+
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken()) // ignore this error
                 .addOnSuccessListener(CameraCaughtNewActivity.this, new OnSuccessListener<Location>() {
@@ -178,6 +183,8 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                     }
                 });
 
+
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             @Override
@@ -189,7 +196,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                 dataMap2.put("Point Value", thisCode.getCodePoints());
 
                 if (save_geolocation.isChecked()) {
-                    Log.d(TAG, "locationadded 1");
+//                    Log.d(TAG, "locationadded 1");
 
 //                    String longitude = String.valueOf(thislocation.getLongitude());//*hide to prevent current location tracking (use fake below)
 //                    String latitude = String.valueOf(thislocation.getLatitude());
@@ -248,33 +255,52 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
             }
         });
 
+//        // Get Firebase Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
+//        FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
+//        // Create a storage reference from our app (https://firebase.google.com/docs/storage/android/download-files)
+//        StorageReference storageRef = storage.getReference();
+//        // Create a reference with an initial file path and name // use QRcode-object's imgRef string to ref storage
+//        String codePicRef = "GendImages/" + thisCode.getCodeGendImageRef();
+//        StorageReference pathReference_pic = storageRef.child(codePicRef);
+//        // convert pathRef_pic to bytes, then set image bitmap via bytes (https://firebase.google.com/docs/storage/android/download-files)
+//        //final long ONE_MEGABYTE = 1024 * 1024;
+//        final long ONE_POINT_FIVE_MEGABYTE = 1536 * 1536; // made this to get the .getBytes() limit larger (all pics are less than 1.5MB)
+//        pathReference_pic.getBytes(ONE_POINT_FIVE_MEGABYTE).
+//                addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//                    @Override
+//                    public void onSuccess(byte[] bytes) {
+//                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                        codePicImage.setImageBitmap(bmp);
+//                    }
+//                }).
+//                addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception exception) {
+//                        Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+//                    }
+//                });
 
+    }
 
-        // Get Firebase Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
-        // Create a storage reference from our app (https://firebase.google.com/docs/storage/android/download-files)
-        StorageReference storageRef = storage.getReference();
-        // Create a reference with an initial file path and name // use QRcode-object's imgRef string to ref storage
-        String codePicRef = "GendImages/" + thisCode.getCodeGendImageRef();
-        StorageReference pathReference_pic = storageRef.child(codePicRef);
-        // convert pathRef_pic to bytes, then set image bitmap via bytes (https://firebase.google.com/docs/storage/android/download-files)
-        //final long ONE_MEGABYTE = 1024 * 1024;
-        final long ONE_POINT_FIVE_MEGABYTE = 1536 * 1536; // made this to get the .getBytes() limit larger (all pics are less than 1.5MB)
-        pathReference_pic.getBytes(ONE_POINT_FIVE_MEGABYTE).
-                addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        codePicImage.setImageBitmap(bmp);
-                    }
-                }).
-                addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
-                    }
-                });
+    private void onPictureTaken(QRCode code) {
+        String hashCode = code.getCodeHash();
+        MonsterID monsterID = new MonsterID();
+        // Get the AssetManager object
+        AssetManager assetManager = getAssets();
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            monsterID.generate(baos, hashCode, 0, assetManager);
+        } catch (IOException e) {
+            Toast.makeText(CameraCaughtNewActivity.this, "Failed to generate monster image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        byte[] monsterData = baos.toByteArray();
+        Bitmap monsterBitmap = BitmapFactory.decodeByteArray(monsterData, 0, monsterData.length);
+
+        // Display the monster image in the ImageView
+        codePicImage.setImageBitmap(monsterBitmap);
+        Toast.makeText(CameraCaughtNewActivity.this, "Monster generated successfully!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

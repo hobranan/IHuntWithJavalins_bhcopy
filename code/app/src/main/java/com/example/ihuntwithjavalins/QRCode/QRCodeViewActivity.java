@@ -6,6 +6,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,11 +19,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ihuntwithjavalins.Camera.CameraCaughtNewActivity;
 import com.example.ihuntwithjavalins.Comment.Comment;
+import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
@@ -37,6 +43,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,7 +87,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
         codeName = findViewById(R.id.player_name);
         codeHash = findViewById(R.id.player_hash);
         codePoints = findViewById(R.id.player_points);
-        codeDateCaught = findViewById(R.id.player_date_caught);
+        codeDateCaught = findViewById(R.id.cvi_code_date_caught);
 
         // Get the intent from the previous activity
         Intent myIntent = getIntent();
@@ -88,7 +96,16 @@ public class QRCodeViewActivity extends AppCompatActivity {
         codeName.setText(thisCode.getCodeName());
         codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
-        codeDateCaught.setText(thisCode.getCodeDate());
+
+        String date_caught = getNiceDateFormat(thisCode.getCodeDate());
+        codeDateCaught.setText(date_caught);
+
+
+        /** Portion reponsble for generating an image of the monster from the hashcode */
+        MonsterID monsterID = new MonsterID();
+        // Get the AssetManager object
+        AssetManager assetManager = getAssets();
+        monsterID.generateAndSetImage(imageButton, thisCode.getCodeHash());
 
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
@@ -236,7 +253,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 // These are a method which gets executed when the task is succeeded
                                                 Log.d(TAG, "Comment has been added successfully!");
-                                                customCommentAdapter.notifyDataSetChanged();
+//                                                customCommentAdapter.notifyDataSetChanged();
                                                 Collections.sort(commentsForThisCode, new Comparator<Comment>() {
                                                     @Override
                                                     public int compare(Comment o1, Comment o2) {
@@ -253,6 +270,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                                 Log.d(TAG, "Comment could not be added!" + e.toString());
                                             }
                                         });
+                                customCommentAdapter.notifyDataSetChanged();
                             }
 
                         })
@@ -310,12 +328,59 @@ public class QRCodeViewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         BackActionToLibrary();
+//        finish();
     }
 
     void BackActionToLibrary() {
-        Intent intent = new Intent(QRCodeViewActivity.this, QRCodeLibraryActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+//        Intent intent = new Intent(QRCodeViewActivity.this, QRCodeLibraryActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+        finish();
+    }
+
+    String getNiceDateFormat(String joinedDate) {
+        String date = joinedDate;
+        String date_joined = "";
+        if (date != null) {
+            String[] months = {
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December"
+            };
+            String year = date.substring(0, 4);
+            String month = date.substring(4, 6);
+            String day = date.substring(6, 8);
+            // Convert the day from a string to an integer
+            int dayInt = Integer.parseInt(day);
+            // Get the day suffix
+            String daySuffix;
+            if (dayInt % 10 == 1 && dayInt != 11) {
+                daySuffix = "st";
+            } else if (dayInt % 10 == 2 && dayInt != 12) {
+                daySuffix = "nd";
+            } else if (dayInt % 10 == 3 && dayInt != 13) {
+                daySuffix = "rd";
+            } else {
+                daySuffix = "th";
+            }
+            // Get the month name from the array
+            int monthInt = Integer.parseInt(month);
+            String monthName = months[monthInt - 1];
+            // Build the final date string
+            date_joined = dayInt + daySuffix + " " + monthName + ", " + year;
+        } else {
+            date_joined = "No date";
+        }
+        return date_joined;
     }
 
 }
