@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.UUID;
 
 /**
- * TODO: Update javadoc comments as functionality changed from uuid to username
+ * TODO: Change the Collection reference back to Users after sufficient testing
  *
  * Connects to Database, gettings the users unique firestore ID to identify them.
  * Predominantly code is from Well Fed project
@@ -51,14 +51,13 @@ public class DBConnection {
      */
     public void setUsername(Context context, String username) {
         SharedPreferences sharedPreferences;
-        sharedPreferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
+        sharedPreferences = context.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
 
-        String foundUsername = sharedPreferences.getString("Username", null);    // second value null means return null if preference UUID does not exist
+        String foundUsername = sharedPreferences.getString("UsernameTag", null);    // second value null means return null if preference UUID does not exist
 
+        Log.d(myTAG, "BANANA" + foundUsername);
         if (foundUsername == null) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("Username", playerUsername);
-            editor.apply();
+            sharedPreferences.edit().putString("UsernameTag", username).apply();
         }
     }
 
@@ -69,9 +68,9 @@ public class DBConnection {
      */
     public String getUsername(Context context) {
         SharedPreferences sharedPreferences;
-        sharedPreferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
+        sharedPreferences = context.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
 
-        String username = sharedPreferences.getString("Username", null);    // second value null means return null if preference UUID does not exist
+        String username = sharedPreferences.getString("UsernameTag", null);    // second value null means return null if preference UUID does not exist
 
         return username;
     }
@@ -91,7 +90,7 @@ public class DBConnection {
      */
     public CollectionReference getSubCollection(String subCollection) {
 
-        return this.db.collection("Users").document(playerUsername).collection(subCollection);
+        return this.db.collection("TestingUsers").document(playerUsername).collection(subCollection);
 
     }
 
@@ -99,8 +98,7 @@ public class DBConnection {
      * Gets the reference to the collection of users of the application
      * @return reference to user collection
      */
-    public CollectionReference getUserCollection() {
-        return this.db.collection("Users");
+    public CollectionReference getUserCollection() {return this.db.collection("TestingUsers");
     }
 
     /**
@@ -108,8 +106,11 @@ public class DBConnection {
      * @return reference to the user document
      */
     public DocumentReference getUserDocument() {
-
-        return this.db.collection("Users").document(playerUsername);
+        if (playerUsername == null) {
+            return null;
+        } else {
+            return this.db.collection("TestingUsers").document(playerUsername);
+        }
     }
 
     /**

@@ -62,17 +62,17 @@ public class PlayerDB {
         collection = connection.getUserCollection();
 
         // Create new instance of QRCodeDB based on current connection
-        codeDB = new QRCodeDB(connection);
-        userUsername = connection.getUserDocument().getId();
+//        codeDB = new QRCodeDB(connection);
+        userUsername = connection.getUsername();
     }
 
-    /**
-     * Switches the codeDB connection to a new user based on username
-     * @param username Username to switch codeDB connection to
-     */
-    public void switchPlayerDBConnection(String username) {
-        codeDB.switchFromPlayerToPlayerCodes(username);
-    }
+//    /**
+//     * Switches the codeDB connection to a new user based on username
+//     * @param username Username to switch codeDB connection to
+//     */
+//    public void switchPlayerDBConnection(String username) {
+//        codeDB.switchFromPlayerToPlayerCodes(username);
+//    }
 
     /**
      * Adds a player to the database(Use lambda to retrieve)
@@ -81,7 +81,8 @@ public class PlayerDB {
      * @param listener the listener to call when the player is added
      */
     public void addPlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
-        // creating batch and return value
+
+
         WriteBatch batch = db.batch();
 
         // add player info to batch
@@ -91,8 +92,6 @@ public class PlayerDB {
         item.put("Email", player.getEmail());
         item.put("Region", player.getRegion());
         item.put("Date Joined", player.getDateJoined());
-        //item.put("highest score", 0);
-        //item.put("total score", 0);
         batch.set(playerRef, item);
 
         // commits batch writes to firebase
@@ -138,6 +137,10 @@ public class PlayerDB {
             }
 
         });
+    }
+
+    public void getAllPlayers(OnCompleteListener<List<Player>> listener) {
+
     }
 
     /**
@@ -267,58 +270,58 @@ public class PlayerDB {
         return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);    // Running .get on the Query should give you the sorted data
     }
 
-    /**
-     * Adds given code to player code collection in database
-     * @param code given code to add
-     * @param listener the listener to call when code is added
-     */
-    public void playerAddQRCode(QRCode code, OnCompleteListener<QRCode> listener) {
-        codeDB.getCode(code, (foundCode, success) -> {
-            if (foundCode == null) {
-                codeDB.addQRCode(code, (addedCode, success2) -> {
-                    if (addedCode != null) {
-                        listener.onComplete(addedCode, true);
-                    } else {
-                        listener.onComplete(null, false);
-                    }
-                });
-            }
-        });
-    }
-
-    /**
-     * Deletes given code from player code collection in database
-     * @param code given code to delete
-     * @param listener the listener to call when the code is deleted
-     */
-    public void playerDelQRCode(QRCode code, OnCompleteListener<QRCode> listener){
-        codeDB.getCode(code, (foundCode, success) -> {
-            if (foundCode != null) {
-                codeDB.deleteCode(code, (deletedCode, success2) -> {
-                    if (deletedCode != null) {
-                        listener.onComplete(deletedCode, true);
-                    } else {
-                        listener.onComplete(null, false);
-                    }
-                });
-            }
-        });
-    }
-
-    /**
-     * Returns a list of QRCodes the user owns
-     * @return list of user owned QRCodes
-     */
-    public void getUserCodes (OnCompleteListener<List> listener){
-        codeDB.getCodes((codeList, success)->{
-            if (success) {
-                Log.d("Banana", "Hello");
-                listener.onComplete(codeList, true);
-            } else {
-                listener.onComplete(null, false);
-            }
-        });
-    }
+//    /**
+//     * Adds given code to player code collection in database
+//     * @param code given code to add
+//     * @param listener the listener to call when code is added
+//     */
+//    public void playerAddQRCode(QRCode code, OnCompleteListener<QRCode> listener) {
+//        codeDB.getCode(code, (foundCode, success) -> {
+//            if (foundCode == null) {
+//                codeDB.addQRCode(code, (addedCode, success2) -> {
+//                    if (addedCode != null) {
+//                        listener.onComplete(addedCode, true);
+//                    } else {
+//                        listener.onComplete(null, false);
+//                    }
+//                });
+//            }
+//        });
+//    }
+//
+//    /**
+//     * Deletes given code from player code collection in database
+//     * @param code given code to delete
+//     * @param listener the listener to call when the code is deleted
+//     */
+//    public void playerDelQRCode(QRCode code, OnCompleteListener<QRCode> listener){
+//        codeDB.getCode(code, (foundCode, success) -> {
+//            if (foundCode != null) {
+//                codeDB.deleteCode(code, (deletedCode, success2) -> {
+//                    if (deletedCode != null) {
+//                        listener.onComplete(deletedCode, true);
+//                    } else {
+//                        listener.onComplete(null, false);
+//                    }
+//                });
+//            }
+//        });
+//    }
+//
+//    /**
+//     * Returns a list of QRCodes the user owns
+//     * @return list of user owned QRCodes
+//     */
+//    public void getUserCodes (OnCompleteListener<List> listener){
+//        codeDB.getCodes((codeList, success)->{
+//            if (success) {
+//                Log.d("Banana", "Hello");
+//                listener.onComplete(codeList, true);
+//            } else {
+//                listener.onComplete(null, false);
+//            }
+//        });
+//    }
 
 //    /**
 //     * Returns a list of QRCodes the given player owns

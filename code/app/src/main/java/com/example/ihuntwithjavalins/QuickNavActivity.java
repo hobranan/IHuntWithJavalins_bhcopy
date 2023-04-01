@@ -1,5 +1,6 @@
 package com.example.ihuntwithjavalins;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class QuickNavActivity extends AppCompatActivity {
 
         // MODEL
         // grabbed any device stored username variables within app local date storage
-        SharedPreferences mPrefs = getSharedPreferences("Login", 0);
+        SharedPreferences mPrefs = this.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
 
 

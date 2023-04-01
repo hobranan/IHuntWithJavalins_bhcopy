@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String userRegion;
     private String userDateJoined;
     private String TAG = "Sample"; // used as starter string for debug-log messaging
+    private PlayerController playerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         setContentView(R.layout.signup_login);
 
+        playerController = new PlayerController(this);
         confirmSignup = findViewById(R.id.button_signup_confirm);
         editText_signup_Username = findViewById(R.id.edittext_signup_username);
         editText_signup_Email = findViewById(R.id.edittext_signup_email);
@@ -75,65 +79,15 @@ public class SignUpActivity extends AppCompatActivity {
                     Date today = Calendar.getInstance().getTime();
                     userDateJoined = df.format(today);
 
-                    //https://stackoverflow.com/questions/53332471/checking-if-a-document-exists-in-a-firestore-collection
-                    // Access Firestore instance
-                    final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    final CollectionReference collectionRef_Users = db.collection("Users");
-                    final DocumentReference docRef_thisPlayer = collectionRef_Users.document(username);
-                    docRef_thisPlayer.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (!document.exists()) {
-
-                                    Log.d(TAG, "Document does not exist! New player, signing up");
-
-                                    HashMap<String, String> dataMap = new HashMap<>();
-                                    dataMap.put("Date Joined", userDateJoined);
-                                    dataMap.put("Email", userEmail);
-                                    dataMap.put("Region", userRegion);
-                                    collectionRef_Users
-                                            .document(username)
-                                            .set(dataMap)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    // set saved tag as savedUser so when app reopen you can recall this info and skip signup
-                                                    SharedPreferences mPrefs = getSharedPreferences("Login", 0);
-                                                    mPrefs.edit().putString("UsernameTag", username).apply();
-
-                                                    Toast toast = Toast.makeText(getApplicationContext(), "Player new, signing up", Toast.LENGTH_LONG);
-                                                    toast.show(); // display the Toast popup
-
-                                                    switchToMain();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() { // log the failure on your console (if sending-action failed)
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    //do nothing
-                                                    Toast toast = Toast.makeText(getApplicationContext(), "firebase failed?", Toast.LENGTH_LONG);
-                                                    toast.show(); // display the Toast popup
-                                                }
-                                            });
-                                } else {
-                                    Log.d(TAG, "Document does exists! Old player, logging in");
-
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Player exists, logging in", Toast.LENGTH_LONG);
-                                    toast.show(); // display the Toast popup
-
-                                    // set saved tag as savedUser so when app reopen you can recall this info and skip signup
-                                    SharedPreferences mPrefs = getSharedPreferences("Login", 0);
-                                    mPrefs.edit().putString("UsernameTag", document.getId()).apply();
-
-                                    switchToMain();
-
-                                }
-                            } else {
-                                Log.d(TAG, "Failed with: ", task.getException());
-                            }
+                    Player newUser = new Player(username, userEmail, userRegion, userDateJoined);
+                    playerController.addUser(newUser, (addedUser, success) -> {
+                        if (success) {
+                            switchToMain();
+                        } else {
+                            Log.d(TAG, "Adding Failed");
                         }
                     });
+
                 } else {
                     // make pop-up warning about empty strings or list already has name
                     Toast toast = Toast.makeText(getApplicationContext(), "some info is empty", Toast.LENGTH_LONG);
