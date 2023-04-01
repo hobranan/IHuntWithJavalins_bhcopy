@@ -56,7 +56,7 @@ public class QuickNavActivityTest {
     @Test
     public void scanACodeButton() {
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
-        solo.clickOnButton("Scan A Code");
+        solo.clickOnView(solo.getView(R.id.button_qn_scanCode));
         solo.assertCurrentActivity("Wrong Activity", CameraScanActivity.class);
     }
 
@@ -78,7 +78,7 @@ public class QuickNavActivityTest {
     @Test
     public void seeTheScoreboardButton() {
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
-        solo.clickOnButton("See The Scoreboard");
+        solo.clickOnView(solo.getView(R.id.button_qn_sb));
         solo.assertCurrentActivity("Wrong Activity", ScoreboardActivity.class);
     }
 
