@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
+import com.example.ihuntwithjavalins.Scoreboard.CustomListScoreBoard;
+import com.example.ihuntwithjavalins.Scoreboard.ScoreboardActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -30,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 /**
@@ -49,6 +53,13 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
     private Player player;
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
     private String TAG = "Sample"; // used as starter string for debug-log messaging
+    private boolean sortNameAscend = false;
+    private boolean sortPointsAscend = false;
+    private boolean sortDateAscend = false;
+
+    private Button btn_sortNames;
+    private Button btn_sortPoints;
+    private Button btn_sortDates;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +69,10 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         codeLib_quickNav = findViewById(R.id.button_codelib_qn);
         addExamplesButton = findViewById(R.id.button_addHardcodes);
         addExamplesButton.setVisibility(View.INVISIBLE); //*for testing
+
+        btn_sortNames = findViewById(R.id.ml_sort_name_btn);
+        btn_sortPoints = findViewById(R.id.ml_sort_points_btn);
+        btn_sortDates = findViewById(R.id.ml_sort_date_btn);
 
         // Setup/link list to new adapter for linking data and UI
         libraryList = findViewById(R.id.code_list_listview); // grab UI-datalist var
@@ -88,7 +103,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
                     String codeLatValue = (String) doc.getData().get("Lat Value");
                     String codeLonValue = (String) doc.getData().get("Lon Value");
                     String codePhotoRef = (String) doc.getData().get("Photo Ref");
-                    String codeDate = (String) doc.getData().get("Code Date:");
+                    String codeDate = (String) doc.getData().get("Code Date");
                     codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
                 }
                 libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
@@ -142,8 +157,61 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
             }
         });
 
+        btn_sortNames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(codeList, new Comparator<QRCode>() {
+                    @Override
+                    public int compare(QRCode q1, QRCode q2) {
+                        return (q1.getCodeName().toLowerCase()).compareTo(q2.getCodeName().toLowerCase());
+                    }
+                });
+                if (sortNameAscend) {
+                    Collections.reverse(codeList);
+                }
+                sortNameAscend = !sortNameAscend;
+                // Update the adapter with the sorted list
+                libraryAdapter.notifyDataSetChanged();
+            }
+        });
 
-        // This listener will allow the delete button option to appear when UI-list item is clicked on
+        btn_sortPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(codeList, new Comparator<QRCode>() {
+                    @Override
+                    public int compare(QRCode q1, QRCode q2) {
+                        return (q1.getCodePoints()).compareTo(q2.getCodePoints());
+                    }
+                });
+                if (sortPointsAscend) {
+                    Collections.reverse(codeList);
+                }
+                sortPointsAscend = !sortPointsAscend;
+                libraryAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+        btn_sortDates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(codeList, new Comparator<QRCode>() {
+                    @Override
+                    public int compare(QRCode q1, QRCode q2) {
+                        return (q1.getCodeDate()).compareTo(q2.getCodeDate());
+                    }
+                });
+                if (sortDateAscend) {
+                    Collections.reverse(codeList);
+                }
+                sortDateAscend = !sortDateAscend;
+                // Update the adapter with the sorted list
+                libraryAdapter.notifyDataSetChanged();
+            }
+        });
+
+
         libraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

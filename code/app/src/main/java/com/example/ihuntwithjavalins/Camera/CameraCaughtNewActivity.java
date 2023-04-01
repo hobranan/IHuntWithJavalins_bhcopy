@@ -102,9 +102,9 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        setContentView(R.layout.scanned_code_new);
+        setContentView(R.layout.scannedcode_new);
         codeName = findViewById(R.id.civ_qr_code_name);
-        codeHash = findViewById(R.id.civ_hash_code_);
+        codeHash = findViewById(R.id.player_hash);
         codePoints = findViewById(R.id.civ_total_points);
         codePicImage = findViewById(R.id.civ_display_img);
         save_geolocation = (CheckBox) findViewById(R.id.checkbox_geolocation);
@@ -196,7 +196,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                 dataMap2.put("Point Value", thisCode.getCodePoints());
 
                 if (save_geolocation.isChecked()) {
-                    Log.d(TAG, "locationadded 1");
+//                    Log.d(TAG, "locationadded 1");
 
 //                    String longitude = String.valueOf(thislocation.getLongitude());//*hide to prevent current location tracking (use fake below)
 //                    String latitude = String.valueOf(thislocation.getLatitude());

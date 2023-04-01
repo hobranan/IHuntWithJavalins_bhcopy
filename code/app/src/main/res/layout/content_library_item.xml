@@ -31,6 +31,15 @@
             android:textColor="@color/text1_bolded"
             android:textSize="15sp" />
 
+        <TextView
+            android:id="@+id/code_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Code Date"
+            android:textColor="@color/text1_bolded"
+            android:textSize="15sp" />
+
     </LinearLayout>
 
     <TextView

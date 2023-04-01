@@ -15,6 +15,42 @@
         android:clickable="true"
         android:focusable="true" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/map_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Region: "
+            android:textColor="@color/text1_bolded"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/map_spin_region"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@color/fill5_edittext"
+            android:textColor="@color/black"
+            android:popupBackground="@color/fill5_edittext"
+            android:textSize="24sp" />
+        <!--        android:ems="10"-->
+
+        <Button
+            android:id="@+id/map_region_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button1"
+            android:text="GO to Region"
+            android:textColor="@color/text2_general" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/map_backButton"
         android:layout_width="190dp"

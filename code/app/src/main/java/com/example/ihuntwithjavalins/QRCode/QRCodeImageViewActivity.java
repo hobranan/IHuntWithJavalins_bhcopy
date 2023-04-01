@@ -2,8 +2,10 @@ package com.example.ihuntwithjavalins.QRCode;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -76,6 +78,16 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         AssetManager assetManager = getAssets();
         monsterID.generateAndSetImage(codePicImage, thisCode.getCodeHash());
 
+        // https://stackoverflow.com/questions/29801031/how-to-add-button-tint-programmatically
+        if ( (thisCode.getCodePhotoRef() == null) || (thisCode.getCodePhotoRef().equals(""))){
+//            photoButton.setBackgroundTintColor(Color.GRAY);
+            photoButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+        }
+        if ( (thisCode.getCodeLat() == null) || (thisCode.getCodeLat().equals(""))){
+//            geoButton.setBackgroundColor(Color.GRAY);
+            geoButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+        }
+
         // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
         // Create a storage reference from our app (https://firebase.google.com/docs/storage/android/download-files)
@@ -103,7 +115,7 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( (thisCode.getCodePhotoRef() != null) || (!thisCode.getCodePhotoRef().equals(""))){
+                if ( (thisCode.getCodePhotoRef() != null) && (!thisCode.getCodePhotoRef().equals(""))){
                     Intent intent = new Intent(QRCodeImageViewActivity.this, PhotoViewActivity.class);
                     intent.putExtra("imageSavedCodePhotoRef", thisCode.getCodePhotoRef());
                     startActivity(intent);

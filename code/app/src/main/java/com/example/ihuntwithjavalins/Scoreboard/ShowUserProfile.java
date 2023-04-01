@@ -21,6 +21,7 @@ public class ShowUserProfile extends AppCompatActivity {
     private Player player_details = new Player();
     private ArrayList<Player> playerList = new ArrayList<>();
     private String TAG = "Sample"; // used as starter string for debug-log messaging
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,6 @@ public class ShowUserProfile extends AppCompatActivity {
 //                finish();
 //            }
 //        });
-
 
 
         Intent myIntent = getIntent();
@@ -70,49 +70,8 @@ public class ShowUserProfile extends AppCompatActivity {
         TextView highestCodeValuePlacing = findViewById(R.id.prf_highestcodevalueplacing_data);
 
         username.setText(player_details.getUsername());
-        userdateJoined.setText(player_details.getDateJoined());
-        String date = player_details.getDateJoined();
-                String date_joined = "";
-                if (date!=null){
-                    String[] months = {
-                            "January",
-                            "February",
-                            "March",
-                            "April",
-                            "May",
-                            "June",
-                            "July",
-                            "August",
-                            "September",
-                            "October",
-                            "November",
-                            "December"
-                    };
-                    String year = date.substring(0,4);
-                    String month = date.substring(4,6);
-                    String day = date.substring(6,8);
-                    // Convert the day from a string to an integer
-                    int dayInt = Integer.parseInt(day);
-                    // Get the day suffix
-                    String daySuffix;
-                    if (dayInt % 10 == 1 && dayInt != 11) {
-                        daySuffix = "st";
-                    } else if (dayInt % 10 == 2 && dayInt != 12) {
-                        daySuffix = "nd";
-                    } else if (dayInt % 10 == 3 && dayInt != 13) {
-                        daySuffix = "rd";
-                    } else {
-                        daySuffix = "th";
-                    }
-                    // Get the month name from the array
-                    int monthInt = Integer.parseInt(month);
-                    String monthName = months[monthInt - 1];
-                    // Build the final date string
-                    date_joined = dayInt + daySuffix + " " + monthName + ", " + year;
-                }
-                else{
-                    date_joined="No date";
-                }
+//        userdateJoined.setText(player_details.getDateJoined());
+        String date_joined = getNiceDateFormat(player_details.getDateJoined());
         userdateJoined.setText(date_joined);
 
         userEmail.setText(player_details.getEmail());
@@ -133,7 +92,7 @@ public class ShowUserProfile extends AppCompatActivity {
         for (Player plr : playerList) {
             if ((player_details.getRegion()).equals(plr.getRegion())) {
                 regional_players.add(plr);
-                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " "+ plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
+                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " " + plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
             }
         }
         float goldLevel = 0.05f;
@@ -318,6 +277,55 @@ public class ShowUserProfile extends AppCompatActivity {
         }
 
 
+    }
 
+    String getNiceDateFormat(String joinedDate) {
+        String date = joinedDate;
+        String date_joined = "";
+        if (date != null) {
+            String[] months = {
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December"
+            };
+            String year = date.substring(0, 4);
+            String month = date.substring(4, 6);
+            String day = date.substring(6, 8);
+            // Convert the day from a string to an integer
+            int dayInt = Integer.parseInt(day);
+            // Get the day suffix
+            String daySuffix;
+            if (dayInt % 10 == 1 && dayInt != 11) {
+                daySuffix = "st";
+            } else if (dayInt % 10 == 2 && dayInt != 12) {
+                daySuffix = "nd";
+            } else if (dayInt % 10 == 3 && dayInt != 13) {
+                daySuffix = "rd";
+            } else {
+                daySuffix = "th";
+            }
+            // Get the month name from the array
+            int monthInt = Integer.parseInt(month);
+            String monthName = months[monthInt - 1];
+            // Build the final date string
+            date_joined = dayInt + daySuffix + " " + monthName + ", " + year;
+        } else {
+            date_joined = "No date";
+        }
+        return date_joined;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
