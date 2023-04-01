@@ -328,12 +328,14 @@ public class QRCodeViewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         BackActionToLibrary();
+//        finish();
     }
 
     void BackActionToLibrary() {
-        Intent intent = new Intent(QRCodeViewActivity.this, QRCodeLibraryActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+//        Intent intent = new Intent(QRCodeViewActivity.this, QRCodeLibraryActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+        finish();
     }
 
     String getNiceDateFormat(String joinedDate) {

@@ -89,32 +89,33 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         String mStringU = mPrefs.getString("UsernameTag", "default_username_not_found");
 
 
-//        // Access a Firestore instance
-//        final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
-//        final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
-//        final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mStringU); // pull instance of specific collection in firestore
-//        final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
-//
-//        // This listener will pull the firestore data into your android app (if you reopen the app)
-//        subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-//            FirebaseFirestoreException error) {
-//                codeList.clear(); // Clear the old list
-//                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
-//                    String codeHash = doc.getId();
-//                    String codeName = (String) doc.getData().get("Code Name");
-//                    String codePoints = (String) doc.getData().get("Point Value");
-//                    String codeImgRef = (String) doc.getData().get("Img Ref");
-//                    String codeLatValue = (String) doc.getData().get("Lat Value");
-//                    String codeLonValue = (String) doc.getData().get("Lon Value");
-//                    String codePhotoRef = (String) doc.getData().get("Photo Ref");
-//                    String codeDate = (String) doc.getData().get("Code Date");
-//                    codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
-//                }
-//                libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-//            }
-//        });
+        // Access a Firestore instance
+        final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
+        final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
+        final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mStringU); // pull instance of specific collection in firestore
+        final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
+
+        // This listener will pull the firestore data into your android app (if you reopen the app)
+        subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+            FirebaseFirestoreException error) {
+                codeList.clear(); // Clear the old list
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
+                    String codeHash = doc.getId();
+                    String codeName = (String) doc.getData().get("Code Name");
+                    String codePoints = (String) doc.getData().get("Point Value");
+                    String codeImgRef = (String) doc.getData().get("Img Ref");
+                    String codeLatValue = (String) doc.getData().get("Lat Value");
+                    String codeLonValue = (String) doc.getData().get("Lon Value");
+                    String codePhotoRef = (String) doc.getData().get("Photo Ref");
+                    String codeDate = (String) doc.getData().get("Code Date");
+                    codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
+                }
+                libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
+            }
+        });
+
 //        addExamplesButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -228,9 +229,10 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
                 Intent intent = new Intent(QRCodeLibraryActivity.this, QRCodeViewActivity.class);
                 intent.putExtra("savedItemObject", (Serializable) item);
                 startActivity(intent);
+                libraryAdapter.notifyDataSetChanged();
             }
         });
-
+        libraryAdapter.notifyDataSetChanged();
         codeLib_quickNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
