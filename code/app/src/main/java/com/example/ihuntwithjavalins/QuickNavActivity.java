@@ -65,7 +65,7 @@ public class QuickNavActivity extends AppCompatActivity {
         // MODEL
         // grabbed any device stored username variables within app local date storage
         SharedPreferences mPrefs = this.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
-//        mPrefs.edit().clear().commit();
+//        mPrefs.edit().clear().commit();    // uncomment to easily clear the shared preferences for login testing
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
 
 
@@ -95,7 +95,7 @@ public class QuickNavActivity extends AppCompatActivity {
         } else {
 
             // grab all players from firebase into ArrayList<Player> playerList;
-            // calculate rankings/stats from playerlist (
+            // calculate rankings/stats from playerlist
             // pull myPlayer from playerList;
 
             // Access a Firestore instance
@@ -110,7 +110,7 @@ public class QuickNavActivity extends AppCompatActivity {
             });
             userNameDisplay.setText(player.getUsername());
 
-
+            // Gets player QRCode info
             playerController.getPlayerCodes(player.getUsername(), (foundCodes, success) -> {
                 if (success) {
                     codeList.addAll(foundCodes);
@@ -118,6 +118,8 @@ public class QuickNavActivity extends AppCompatActivity {
                     userTotalCodes.setText(String.valueOf(playerController.getTotalCodes(codeList)));
                 } else {
                     Log.d(TAG, "Error getting code data from database");
+                    userTotalPoints.setText(String.valueOf(playerController.calculateTotalPoints(codeList)));
+                    userTotalCodes.setText(String.valueOf(playerController.getTotalCodes(codeList)));
                 }
             });
         }
