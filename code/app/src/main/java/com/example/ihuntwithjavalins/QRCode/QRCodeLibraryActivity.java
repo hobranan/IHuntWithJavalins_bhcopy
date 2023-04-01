@@ -50,7 +50,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
     private ListView libraryList; // activity_main.xml's object for holding the UI-datalist (within content.xml)
     private ArrayAdapter<QRCode> libraryAdapter; // adapter (custom child class of Adapter) to link/use on backend-datalist
 
-    private Player player;
+    private Player player = new Player();
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
     private String TAG = "Sample"; // used as starter string for debug-log messaging
     private boolean sortNameAscend = false;
@@ -74,6 +74,11 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         btn_sortPoints = findViewById(R.id.ml_sort_points_btn);
         btn_sortDates = findViewById(R.id.ml_sort_date_btn);
 
+        // Get the intent from the previous activity
+        Intent myIntent = getIntent();
+        player = (Player) myIntent.getSerializableExtra("myPlayer");
+        codeList = (ArrayList<QRCode>) player.getCodes();
+
         // Setup/link list to new adapter for linking data and UI
         libraryList = findViewById(R.id.code_list_listview); // grab UI-datalist var
         libraryAdapter = new LibraryListForLibraryAdapter(this, codeList); // create adapter (custom child class of Adapter) to link/use on backend-datalist
@@ -83,79 +88,80 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
         String mStringU = mPrefs.getString("UsernameTag", "default_username_not_found");
 
-        // Access a Firestore instance
-        final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
-        final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
-        final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mStringU); // pull instance of specific collection in firestore
-        final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
 
-        // This listener will pull the firestore data into your android app (if you reopen the app)
-        subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-            FirebaseFirestoreException error) {
-                codeList.clear(); // Clear the old list
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
-                    String codeHash = doc.getId();
-                    String codeName = (String) doc.getData().get("Code Name");
-                    String codePoints = (String) doc.getData().get("Point Value");
-                    String codeImgRef = (String) doc.getData().get("Img Ref");
-                    String codeLatValue = (String) doc.getData().get("Lat Value");
-                    String codeLonValue = (String) doc.getData().get("Lon Value");
-                    String codePhotoRef = (String) doc.getData().get("Photo Ref");
-                    String codeDate = (String) doc.getData().get("Code Date");
-                    codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
-                }
-                libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-            }
-        });
-        addExamplesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ArrayList<String> exText4hashlist = new ArrayList<>();
-                exText4hashlist.addAll(Arrays.asList(
-                        "dfgdfgsdfgs",
-                        "gfdfsgs",
-                        "hgjghjgjg",
-                        "ghiouilghjl",
-                        "erqwerwer",
-                        "tyu7hu56y"
-
-                ));
-                for (int i = 0; i < exText4hashlist.size(); i++) {
-                    QRCode temp = new QRCode(exText4hashlist.get(i));
-                    codeList.add(temp);
-                    HashMap<String, String> dataMap = new HashMap<>();
-                    dataMap.put("Code Name", temp.getCodeName());
-                    dataMap.put("Point Value", temp.getCodePoints());
-                    dataMap.put("Img Ref", temp.getCodeGendImageRef());
-                    dataMap.put("Code Date", temp.getCodeDate());
-                    Random randomizer = new Random();// fake ones (ualberta campus points) with random offsets
-                    String latitude = String.valueOf(53.5269 + ( 0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
-                    String longitude = String.valueOf(-113.52740 + ( 0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
-                    dataMap.put("Lat Value", latitude);
-                    dataMap.put("Lon Value", longitude);
-                    dataMap.put("Photo Ref", "20230311_115608.jpg");//testing
-                    subColRef_Codes
-                            .document(temp.getCodeHash())
-                            .set(dataMap) // add province key-value-pair (to sub-collection of document)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() { // log the success on your console (this helps you verify that the firestore sending-action worked)
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    // These are a method which gets executed when the task is succeeded
-                                    Log.d(TAG, "Data has been added successfully!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() { // log the failure on your console (if sending-action failed)
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // These are a method which gets executed if there’s any problem
-                                    Log.d(TAG, "Data could not be added!" + e.toString());
-                                }
-                            });
-                }
-            }
-        });
+//        // Access a Firestore instance
+//        final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
+//        final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
+//        final DocumentReference docRef_thisPlayer = collectionRef_Users.document(mStringU); // pull instance of specific collection in firestore
+//        final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
+//
+//        // This listener will pull the firestore data into your android app (if you reopen the app)
+//        subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+//            FirebaseFirestoreException error) {
+//                codeList.clear(); // Clear the old list
+//                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
+//                    String codeHash = doc.getId();
+//                    String codeName = (String) doc.getData().get("Code Name");
+//                    String codePoints = (String) doc.getData().get("Point Value");
+//                    String codeImgRef = (String) doc.getData().get("Img Ref");
+//                    String codeLatValue = (String) doc.getData().get("Lat Value");
+//                    String codeLonValue = (String) doc.getData().get("Lon Value");
+//                    String codePhotoRef = (String) doc.getData().get("Photo Ref");
+//                    String codeDate = (String) doc.getData().get("Code Date");
+//                    codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
+//                }
+//                libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
+//            }
+//        });
+//        addExamplesButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ArrayList<String> exText4hashlist = new ArrayList<>();
+//                exText4hashlist.addAll(Arrays.asList(
+//                        "dfgdfgsdfgs",
+//                        "gfdfsgs",
+//                        "hgjghjgjg",
+//                        "ghiouilghjl",
+//                        "erqwerwer",
+//                        "tyu7hu56y"
+//
+//                ));
+//                for (int i = 0; i < exText4hashlist.size(); i++) {
+//                    QRCode temp = new QRCode(exText4hashlist.get(i));
+//                    codeList.add(temp);
+//                    HashMap<String, String> dataMap = new HashMap<>();
+//                    dataMap.put("Code Name", temp.getCodeName());
+//                    dataMap.put("Point Value", temp.getCodePoints());
+//                    dataMap.put("Img Ref", temp.getCodeGendImageRef());
+//                    dataMap.put("Code Date", temp.getCodeDate());
+//                    Random randomizer = new Random();// fake ones (ualberta campus points) with random offsets
+//                    String latitude = String.valueOf(53.5269 + ( 0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
+//                    String longitude = String.valueOf(-113.52740 + ( 0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
+//                    dataMap.put("Lat Value", latitude);
+//                    dataMap.put("Lon Value", longitude);
+//                    dataMap.put("Photo Ref", "20230311_115608.jpg");//testing
+//                    subColRef_Codes
+//                            .document(temp.getCodeHash())
+//                            .set(dataMap) // add province key-value-pair (to sub-collection of document)
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() { // log the success on your console (this helps you verify that the firestore sending-action worked)
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    // These are a method which gets executed when the task is succeeded
+//                                    Log.d(TAG, "Data has been added successfully!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() { // log the failure on your console (if sending-action failed)
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    // These are a method which gets executed if there’s any problem
+//                                    Log.d(TAG, "Data could not be added!" + e.toString());
+//                                }
+//                            });
+//                }
+//            }
+//        });
 
         btn_sortNames.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +187,9 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
                 Collections.sort(codeList, new Comparator<QRCode>() {
                     @Override
                     public int compare(QRCode q1, QRCode q2) {
-                        return (q1.getCodePoints()).compareTo(q2.getCodePoints());
+                        int q1size = Integer.parseInt(q1.getCodePoints());
+                        int q2size = Integer.parseInt(q2.getCodePoints());
+                        return Integer.compare(q2size, q1size);
                     }
                 });
                 if (sortPointsAscend) {

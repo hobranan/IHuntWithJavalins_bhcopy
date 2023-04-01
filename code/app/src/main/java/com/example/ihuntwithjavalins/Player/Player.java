@@ -35,7 +35,8 @@ import java.util.List;
     /**
      * Holds the QRCodes the Player has scanned
      */
-    private List<QRCode> codes = new ArrayList<>();    // add QRCode class later
+//    private ArrayList<QRCode> codes = new ArrayList<>();
+    private List<QRCode> codes = new ArrayList<>();
 
     private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
 

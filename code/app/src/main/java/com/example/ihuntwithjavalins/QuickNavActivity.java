@@ -123,7 +123,7 @@ public class QuickNavActivity extends AppCompatActivity {
                                                             String codeLatValue = (String) doc.getData().get("Lat Value");
                                                             String codeLonValue = (String) doc.getData().get("Lon Value");
                                                             String codePhotoRef = (String) doc.getData().get("Photo Ref");
-                                                            String codeDate = (String) doc.getData().get("Code Date:");
+                                                            String codeDate = (String) doc.getData().get("Code Date");
                                                             tempCodeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
                                                         }
                                                         tempPlayer.addCodes(tempCodeList);
