@@ -37,7 +37,7 @@ public class LocationIntentTests {
      * Makes sure the set up didn't fail
      */
     @Test
-    public void start() throws Exception{
+    public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
 
@@ -49,7 +49,21 @@ public class LocationIntentTests {
         solo.assertCurrentActivity("Wrong Activity", OpenStreetMapActivity.class);
     }
 
+    @After
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
+    /**
+     * Checks the back button that takes us from OpenStreetMapActivity to
+     * QuickNavActivity and throws an error if it doesn't
+     */
+    @Test
+    public void backButton() {
+        solo.assertCurrentActivity("Wrong Activity", OpenStreetMapActivity.class);
+        solo.clickOnButton("BACK");
+        solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
 
+    }
 }
 
 
