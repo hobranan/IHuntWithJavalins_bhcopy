@@ -105,7 +105,6 @@ public class ProfileActivity extends AppCompatActivity {
         float silverLevel = 0.10f;
         float bronzeLevel = 0.25f;
 
-
         // sort both list by points
         String pointsString = "";
         Collections.sort(playerList, new Comparator<Player>() {

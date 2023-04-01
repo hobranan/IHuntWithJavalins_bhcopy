@@ -371,7 +371,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 //                Player focusedPlayer = playerList.get(position);
                 intent.putExtra("focusedPlayer", (Serializable) thisPlayer);
                 intent.putExtra("myPlayer", (Serializable) myPlayer);
-                intent.putExtra("playerList",playerList);
+                intent.putExtra("playerList", (Serializable) playerList);
                 intent.putExtra("StorageList", StorageList);
                 startActivity(intent);
                 StorageList.clear();
