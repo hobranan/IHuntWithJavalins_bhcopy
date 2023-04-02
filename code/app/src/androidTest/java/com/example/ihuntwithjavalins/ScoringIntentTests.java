@@ -20,10 +20,10 @@ public class ScoringIntentTests {
     private Solo solo;
 
     /**
-     * Puts us in OpenStreetMapActivity
+     * Puts us in ProfilActivity
      */
     @Rule
-    public ActivityTestRule rule = new ActivityTestRule(OpenStreetMapActivity.class, true, true);
+    public ActivityTestRule rule = new ActivityTestRule(ProfileActivity.class, true, true);
 
     /**
      * Sets up the Activity before every test
