@@ -14,7 +14,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * Contains methods that perform action on or using the Player model class throughout the code
+ * Design Patterns:
+ * observer pattern - OnCompleteListener used to notify the caller of an operation when it is complete
+ * factory pattern - PlayerDB object created in the constructor
+ * template pattern - sortPlayers method is a template
+ * singleton pattern - implementation of the DBConnection class
+ * chain of responsibility pattern - ComparisonChain class from Google Guava library
+ * */
 public class PlayerController {
     private AppCompatActivity activity;
     private DBConnection connection;

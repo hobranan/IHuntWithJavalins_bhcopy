@@ -35,6 +35,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * handles taking a photo and saving it to Firebase Storage as well as saving relevant information about the photo to a Firestore database.
+ * Design Patterns:
+ * factory pattern - firebase getInstance for instance of FirebaseStorage
+ * observer pattern - firestore onSuccess and onFailure
+ * singleton pattern - only 1 instance of firebase firestore throughout the class. Uses getinstance to ensure that.
+ * */
 public class PhotoTakeActivity extends AppCompatActivity {
     Button btnTakePhoto;
     Button btnSavePhoto;
