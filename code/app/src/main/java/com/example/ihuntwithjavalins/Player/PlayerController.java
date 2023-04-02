@@ -9,6 +9,9 @@ import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PlayerController {
@@ -44,11 +47,20 @@ public class PlayerController {
         });
     }
 
-    public void getPlayerData(Player player, OnCompleteListener<Player> listener) {
+    public void getPlayerData(String username, OnCompleteListener<Player> listener) {
+        Player player = new Player();
+        player.setUsername(username);
         playerDB.getPlayer(player, (foundPlayer, success) -> {
             if (success) {
                 Log.d(TAG, "Player data found");
-                listener.onComplete(foundPlayer, true);
+                playerDB.getPlayerCodes(foundPlayer, (codeCollection, codeSuccess) -> {
+                    if (codeSuccess) {
+                        foundPlayer.addCodes(codeCollection);
+                        listener.onComplete(foundPlayer, true);
+                    } else {
+                        Log.d(TAG, "Getting codes failed");
+                    }
+                });
             } else {
                 Log.d(TAG, "Player data not found");
                 listener.onComplete(foundPlayer, false);
@@ -56,40 +68,100 @@ public class PlayerController {
         });
     }
 
-    public void getPlayerCodes(String username, OnCompleteListener<List<QRCode>> listener) {
-        Player player = new Player();
-        player.setUsername(username);
-
-        playerDB.getPlayerCodes(player, (codeCollection, success) -> {
+    public void getAllPlayerData(OnCompleteListener<List<Player>> listener) {
+        playerDB.getAllPlayers((playerList, success) ->{
             if (success) {
-                listener.onComplete(codeCollection, true);
+                Log.d(TAG, "All player data obtained");
+                listener.onComplete(playerList, true);
             } else {
+                Log.d(TAG, "Player data retrieval failed");
                 listener.onComplete(null, false);
             }
         });
     }
 
-    public int calculateTotalPoints(List<QRCode> codeList) {
-        int totalPointsInt = 0;
-        for (QRCode code : codeList) {
-            totalPointsInt = totalPointsInt + Integer.parseInt(code.getCodePoints());
+    public List<Player> getRegionalPlayers(Player user, List<Player> playerList) {
+        List<Player> regionalPlayers = new ArrayList<>();
+        for (Player plr : playerList) {
+            if ((user.getRegion()).equals(plr.getRegion())) {
+                regionalPlayers.add(plr);
+                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " "+ plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
+            }
         }
-
-        return totalPointsInt;
+        return regionalPlayers;
     }
 
-    public int calculateHighestValue(List<QRCode> codeList) {
-        int highestcodeval = 0;
-        for (QRCode code: codeList ) {
-            if (Integer.parseInt(code.getCodePoints()) > highestcodeval) {
-                highestcodeval = Integer.parseInt(code.getCodePoints());
+    public String getRanking(Player user, List<Player> playerList, String wordBrake, String rankType) {
+        float goldLevel = 0.05f;
+        float silverLevel = 0.10f;
+        float bronzeLevel = 0.25f;
+        String codeString = "";
+
+        if (rankType.toLowerCase().equals("sum")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    int p1size = p1.getSumOfCodes();
+                    int p2size = p2.getSumOfCodes();
+                    return Integer.compare(p2size, p1size);
+                }
+            });
+        } else if (rankType.toLowerCase().equals("points")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    int p1size = p1.getSumOfCodePoints();
+                    int p2size = p2.getSumOfCodePoints();
+                    return Integer.compare(p2size, p1size);
+                }
+            });
+        } else if (rankType.toLowerCase().equals("high")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    int p1size = p1.getHighestCode();
+                    int p2size = p2.getHighestCode();
+                    return Integer.compare(p2size, p1size);
+                }
+            });
+        } else {
+            return wordBrake;
+        }
+
+        for (Player plr : playerList) {
+            Log.d(TAG, "BANANA");
+            if ((plr.getUsername()).equals(user.getUsername())) {
+                codeString = wordBrake + (playerList.indexOf(plr) + 1);
+                String rankString = "";
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= bronzeLevel) {
+                    rankString = " Bronze Level";
+                }
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= silverLevel) {
+                    rankString = " Silver Level";
+                }
+                if (((float) (playerList.indexOf(plr) + 1) / (float) playerList.size()) <= goldLevel) {
+                    rankString = " Gold Level";
+                }
+                if (playerList.indexOf(plr) == 0) {
+                    rankString = " Leader!";
+                }
+                codeString = codeString + rankString;
             }
         }
 
-        return highestcodeval;
+        return codeString;
     }
 
-    public int getTotalCodes(List<QRCode> codeList) {
-        return codeList.size();
+
+    public int calculateTotalPoints(Player player) {
+        return player.getSumOfCodePoints();
+    }
+
+    public int calculateHighestValue(Player player) {
+        return player.getHighestCode();
+    }
+
+    public int getTotalCodes(Player player) {
+        return player.getSumOfCodes();
     }
 }

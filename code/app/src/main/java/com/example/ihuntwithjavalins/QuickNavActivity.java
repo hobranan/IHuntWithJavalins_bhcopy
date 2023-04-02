@@ -34,10 +34,14 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The QuickNavActivity class is responsible for handling the main navigation screen in the app.
@@ -52,11 +56,10 @@ public class QuickNavActivity extends AppCompatActivity {
     private TextView userNameDisplay;
     private TextView userTotalPoints;
     private TextView userTotalCodes;
-    private Player player = new Player();
-    private ArrayList<Player> playerList = new ArrayList<>();
-    private ArrayList<QRCode> codeList = new ArrayList<>();
     private String TAG = "Sample"; // used as string tag for debug-log messaging
     private PlayerController playerController;
+    private AtomicReference<Player> player;
+    private AtomicReference<List<Player>> playerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,6 @@ public class QuickNavActivity extends AppCompatActivity {
         SharedPreferences mPrefs = this.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
 //        mPrefs.edit().clear().commit();    // uncomment to easily clear the shared preferences for login testing
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
-
 
 
         // VIEW
@@ -99,78 +101,78 @@ public class QuickNavActivity extends AppCompatActivity {
             // pull myPlayer from playerList;
 
             // Access a Firestore instance
-            player = new Player();
-            player.setUsername(mString);
-            playerController.getPlayerData(player, (foundPlayer, success) -> {
+            AtomicReference<Player> player = new AtomicReference<>();
+            playerController.getPlayerData(mString, (foundPlayer, success) -> {
                 if (success) {
-                    player = foundPlayer;
+                    player.set(foundPlayer);
+                    userNameDisplay.setText(player.get().getUsername());
+                    userTotalPoints.setText(String.valueOf(playerController.calculateTotalPoints(player.get())));
+                    userTotalCodes.setText(String.valueOf(playerController.getTotalCodes(player.get())));
                 } else {
                     Log.d(TAG, "Error finding player data");
                 }
             });
-            userNameDisplay.setText(player.getUsername());
 
-            // Gets player QRCode info
-            playerController.getPlayerCodes(player.getUsername(), (foundCodes, success) -> {
-                if (success) {
-                    codeList.addAll(foundCodes);
-                    userTotalPoints.setText(String.valueOf(playerController.calculateTotalPoints(codeList)));
-                    userTotalCodes.setText(String.valueOf(playerController.getTotalCodes(codeList)));
+            AtomicReference<List<Player>> playerList = new AtomicReference<>();
+            playerController.getAllPlayerData((foundPlayers, listSuccess) -> {
+                if (listSuccess) {
+                    Log.d(TAG, "Found all player data");
+                    playerList.set(foundPlayers);
                 } else {
-                    Log.d(TAG, "Error getting code data from database");
-                    userTotalPoints.setText(String.valueOf(playerController.calculateTotalPoints(codeList)));
-                    userTotalCodes.setText(String.valueOf(playerController.getTotalCodes(codeList)));
+                    Log.d(TAG, "Failed to retrieve all player data");
                 }
             });
+            // Gets player QRCode info
+
+            cameraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(QuickNavActivity.this, CameraScanActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
+
+            mapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(QuickNavActivity.this, OpenStreetMapActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
+
+            libraryButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(QuickNavActivity.this, QRCodeLibraryActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
+
+            scoreboardButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(QuickNavActivity.this, ScoreboardActivity.class);
+                    intent.putExtra("myPlayer", (Serializable) player.get());
+                    intent.putExtra("playerList", (Serializable) playerList.get());
+                    startActivity(intent);
+                }
+            });
+
+            profileButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
+                    // Add the custom object as an extra to the Intent
+                    intent.putExtra("myPlayer", (Serializable) player.get());
+                    intent.putExtra("playerList", (Serializable) playerList.get());
+                    startActivity(intent);
+                }
+            });
+
+
         }
-
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, CameraScanActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, OpenStreetMapActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-
-        libraryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, QRCodeLibraryActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-
-        scoreboardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, ScoreboardActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QuickNavActivity.this, ProfileActivity.class);
-                Player player = new Player();
-                player.setUsername(mString);
-                // Add the custom object as an extra to the Intent
-                intent.putExtra("savedPlayerObject", (Serializable) player);
-                startActivity(intent);
-            }
-        });
-
-
     }
 }

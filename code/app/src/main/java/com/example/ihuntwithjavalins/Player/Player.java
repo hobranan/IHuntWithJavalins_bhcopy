@@ -1,5 +1,7 @@
 package com.example.ihuntwithjavalins.Player;
 
+import android.util.Log;
+
 import com.example.ihuntwithjavalins.Comment.Comment;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
@@ -141,6 +143,15 @@ import java.util.List;
      */
     public List<QRCode> getCodes() {
         return codes;
+    }
+
+    /**
+     * Adds all codes from list to Player costs
+     * @param codes Codes to add to player
+     */
+    public void setCodes(List<QRCode> codes) {
+        this.codes.clear();
+        this.codes.addAll(codes);
     }
 
     /**

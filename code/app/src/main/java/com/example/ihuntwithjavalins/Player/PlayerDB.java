@@ -10,13 +10,17 @@ import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,7 +146,35 @@ public class PlayerDB {
     }
 
     public void getAllPlayers(OnCompleteListener<List<Player>> listener) {
+        collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Player> playerList = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Log.d(myTAG, doc.getId() + " => " + doc.getData());
 
+                        Player player = new Player();
+                        player.setUsername(doc.getId());
+                        player.setEmail(doc.getString("Email"));
+                        player.setRegion(doc.getString("Region"));
+                        player.setDateJoined(doc.getString("Date Joined"));
+                        getPlayerCodes(player, (foundCodes, foundSuccess) -> {
+                            if (foundSuccess) {
+                                player.setCodes(foundCodes);
+                                playerList.add(player);
+                            } else {
+                                Log.d(myTAG, "Getting codes failed");
+                            }
+                        });
+                    }
+                    listener.onComplete(playerList, true);
+                } else {
+                    Log.d(myTAG, "Error getting documents: ", task.getException());
+                    listener.onComplete(null, false);
+                }
+            }
+        });
     }
 
     /**
