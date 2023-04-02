@@ -53,6 +53,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
     private Player player = new Player();
     private ArrayList<QRCode> codeList = new ArrayList<>();// list of objects
     private String TAG = "Sample"; // used as starter string for debug-log messaging
+    private QRCodeController codeController;
     private boolean sortNameAscend = false;
     private boolean sortPointsAscend = false;
     private boolean sortDateAscend = false;
@@ -63,6 +64,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        codeController = new QRCodeController(this);
 
         setContentView(R.layout.library_mine);
 
@@ -87,7 +89,6 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         // grabbed any store username variables within app local date storage
         SharedPreferences mPrefs = getSharedPreferences("Login", 0);
         String mStringU = mPrefs.getString("UsernameTag", "default_username_not_found");
-
 
         // Access a Firestore instance
         final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
@@ -115,8 +116,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
                 libraryAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
         });
-
-//        addExamplesButton.setOnClickListener(new View.OnClickListener() {
+//                addExamplesButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                ArrayList<String> exText4hashlist = new ArrayList<>();
@@ -167,12 +167,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         btn_sortNames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(codeList, new Comparator<QRCode>() {
-                    @Override
-                    public int compare(QRCode q1, QRCode q2) {
-                        return (q1.getCodeName().toLowerCase()).compareTo(q2.getCodeName().toLowerCase());
-                    }
-                });
+                codeList = codeController.sortCodes(codeList, "name");
                 if (sortNameAscend) {
                     Collections.reverse(codeList);
                 }
@@ -185,14 +180,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         btn_sortPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(codeList, new Comparator<QRCode>() {
-                    @Override
-                    public int compare(QRCode q1, QRCode q2) {
-                        int q1size = Integer.parseInt(q1.getCodePoints());
-                        int q2size = Integer.parseInt(q2.getCodePoints());
-                        return Integer.compare(q2size, q1size);
-                    }
-                });
+                codeList = codeController.sortCodes(codeList, "points");
                 if (sortPointsAscend) {
                     Collections.reverse(codeList);
                 }
@@ -205,12 +193,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         btn_sortDates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(codeList, new Comparator<QRCode>() {
-                    @Override
-                    public int compare(QRCode q1, QRCode q2) {
-                        return (q1.getCodeDate()).compareTo(q2.getCodeDate());
-                    }
-                });
+                codeList = codeController.sortCodes(codeList, "date");
                 if (sortDateAscend) {
                     Collections.reverse(codeList);
                 }

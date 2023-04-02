@@ -147,6 +147,7 @@ public class QuickNavActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(QuickNavActivity.this, QRCodeLibraryActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("myPlayer", (Serializable) player.get());
                     startActivity(intent);
                 }
             });

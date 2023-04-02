@@ -26,9 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: Add added Player class fields(like date) to this
- * TODO: Fix getPlayerCodes to use lambda expressions
- *
  * PlayerDB is a class which handles all database operations for Player objects.
  * Much functionality is derived from Well Fed project example given by TA
  *

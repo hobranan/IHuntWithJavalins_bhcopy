@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.R;
 
@@ -27,13 +28,11 @@ import java.util.List;
 public class ShowIndividualCodes extends AppCompatActivity {
     boolean sortPointAmountAscend = false;
     boolean sortHaveAscend = false;
-
     boolean sortNameAscend = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         // viraj version
         setContentView(R.layout.scoreboard_main_individual);
