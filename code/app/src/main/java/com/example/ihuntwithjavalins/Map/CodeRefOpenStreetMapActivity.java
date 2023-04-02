@@ -42,6 +42,11 @@ import java.util.ArrayList;
  * The OpenStreetMapActivity class is an activity that displays a map using osmdroid library.
  * It loads the osmdroid configuration and inflates the map layout, which contains the map and some UI elements.
  * It also handles location tracking, map zooming and panning, and adding overlays to the map.
+ * Design Patterns:
+ * factory pattern - TileSourceFactory in MapView
+ * singleton pattern - configuration class using getInstance()
+ * observer pattern - ItemizedOverlayWithFocus observes the users interactions and notifies the listener
+ * command pattern - view.onClickListener
  * TODO: fix issue where map seems to overtake app and nearly-freezes back button action.
  * TODO: add algorithm to find codes within a lat/lon range
  */

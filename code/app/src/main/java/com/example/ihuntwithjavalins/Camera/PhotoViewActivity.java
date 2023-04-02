@@ -20,6 +20,7 @@ import com.google.firebase.storage.StorageReference;
 /**
  * Activity for displaying a photo taken with a QR code.
  * The activity retrieves the photo from Firebase Storage and sets it as the image of an ImageView.
+ * Design Patterns: none
  */
 public class PhotoViewActivity extends Activity {
     /**

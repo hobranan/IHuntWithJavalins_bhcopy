@@ -28,7 +28,8 @@ import java.util.Map;
 /**
  * PlayerDB is a class which handles all database operations for Player objects.
  * Much functionality is derived from Well Fed project example given by TA
- *
+ * Design Patterns:
+ * observer pattern - onCompleteListener
  * @version 1.0
  */
 public class PlayerDB {

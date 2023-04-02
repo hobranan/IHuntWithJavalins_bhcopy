@@ -44,6 +44,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * This class represents the activity where the user can view their profile information.
  * It extends the AppCompatActivity class.
+ * Design Patterns: none
  * TODO: add algorithms for rankings
  */
 public class ProfileActivity extends AppCompatActivity {

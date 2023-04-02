@@ -10,6 +10,7 @@ import java.util.Date;
 
 /**
  * This class represents a comment object containing the details of a comment made by a user on a code.
+ * Design Patterns: none
  * TODO: implement this with the app (no commenting yet)
  */
 public class Comment {
