@@ -120,7 +120,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")){
                         regionalList = new ArrayList<>(playerList);
                 } else {
-                    regionalList.addAll(playerController.getPlayersContainQuery(playerList, searchQuery));
+                    regionalList.addAll(playerController.getPlayersContainQuery(playerList, searchQuery, "region"));
                 }
                 if (regionalList.size() == 0) {
                     Toast.makeText(ScoreboardActivity.this, "Couldn't find any people in region: " + searchQuery, Toast.LENGTH_SHORT).show();
@@ -153,7 +153,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
                 ArrayList<Player> searchResultsList = new ArrayList<>();
-                searchResultsList.addAll(playerController.getPlayersContainQuery(regionalList, searchQuery));
+                searchResultsList.addAll(playerController.getPlayersContainQuery(regionalList, searchQuery, "within"));
                 if (searchQuery.equals("")){
                     rankingNameFlag = false;
                 } else {

@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -95,6 +97,28 @@ public class QRCodeDB {
                 listener.onComplete(code, true);
             } else {
                 Log.d(TAG, ":isFailure:" + hashValue);
+                listener.onComplete(code, false);
+            }
+        });
+    }
+
+    /**
+     * Overwrites(and creates new if not existing) QRCode in database based on HashMap
+     * @param code The QRCode to data to update
+     * @param dataMap The map of the data fields to update to
+     * @param listener the listener to call after overwriting
+     */
+    public void overwriteCode(QRCode code, HashMap<String, String> dataMap, OnCompleteListener<QRCode> listener) {
+        collection.document(code.getCodeHash()).set(dataMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Data has been added successfully!");
+                listener.onComplete(code, true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Data could not be added!" + e.toString());
                 listener.onComplete(code, false);
             }
         });

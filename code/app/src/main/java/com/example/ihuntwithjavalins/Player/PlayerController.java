@@ -15,18 +15,42 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Controller class for Player related operations
+ */
 public class PlayerController {
+    /**
+     * The activity currently using the controller
+     */
     private AppCompatActivity activity;
+    /**
+     * The connection to the database
+     */
     private DBConnection connection;
+    /**
+     * Holds the connection to PlayerDB
+     */
     private PlayerDB playerDB;
+    /**
+     * Hold tag for logging
+     */
     private String TAG = "PlayerController";
 
+    /**
+     * Constructor to initialize PlayerController
+     * @param activity the activity using the controller
+     */
     public PlayerController(AppCompatActivity activity) {
         this.activity = activity;
         this.connection = new DBConnection(activity.getApplicationContext());
         playerDB = new PlayerDB(connection);
     }
 
+    /**
+     * Adds player(user) to the database
+     * @param player the player data to add to the database
+     * @param listener the listener to call after adding
+     */
     public void addUser(Player player, OnCompleteListener<Player> listener) {
         playerDB.getPlayer(player, (foundPlayer, foundSuccess) -> {
             if (!foundSuccess) {
@@ -48,6 +72,11 @@ public class PlayerController {
         });
     }
 
+    /**
+     * Gets the player data from the database
+     * @param username the username of the player to get the data from
+     * @param listener the listener to call after getting
+     */
     public void getPlayerData(String username, OnCompleteListener<Player> listener) {
         Player player = new Player();
         player.setUsername(username);
@@ -69,7 +98,11 @@ public class PlayerController {
         });
     }
 
-    public void getAllPlayerData(OnCompleteListener<List<Player>> listener) {
+    /**
+     * Gets all players data from the database
+     * @param listener the listener to call after getting all player data
+     */
+    public void getAllPlayerData(OnCompleteListener<ArrayList<Player>> listener) {
         playerDB.getAllPlayers((playerList, success) ->{
             if (success) {
                 Log.d(TAG, "All player data obtained");
@@ -81,6 +114,12 @@ public class PlayerController {
         });
     }
 
+    /**
+     * Gets regional players from a given array of players
+     * @param user the user of the app
+     * @param playerList array of all players
+     * @return array of players with the same region as user
+     */
     public ArrayList<Player> getRegionalPlayers(Player user, ArrayList<Player> playerList) {
         ArrayList<Player> regionalPlayers = new ArrayList<>();
         for (Player plr : playerList) {
@@ -92,6 +131,14 @@ public class PlayerController {
         return regionalPlayers;
     }
 
+    /**
+     * Gets the ranking of the user compared to other players in the playerList
+     * @param user the user playing the app
+     * @param playerList list of players to compare user to
+     * @param wordBrake string which is modified to display ranking
+     * @param rankType string representing how to compare user with others
+     * @return string containing user ranking info
+     */
     public String getRanking(Player user, ArrayList<Player> playerList, String wordBrake, String rankType) {
         float goldLevel = 0.05f;
         float silverLevel = 0.10f;
@@ -124,6 +171,12 @@ public class PlayerController {
         return codeString;
     }
 
+    /**
+     * Sorts players in list based on given query choice
+     * @param playerList the list of players to sort
+     * @param query string representing how to sort the players
+     * @return array of sorted players
+     */
     public ArrayList<Player> sortPlayers(ArrayList<Player> playerList, String query) {
         if (query.toLowerCase().equals("sum")) {
             Collections.sort(playerList, new Comparator<Player>() {
@@ -174,16 +227,37 @@ public class PlayerController {
         return playerList;
     }
 
-    public ArrayList<Player> getPlayersContainQuery(ArrayList<Player> players, String query) {
+    /**
+     * Gets all players in list which contain the query
+     * @param players the list of players to search through
+     * @param query the string which will be searched for in player data
+     * @param type string representing where to search for query in player data
+     * @return list of players who contain the query
+     */
+    public ArrayList<Player> getPlayersContainQuery(ArrayList<Player> players, String query, String type) {
         ArrayList<Player> foundPlayers = new ArrayList<>();
-        for (Player player : players) {
-            if (player.getRegion().contains(query)) {
-                foundPlayers.add(player);
+        if (type.toLowerCase().equals("region")) {
+            for (Player player : players) {
+                if (player.getRegion().contains(query)) {
+                    foundPlayers.add(player);
+                }
+            }
+        } else if (type.toLowerCase().equals("within")) {
+            for (Player player : players) {
+                if (player.getUsername().toLowerCase().contains(query)) {
+                    foundPlayers.add(player);
+                }
             }
         }
 
         return foundPlayers;
     }
+
+    /**
+     * Converts date time to a more easily readable format
+     * @param joinedDate the date time
+     * @return string of formatted date time
+     */
     public String getNiceDateFormat (String joinedDate){
         String date = joinedDate;
         String date_joined = "";
@@ -229,15 +303,29 @@ public class PlayerController {
         return date_joined;
     }
 
-
+    /**
+     * Calculates the total points the player has
+     * @param player the player whose code points is being calculated
+     * @return the total sum of code points
+     */
     public int calculateTotalPoints(Player player) {
         return player.getSumOfCodePoints();
     }
 
+    /**
+     * Calculates the highest value code the player has
+     * @param player the player whose highest code is being calculated
+     * @return the value of the highest code player owns
+     */
     public int calculateHighestValue(Player player) {
         return player.getHighestCode();
     }
 
+    /**
+     * Gets the total codes a player owns
+     * @param player the player whose code count is being summed
+     * @return the sum of the player's code count
+     */
     public int getTotalCodes(Player player) {
         return player.getSumOfCodes();
     }
