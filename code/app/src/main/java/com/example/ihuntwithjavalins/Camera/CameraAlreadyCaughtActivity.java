@@ -31,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 /**
  * This activity is displayed when the user scans a QR code that has already been caught.
  * It displays the details of the scanned code and the image of the monster associated with it.
+ * Design patterns: none
  * TODO: implement this with the app (right now the camera cannot distinguish new codes from old QRcodes)
  */
 public class CameraAlreadyCaughtActivity extends AppCompatActivity {

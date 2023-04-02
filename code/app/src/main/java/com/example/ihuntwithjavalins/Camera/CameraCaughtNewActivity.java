@@ -45,6 +45,10 @@ import java.util.Random;
 
 /**
  * The activity for displaying and confirming a QR code that has been scanned using the device camera.
+ * Design Patterns:
+ * builder pattern - HashMap<String, String>
+ * factory pattern - object creation at Intent, SharedPreferences, FirebaseFirestore, ...
+ * observer pattern - addOnSuccessListener(), addOnFailureListener()
  * TODO: this is used as the only gateway from camera scanning (implement later a distinguishment between new and old captured codes)
  */
 public class CameraCaughtNewActivity extends AppCompatActivity {

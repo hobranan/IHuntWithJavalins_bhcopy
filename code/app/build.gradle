@@ -48,10 +48,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.0-M1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.5.4' // UI testing
     androidTestImplementation 'androidx.test:rules:1.2.0'
 
