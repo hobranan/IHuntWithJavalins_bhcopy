@@ -93,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
         username.setText(myPlayer.getUsername());
         userEmail.setText(myPlayer.getEmail());
         userregion.setText(myPlayer.getRegion());
-        userdateJoined.setText(myPlayer.getDateJoined());
+        userdateJoined.setText(playerController.getNiceDateFormat(myPlayer.getDateJoined()));
         totalPoints.setText(String.valueOf(playerController.calculateTotalPoints(myPlayer)));
         totalCodes.setText(String.valueOf(playerController.getTotalCodes(myPlayer)));
         highestCodeValue.setText(String.valueOf(playerController.calculateHighestValue(myPlayer)));

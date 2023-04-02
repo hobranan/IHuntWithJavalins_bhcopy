@@ -175,4 +175,8 @@ public class QuickNavActivity extends AppCompatActivity {
 
         }
     }
+    @Override
+    public void onBackPressed() {
+// do nothing
+    }
 }
