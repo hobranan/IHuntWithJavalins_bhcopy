@@ -117,7 +117,7 @@ public class QRCodeDB {
                     Log.d(TAG, ":exists:" + hashValue);
                     QRCode foundCode = new QRCode();
                     foundCode.setCodeHash(document.getId());
-                    foundCode.setCodeName(document.getString("Name"));
+                    foundCode.setCodeName(document.getString("Code Name"));
                     foundCode.setCodeLat(document.getString("Latitude"));
                     foundCode.setCodeLon(document.getString("Longitude"));
                     foundCode.setCodePhotoRef(document.getString("Photo Ref"));
@@ -167,18 +167,18 @@ public class QRCodeDB {
      * Citation: How to get data from firestore https://firebase.google.com/docs/firestore/query-data/get-data#java_14
      * @return list of QRCodes from the database collection
      */
-    public void getCodes(OnCompleteListener<List<QRCode>> listener) {
+    public void getCodes(OnCompleteListener<ArrayList<QRCode>> listener) {
         collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    List<QRCode> codeList = new ArrayList<>();
+                    ArrayList<QRCode> codeList = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Log.d(TAG, doc.getId() + " => " + doc.getData());
 
                         QRCode newCode = new QRCode();
                         newCode.setCodeHash(doc.getId());
-                        newCode.setCodeName((String) doc.getData().get("Name"));
+                        newCode.setCodeName((String) doc.getData().get("Code Name"));
                         newCode.setCodePoints((String) doc.getData().get("Point Value"));
                         newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
                         newCode.setCodeLon((String) doc.getData().get("Longitude"));

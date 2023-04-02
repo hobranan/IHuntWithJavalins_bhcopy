@@ -38,7 +38,7 @@ import java.util.List;
      * Holds the QRCodes the Player has scanned
      */
 //    private ArrayList<QRCode> codes = new ArrayList<>();
-    private List<QRCode> codes = new ArrayList<>();
+    private ArrayList<QRCode> codes = new ArrayList<>();
 
     private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
 
@@ -149,7 +149,7 @@ import java.util.List;
      * Adds all codes from list to Player costs
      * @param codes Codes to add to player
      */
-    public void setCodes(List<QRCode> codes) {
+    public void setCodes(ArrayList<QRCode> codes) {
         this.codes.clear();
         this.codes.addAll(codes);
     }

@@ -88,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Get the intent from the previous activity
         Intent myIntent = getIntent();
         Player myPlayer = (Player) myIntent.getSerializableExtra("myPlayer");
-        List<Player> players = (List<Player>) myIntent.getSerializableExtra("playerList");
+        ArrayList<Player> players = (ArrayList<Player>) myIntent.getSerializableExtra("playerList");
 
         username.setText(myPlayer.getUsername());
         userEmail.setText(myPlayer.getEmail());
@@ -98,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
         totalCodes.setText(String.valueOf(playerController.getTotalCodes(myPlayer)));
         highestCodeValue.setText(String.valueOf(playerController.calculateHighestValue(myPlayer)));
 
-        List<Player> regionalPlayers = playerController.getRegionalPlayers(myPlayer, players);
+        ArrayList<Player> regionalPlayers = playerController.getRegionalPlayers(myPlayer, players);
         String rankString = playerController.getRanking(myPlayer, players, "Everywhere: #", "points");
         rankString = playerController.getRanking(myPlayer, regionalPlayers, rankString + "\n" + "Regional: #", "points");
         totalPointsPlacing.setText(rankString);

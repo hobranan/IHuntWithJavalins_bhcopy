@@ -145,12 +145,12 @@ public class PlayerDB {
         });
     }
 
-    public void getAllPlayers(OnCompleteListener<List<Player>> listener) {
+    public void getAllPlayers(OnCompleteListener<ArrayList<Player>> listener) {
         collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    List<Player> playerList = new ArrayList<>();
+                    ArrayList<Player> playerList = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Log.d(myTAG, doc.getId() + " => " + doc.getData());
 
@@ -346,7 +346,7 @@ public class PlayerDB {
      * Returns a list of QRCodes the user owns
      * @return list of user owned QRCodes
      */
-    public void getUserCodes (OnCompleteListener<List> listener){
+    public void getUserCodes (OnCompleteListener<ArrayList<QRCode>> listener){
         codeDB.getCodes((codeList, success)->{
             if (success) {
                 listener.onComplete(codeList, true);
@@ -361,7 +361,7 @@ public class PlayerDB {
      * @param player the given player who owns the codes
      * @return list of player owned QRCodes
      */
-    public void getPlayerCodes(Player player, OnCompleteListener<List<QRCode>> listener){
+    public void getPlayerCodes(Player player, OnCompleteListener<ArrayList<QRCode>> listener){
         String playerUsername = player.getUsername();
         codeDB.switchFromPlayerToPlayerCodes(playerUsername);
         codeDB.getCodes((codeList, success)->{

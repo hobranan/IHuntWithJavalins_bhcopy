@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
+import com.google.common.collect.ComparisonChain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,8 +81,8 @@ public class PlayerController {
         });
     }
 
-    public List<Player> getRegionalPlayers(Player user, List<Player> playerList) {
-        List<Player> regionalPlayers = new ArrayList<>();
+    public ArrayList<Player> getRegionalPlayers(Player user, ArrayList<Player> playerList) {
+        ArrayList<Player> regionalPlayers = new ArrayList<>();
         for (Player plr : playerList) {
             if ((user.getRegion()).equals(plr.getRegion())) {
                 regionalPlayers.add(plr);
@@ -91,42 +92,13 @@ public class PlayerController {
         return regionalPlayers;
     }
 
-    public String getRanking(Player user, List<Player> playerList, String wordBrake, String rankType) {
+    public String getRanking(Player user, ArrayList<Player> playerList, String wordBrake, String rankType) {
         float goldLevel = 0.05f;
         float silverLevel = 0.10f;
         float bronzeLevel = 0.25f;
         String codeString = "";
 
-        if (rankType.toLowerCase().equals("sum")) {
-            Collections.sort(playerList, new Comparator<Player>() {
-                @Override
-                public int compare(Player p1, Player p2) {
-                    int p1size = p1.getSumOfCodes();
-                    int p2size = p2.getSumOfCodes();
-                    return Integer.compare(p2size, p1size);
-                }
-            });
-        } else if (rankType.toLowerCase().equals("points")) {
-            Collections.sort(playerList, new Comparator<Player>() {
-                @Override
-                public int compare(Player p1, Player p2) {
-                    int p1size = p1.getSumOfCodePoints();
-                    int p2size = p2.getSumOfCodePoints();
-                    return Integer.compare(p2size, p1size);
-                }
-            });
-        } else if (rankType.toLowerCase().equals("high")) {
-            Collections.sort(playerList, new Comparator<Player>() {
-                @Override
-                public int compare(Player p1, Player p2) {
-                    int p1size = p1.getHighestCode();
-                    int p2size = p2.getHighestCode();
-                    return Integer.compare(p2size, p1size);
-                }
-            });
-        } else {
-            return wordBrake;
-        }
+        playerList = sortPlayers(playerList, rankType);
 
         for (Player plr : playerList) {
             Log.d(TAG, "BANANA");
@@ -150,6 +122,67 @@ public class PlayerController {
         }
 
         return codeString;
+    }
+
+    public ArrayList<Player> sortPlayers(ArrayList<Player> playerList, String query) {
+        if (query.toLowerCase().equals("sum")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    int p1size = p1.getSumOfCodes();
+                    int p2size = p2.getSumOfCodes();
+                    return Integer.compare(p2size, p1size);
+                }
+            });
+        } else if (query.toLowerCase().equals("points")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    int p1size = p1.getSumOfCodePoints();
+                    int p2size = p2.getSumOfCodePoints();
+                    return Integer.compare(p2size, p1size);
+                }
+            });
+        } else if (query.toLowerCase().equals("high")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    int p1size = p1.getHighestCode();
+                    int p2size = p2.getHighestCode();
+                    return Integer.compare(p2size, p1size);
+                }
+            });
+        } else if (query.toLowerCase().equals("name")){
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    return (p1.getUsername().toLowerCase()).compareTo(p2.getUsername().toLowerCase());
+                }
+            });
+        } else if (query.toLowerCase().equals("high+sum")) {
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player p1, Player p2) {
+                    // https://stackoverflow.com/questions/4258700/collections-sort-with-multiple-fields
+                    return ComparisonChain.start().compare(p2.getHighestCode(), p1.getHighestCode()).compare(p2.getSumOfCodePoints(), p1.getSumOfCodePoints()).result();
+                }
+            });
+        } else {
+            return playerList;
+        }
+
+        return playerList;
+    }
+
+    public ArrayList<Player> getPlayersContainQuery(ArrayList<Player> players, String query) {
+        ArrayList<Player> foundPlayers = new ArrayList<>();
+        for (Player player : players) {
+            if (player.getRegion().contains(query)) {
+                foundPlayers.add(player);
+            }
+        }
+
+        return foundPlayers;
     }
 
 
