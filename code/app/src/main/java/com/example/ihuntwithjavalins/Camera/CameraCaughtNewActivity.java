@@ -161,17 +161,8 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-//                            Log.d(TAG, "locationadded 2");
-//                                        myGPS_point[0] = new GeoPoint(location.getLatitude(), location.getLongitude()); // current 'location tracker' point
-//                                        //my location map point 'item'
-//                                        OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
-//                                        items.add(myGPSoverlayItem);
-//                                        mapController.setCenter(myGPS_point[0]);//
-//                             String longitude = String.valueOf(locationTrack.getLongitude());//*hide to prevent current location tracking (use fake below)
-//                             String latitude = String.valueOf(locationTrack.getLatitude());
                             thislocation = location;
                         } else {
-//                            Log.d(TAG, "locationadded 3");
                             Toast.makeText(getApplicationContext(), "Cannot grab geolocation", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -190,15 +181,16 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                 dataMap2.put("Point Value", thisCode.getCodePoints());
 
                 if (save_geolocation.isChecked()) {
-//                    Log.d(TAG, "locationadded 1");
-
-//                    String longitude = String.valueOf(thislocation.getLongitude());//*hide to prevent current location tracking (use fake below)
-//                    String latitude = String.valueOf(thislocation.getLatitude());
-
-
-                    Random randomizer = new Random();// fake ones (ualberta campus points) with random offsets
-                    String latitude = String.valueOf(53.5269 + (0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
-                    String longitude = String.valueOf(-113.52740 + (0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
+                    String latitude;
+                    String longitude;
+                    if (thislocation == null) {
+                        Random randomizer = new Random();// fake ones (ualberta campus points) with random offsets
+                        latitude = String.valueOf(53.5269 + (0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
+                        longitude = String.valueOf(-113.52740 + (0.0001 + (0.0009 - 0.0001) * randomizer.nextDouble()));
+                    } else {
+                        longitude = String.valueOf(thislocation.getLongitude());//*hide to prevent current location tracking (use fake below)
+                        latitude = String.valueOf(thislocation.getLatitude());
+                    }
                     thisCode.setCodeLat(latitude);
                     thisCode.setCodeLon(longitude);
                     dataMap2.put("Lat Value", latitude);
