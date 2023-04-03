@@ -56,11 +56,6 @@ public class DBConnection {
 
         if (foundUsername == null) {
             sharedPreferences.edit().putString("UsernameTag", username).apply();
-    //        this.playerUsername = username; // added for intent tests, do not delete
-    //        SharedPreferences.Editor editor = sharedPreferences.edit();
-    //        editor.putString("Username", playerUsername);
-     //       editor.apply();
-//main
         }
     }
 

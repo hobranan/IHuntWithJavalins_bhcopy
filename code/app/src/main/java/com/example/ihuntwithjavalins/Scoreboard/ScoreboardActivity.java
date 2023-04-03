@@ -1,14 +1,10 @@
 package com.example.ihuntwithjavalins.Scoreboard;
 
-import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -19,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Player.Player;
@@ -27,20 +22,10 @@ import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
-import com.example.ihuntwithjavalins.TitleActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.common.collect.ComparisonChain;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -127,9 +112,6 @@ public class ScoreboardActivity extends AppCompatActivity {
                     regionalList = new ArrayList<>(savedInCase_List);
                 } else {
                     // Display search results in the list view
-//                    playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, regionalList);
-//                    listViewPlayerList.setAdapter(playerArrayAdapter);
-//                    playerArrayAdapter.notifyDataSetChanged();
                     regionalList = playerController.sortPlayers(regionalList, "points");
                     sortAscend = false;
                     if (sortAscend) {
@@ -174,7 +156,6 @@ public class ScoreboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rankingNameFlag = true;
-//                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by name
                 regionalList = playerController.sortPlayers(regionalList, "name");
 
@@ -192,7 +173,6 @@ public class ScoreboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rankingNameFlag = false;
-//                Toast.makeText(ScoreboardActivity.this, "Sort By Points", Toast.LENGTH_SHORT).show();
                 regionalList = playerController.sortPlayers(regionalList, "points");
                 if (sortAscend) {
                     Collections.reverse(regionalList);
@@ -208,7 +188,6 @@ public class ScoreboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rankingNameFlag = false;
-//                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by num of codes
                 regionalList = playerController.sortPlayers(regionalList, "sum");
                 if (sortAscend) {
@@ -241,11 +220,8 @@ public class ScoreboardActivity extends AppCompatActivity {
         listViewPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d(TAG, "playerID: "+ (playerArrayAdapter.getAdapter().getItem(position)).toString() );
-//                Player thisPlayer = listViewPlayerList.getId();
                 Player thisPlayer = playerArrayAdapter.getItem(position);
                 List<QRCode> codes = thisPlayer.getCodes();
-//                Toast.makeText(ScoreboardActivity.this,Integer.toString(codes.size()) , Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < codes.size(); i++) {
                     int has = 0;
                     for (QRCode mycode : myPlayer.getCodes()) {
@@ -258,13 +234,9 @@ public class ScoreboardActivity extends AppCompatActivity {
                     StoreNamePoints store = new StoreNamePoints(codes.get(i).getCodeName(), codes.get(i).getCodePoints(), boolHas);
                     StorageList.add(store);
                 }
-//                Toast.makeText(ScoreboardActivity.this, StorageList.get(1).getCodeName(), Toast.LENGTH_SHORT).show();
 
 
                 Intent intent = new Intent(ScoreboardActivity.this, ShowIndividualCodes.class);
-//                Toast.makeText(ScoreboardActivity.this, PlayerCodeList.get(position).getUsername(), Toast.LENGTH_SHORT).show();
-//                String get_username = playerList.get(position).getUsername();
-//                Player focusedPlayer = playerList.get(position);
                 intent.putExtra("focusedPlayer", (Serializable) thisPlayer);
                 intent.putExtra("myPlayer", (Serializable) myPlayer);
                 intent.putExtra("playerList", (Serializable) playerList);
@@ -282,29 +254,6 @@ public class ScoreboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        //delay timer to show list (sort by names) automatically after 2 seconds (otherwise you have to press 'sort by' button)
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                // Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
-//                // Sort the player list by name
-//                Collections.sort(playerList, new Comparator<Player>() {
-//                    @Override
-//                    public int compare(Player p1, Player p2) {
-//                        return (p1.getUsername().toLowerCase()).compareTo(p2.getUsername().toLowerCase());
-//                    }
-//                });
-//                if (sortNameAscend) {
-//                    Collections.reverse(playerList);
-//                }
-//                sortNameAscend = !sortNameAscend;
-//                // Update the adapter with the sorted list
-//                playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
-//                listViewPlayerList.setAdapter(playerArrayAdapter);
-//                playerArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-//            }
-//        }, 1500);
 
     }
 

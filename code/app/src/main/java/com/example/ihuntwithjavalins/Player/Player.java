@@ -1,6 +1,5 @@
 package com.example.ihuntwithjavalins.Player;
 
-import android.util.Log;
 
 import com.example.ihuntwithjavalins.Comment.Comment;
 import com.example.ihuntwithjavalins.QRCode.QRCode;

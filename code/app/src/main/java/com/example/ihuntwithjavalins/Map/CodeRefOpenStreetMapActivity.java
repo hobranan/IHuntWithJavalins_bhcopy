@@ -1,7 +1,5 @@
 package com.example.ihuntwithjavalins.Map;
 
-import static android.content.ContentValues.TAG;
-import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -54,9 +52,6 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
     private Button backButton;
-    private FusedLocationProviderClient fusedLocationClient;
-    private Player myPlayer;
-    private ArrayList<Player> playerList;
     private QRCode focusedCode;
 
     @Override
@@ -114,14 +109,6 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
         IMapController mapController = map.getController();
         mapController.setZoom(18.5);
 
-
-
-
-
-
-        // tracking my location
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
         //delay timer to move (used click instead, needs to be improved)
         new Handler().postDelayed(new Runnable() {
             @SuppressLint("MissingPermission")
@@ -129,48 +116,7 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
             public void run() {
                 //example map points (adding to array of points)
                 ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-//        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
-//        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
                 items.add(new OverlayItem(focusedCode.getCodeName(), focusedCode.getCodePoints(), new GeoPoint(Float.parseFloat(focusedCode.getCodeLat()), Float.parseFloat(focusedCode.getCodeLon())))); // Lat/Lon decimal degrees
-//                items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
-//                items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
-//                items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
-//
-//                ArrayList<QRCode> pointsCodeList = new ArrayList<>();
-//                ArrayList<String> pointsCodeListStrings = new ArrayList<>();
-//                for (Player player : playerList) {
-////                    items.add(new OverlayItem(player.getUsername(), player.getRegion(), new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
-//                    ArrayList<QRCode> tempCodeList = (ArrayList<QRCode>) player.getCodes();
-//                    for (QRCode code : tempCodeList) {
-//                        if (!pointsCodeListStrings.contains(code.getCodeHash())) {
-//                            pointsCodeListStrings.add(code.getCodeHash());
-//                            pointsCodeList.add(code);
-//                        }
-//                    }
-//                }
-//                Log.d(TAGmap, "geopoints size: " + pointsCodeListStrings.size());
-//                for (QRCode code : pointsCodeList) {
-//                    items.add(new OverlayItem(code.getCodeName(), code.getCodePoints(), new GeoPoint(Float.parseFloat(code.getCodeLat()), Float.parseFloat(code.getCodeLon())))); // Lat/Lon decimal degrees
-//                }
-
-//                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-//                final GeoPoint[] myGPS_point = new GeoPoint[1];
-//                fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken()) // ignore this error
-//                        .addOnSuccessListener(OpenStreetMapActivity.this, new OnSuccessListener<Location>() {
-//                            @Override
-//                            public void onSuccess(Location location) {
-//                                // Got last known location. In some rare situations this can be null.
-//                                if (location != null) {
-//                                    myGPS_point[0] = new GeoPoint(location.getLatitude(), location.getLongitude()); // current 'location tracker' point
-//                                    //my location map point 'item'
-//                                    OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
-//                                    items.add(myGPSoverlayItem);
-//                                    mapController.setCenter(myGPS_point[0]);
-//                                } else {
-////                            Log.w(TAG, "No current location could be found");
-//                                }
-//                            }
-//                        });
 
 
                 //the overlay
@@ -190,9 +136,6 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
                         }, ctx);
                 mOverlay.setFocusItemsOnTap(true);
                 map.getOverlays().add(mOverlay); // add 'item' array of points
-
-//                OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
-//                items.add(myGPSoverlayItem);
                 mapController.setCenter(items.get(0).getPoint());
             }
         }, 1000);

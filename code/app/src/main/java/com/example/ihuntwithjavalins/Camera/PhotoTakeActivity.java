@@ -31,7 +31,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -47,8 +46,6 @@ public class PhotoTakeActivity extends AppCompatActivity {
     Button btnSavePhoto;
     ImageView imageView;
     public static final int RequestPermissionCode = 1;
-
-//    private Player player;
     private QRCode code;
     private String TAG = "Sample"; // used as starter string for debug-log messaging
 

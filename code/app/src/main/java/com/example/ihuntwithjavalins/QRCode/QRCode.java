@@ -73,20 +73,6 @@ public class QRCode implements Serializable {
      */
     public QRCode(){}
 
-//    /**
-//     * Constructor for new instance of QRCode object, initializes initial fields based on parameters
-//     * @param codeName the name of the QRCode
-//     * @param codePoints the point value of the QRCode
-//     * @param codeHash the Hash value of the QRCode
-//     * @param codeGendImageRef the image reference of the QRCode
-//     */
-//    public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef) {
-//        this.codeHash = codeHash;
-//        this.codeName = codeName;
-//        this.codePoints = codePoints;
-//        this.codeGendImageRef = codeGendImageRef;
-//    }
-
     /**
      * Constructor for new instance of QRCode object, initalizes fields based on parameters
      * @param codeHash the hash value of the QRCode

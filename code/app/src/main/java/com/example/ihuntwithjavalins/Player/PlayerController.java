@@ -1,11 +1,9 @@
 package com.example.ihuntwithjavalins.Player;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 import com.google.common.collect.ComparisonChain;
@@ -13,7 +11,7 @@ import com.google.common.collect.ComparisonChain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
+
 
 /**
  * Contains methods that perform action on or using the Player model class throughout the code

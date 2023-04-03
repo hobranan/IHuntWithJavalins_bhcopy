@@ -1,7 +1,5 @@
 package com.example.ihuntwithjavalins;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,9 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Camera.CameraScanActivity;
@@ -20,27 +15,15 @@ import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.Profile.ProfileActivity;
-import com.example.ihuntwithjavalins.QRCode.QRCode;
+
 import com.example.ihuntwithjavalins.QRCode.QRCodeLibraryActivity;
 import com.example.ihuntwithjavalins.Scoreboard.ScoreboardActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -68,7 +51,6 @@ public class QuickNavActivity extends AppCompatActivity {
 
         // grabbed any device stored username variables within app local date storage
         SharedPreferences mPrefs = this.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
-//        mPrefs.edit().clear().commit();    // uncomment to easily clear the shared preferences for login testing
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
 
 
@@ -91,10 +73,6 @@ public class QuickNavActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
-
-            // grab all players from firebase into ArrayList<Player> playerList;
-            // calculate rankings/stats from playerlist
-            // pull myPlayer from playerList;
 
             // Access a Firestore instance
             AtomicReference<Player> player = new AtomicReference<>();
@@ -123,7 +101,6 @@ public class QuickNavActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(QuickNavActivity.this, CameraScanActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
             });
@@ -132,7 +109,6 @@ public class QuickNavActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(QuickNavActivity.this, OpenStreetMapActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
             });
@@ -141,7 +117,6 @@ public class QuickNavActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(QuickNavActivity.this, QRCodeLibraryActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("myPlayer", (Serializable) player.get());
                     startActivity(intent);
                 }
@@ -172,9 +147,11 @@ public class QuickNavActivity extends AppCompatActivity {
         }
     }
 
-    /* Overwrites back button so that it doesn't close on Quick Nav page*/
+    /**
+     * Overwrites back button so that it doesn't close on Quick Nav page
+     */
     @Override
     public void onBackPressed() {
-    // do nothing
+        // do nothing
     }
 }

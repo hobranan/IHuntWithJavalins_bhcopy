@@ -15,10 +15,7 @@ import com.example.ihuntwithjavalins.R;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,7 +49,6 @@ public class LibraryListForLibraryAdapter extends ArrayAdapter<QRCode> {
         TextView codeDate = view.findViewById(R.id.code_date_text);
         codeName.setText(tempCode.getCodeName());
         codePoints.setText(tempCode.getCodePoints() + " pts");
-//        codeHash.setText(tempCode.getCodeHash());
         codeHash.setText("");
 
         // https://www.baeldung.com/java-string-to-date

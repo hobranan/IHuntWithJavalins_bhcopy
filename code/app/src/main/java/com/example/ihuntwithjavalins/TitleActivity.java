@@ -3,11 +3,6 @@ package com.example.ihuntwithjavalins;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * Displays the starter title page that the app opens to*/

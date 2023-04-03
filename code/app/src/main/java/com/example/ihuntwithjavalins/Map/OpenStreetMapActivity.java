@@ -1,11 +1,9 @@
 package com.example.ihuntwithjavalins.Map;
 
-import static android.content.ContentValues.TAG;
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
@@ -19,14 +17,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
-import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
-import com.example.ihuntwithjavalins.TitleActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
@@ -35,10 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -93,10 +85,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
         // Access a Firestore instance
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionRef_Users = db.collection("Users");
-//        DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
-//        CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
-        // grab all players and their codes from firebase and put into player list
-//        Log.d(TAGmap, "playerlist 2");
         playerList = new ArrayList<>();
         collectionRef_Users
                 .get()
@@ -123,12 +111,8 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                                Log.d(TAGmap, "playerlist 6");
                                                 if (task.isSuccessful()) {
-
-//                                                    Log.d(TAGmap, "playerlist 7");
                                                     for (QueryDocumentSnapshot doc : task.getResult()) {
-//                                                        Log.d(TAGmap, "playerlist 8");
                                                         String codeHash = doc.getId();
                                                         String codeName = (String) doc.getData().get("Code Name");
                                                         String codePoints = (String) doc.getData().get("Point Value");
@@ -147,12 +131,11 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                                         myPlayer.setUsername(mStringU);
                                                         myPlayer.addCodes(tempCodeList);
                                                     }
-//                                                    Log.d(TAGmap, "playerlist 9 size: " + playerList.size());
                                                 }
                                             }
                                         });
                             }
-                            Log.d(TAGmap, "playerlist 10 size: " + playerList.size());
+                            Log.d(TAGmap, "playerlist size: " + playerList.size());
                         } else {
                             Log.d(TAGmap, "Error getting documents: ", task.getException());
                         }
@@ -219,7 +202,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 ArrayList<QRCode> pointsCodeList = new ArrayList<>();
                 ArrayList<String> pointsCodeListStrings = new ArrayList<>();
                 for (Player player : playerList) {
-//                    items.add(new OverlayItem(player.getUsername(), player.getRegion(), new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
                     ArrayList<QRCode> tempCodeList = (ArrayList<QRCode>) player.getCodes();
                     for (QRCode code : tempCodeList) {
                         if (!pointsCodeListStrings.contains(code.getCodeHash())) {
@@ -253,8 +235,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                                     OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
                                     items.add(myGPSoverlayItem);
                                     mapController.setCenter(myGPS_point[0]);
-                                } else {
-//                            Log.w(TAG, "No current location could be found");
                                 }
                             }
                         });

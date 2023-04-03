@@ -38,8 +38,7 @@ public class PhotoViewActivity extends Activity {
         ImageView codePicImage = findViewById(R.id.code_photo_taken);
 
         Bundle extras = getIntent().getExtras();
-        String savedCodePhotoRef = extras.getString("imageSavedCodePhotoRef");//The key argument here must match that used in the other activity
-//        String savedCodePhotoRef = "20230311_115608.jpg"; // testing
+        String savedCodePhotoRef = extras.getString("imageSavedCodePhotoRef");
 
         // Get a non-default Storage bucket (https://console.firebase.google.com/u/1/project/ihuntwithjavalins-22de3/storage/ihuntwithjavalins-22de3.appspot.com/files/~2F)
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ihuntwithjavalins-22de3.appspot.com/");
@@ -51,7 +50,6 @@ public class PhotoViewActivity extends Activity {
 
 
         // convert pathRef_pic to bytes, then set image bitmap via bytes (https://firebase.google.com/docs/storage/android/download-files)
-        //final long ONE_MEGABYTE = 1024 * 1024;
         final long ONE_POINT_FIVE_MEGABYTE = 1536 * 1536; // made this to get the .getBytes() limit larger (all pics are less than 1.5MB)
         pathReference_pic.getBytes(ONE_POINT_FIVE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -65,8 +63,6 @@ public class PhotoViewActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
             }
         });
-
-
 
 
         backButton.setOnClickListener(new View.OnClickListener() {

@@ -22,7 +22,6 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,13 +69,6 @@ public class PlayerDB {
         userUsername = connection.getUsername();
     }
 
-//    /**
-//     * Switches the codeDB connection to a new user based on username
-//     * @param username Username to switch codeDB connection to
-//     */
-//    public void switchPlayerDBConnection(String username) {
-//        codeDB.switchFromPlayerToPlayerCodes(username);
-//    }
 
     /**
      * Adds a player to the database(Use lambda to retrieve)

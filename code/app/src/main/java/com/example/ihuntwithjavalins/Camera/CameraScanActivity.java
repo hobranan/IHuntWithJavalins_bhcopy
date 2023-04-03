@@ -2,8 +2,6 @@ package com.example.ihuntwithjavalins.Camera;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -28,7 +26,6 @@ import java.util.Arrays;
 
 // https://medium.com/analytics-vidhya/creating-a-barcode-scanner-using-android-studio-71cff11800a2
 // https://alitalhacoban.medium.com/barcode-scanner-app-android-studio-60f87b5a10cd
-
 /**
  * Activity that uses the device's camera to scan barcodes and QR codes.
  * Design Patterns
@@ -41,7 +38,6 @@ public class CameraScanActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    //        private ToneGenerator toneGen1;//This class provides methods to play DTMF tones
     private TextView barcodeText;
     private String barcodeData;
     public static int cameraFlag;
@@ -56,7 +52,6 @@ public class CameraScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_barcode);
-//                toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 50);
         surfaceView = findViewById(R.id.surface_view);
         barcodeText = findViewById(R.id.barcode_text);
 
@@ -69,7 +64,6 @@ public class CameraScanActivity extends AppCompatActivity {
      * Initializes the barcode detector and camera source.
      */
     private void initialiseDetectorsAndSources() {
-        //Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
@@ -116,26 +110,16 @@ public class CameraScanActivity extends AppCompatActivity {
                     barcodeText.post(new Runnable() {
                         @Override
                         public void run() {
-//                                                        if (barcodes.valueAt(0).email != null) {
-//                                                                barcodeText.removeCallbacks(null);
-//                                                                barcodeData = barcodes.valueAt(0).email.address;
-//                                                                barcodeText.setText(barcodeData);
-//                                                                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-//                                                        } else {
                             barcodeData = "";
                             barcodeData = barcodes.valueAt(0).displayValue;
                             barcodeText.setText(barcodeData);
                             Log.d(TAG, "barcodeText = "+ barcodeText.getText().toString());
                             if (!Arrays.asList(" ", "").contains(barcodeData)) {
                                 QRCode thisCode = new QRCode(barcodeText.getText().toString());
-//                                        Intent intent = new Intent(CameraScanActivity.this, CameraAnalyzeScannedActivity.class); //testing
-                                Intent intent = new Intent(CameraScanActivity.this, CameraCaughtNewActivity.class); //testing
+                                Intent intent = new Intent(CameraScanActivity.this, CameraCaughtNewActivity.class);
                                 intent.putExtra("cameraSavedCodeObject", (Serializable) thisCode);
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }
-//                          toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-//                                                        }
                         }
                     });
 

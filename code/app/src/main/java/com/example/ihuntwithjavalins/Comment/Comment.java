@@ -1,12 +1,5 @@
 package com.example.ihuntwithjavalins.Comment;
 
-import android.os.Build;
-
-import com.example.ihuntwithjavalins.Player.Player;
-import com.google.firebase.firestore.auth.User;
-
-import java.time.LocalTime;
-import java.util.Date;
 
 /**
  * This class represents a comment object containing the details of a comment made by a user on a code.
