@@ -9,8 +9,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.UUID;
-
 /**
  * TODO: Update javadoc comments as functionality changed from uuid to username
  *
@@ -56,6 +54,7 @@ public class DBConnection {
         String foundUsername = sharedPreferences.getString("Username", null);    // second value null means return null if preference UUID does not exist
 
         if (foundUsername == null) {
+            this.playerUsername = username; // added for intent tests, do not delete
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("Username", playerUsername);
             editor.apply();
