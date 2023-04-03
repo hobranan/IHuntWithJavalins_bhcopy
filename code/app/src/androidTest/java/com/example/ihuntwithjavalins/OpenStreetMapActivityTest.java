@@ -1,6 +1,8 @@
 package com.example.ihuntwithjavalins;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;

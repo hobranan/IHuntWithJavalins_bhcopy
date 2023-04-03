@@ -1,4 +1,4 @@
-package com.example.ihuntwithjavalins.QRCode;
+package com.example.ihuntwithjavalins.Comment;
 
 import android.content.Context;
 import android.view.LayoutInflater;

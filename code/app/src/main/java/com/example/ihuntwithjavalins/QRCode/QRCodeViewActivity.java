@@ -1,14 +1,10 @@
 package com.example.ihuntwithjavalins.QRCode;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,18 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.Camera.CameraCaughtNewActivity;
 import com.example.ihuntwithjavalins.Comment.Comment;
+import com.example.ihuntwithjavalins.Comment.CommentListForCommentAdapter;
 import com.example.ihuntwithjavalins.MonsterID;
-import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
-import com.example.ihuntwithjavalins.TitleActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,14 +36,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * QRCodeViewActivity is an Activity class that displays details of a QRCode and provides options to delete,
