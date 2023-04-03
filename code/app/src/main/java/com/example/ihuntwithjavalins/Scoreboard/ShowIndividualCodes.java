@@ -3,6 +3,7 @@ package com.example.ihuntwithjavalins.Scoreboard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.QRCode.QRCodeViewOtherActivity;
 import com.example.ihuntwithjavalins.R;
 
 import java.io.Serializable;
@@ -135,6 +137,23 @@ public class ShowIndividualCodes extends AppCompatActivity {
 //                playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, playerList);
 ////                listViewPlayerList.setAdapter(playerArrayAdapter);
                 storageAdapter.notifyDataSetChanged();
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                StoreNamePoints thisCodeTemp = storageAdapter.getItem(position);
+                QRCode thisCode = null;
+                for (QRCode mycode : thisPlayer.getCodes()) {
+                    if ((mycode.getCodeName()).equals(thisCodeTemp.getCodeName())) {
+                        thisCode = mycode;
+                        break;
+                    }
+                }
+                Intent intent = new Intent(ShowIndividualCodes.this, QRCodeViewOtherActivity.class);
+                intent.putExtra("focusedCode", (Serializable) thisCode);
+                startActivity(intent);
             }
         });
 
