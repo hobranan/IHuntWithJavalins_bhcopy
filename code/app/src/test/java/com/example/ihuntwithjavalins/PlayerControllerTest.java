@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-/** Contains copies of all the methods that don't involve the database or app in the PLayerController class
+/**
+ * Contains copies of all the methods that don't involve the database or app in the PLayerController class
  * TODO: The test for getRanking*/
 public class PlayerControllerTest {
 
@@ -164,7 +165,8 @@ public class PlayerControllerTest {
         return player.getHighestCode();
     }
 
-    /** Series of tests to test the getRegionalPlayers method */
+    /**
+     * Series of tests to test the getRegionalPlayers method */
     @Test
     void getRegionalTest() {
         Player user = new Player("John Doe","murab@ualberta.ca","Edmonton");
@@ -195,7 +197,8 @@ public class PlayerControllerTest {
     }
 
 
-    /** Series of tests to test the getRanking method */
+    /**
+     * Series of tests to test the getRanking method */
     @Test
     public void getRankingTest() {
         // Setup test data
@@ -242,7 +245,8 @@ public class PlayerControllerTest {
         assertEquals(expected, rankString);
     }
 
-    /** Series of tests to test the sortPlayers method */
+    /**
+     * Series of tests to test the sortPlayers method */
     @Test
     public void sortPlayersTest() {
         ArrayList<Player> mockPlayers = new ArrayList<>();
@@ -270,7 +274,8 @@ public class PlayerControllerTest {
         assertEquals(output, initialList);
     }
 
-    /** Series of tests to test the niceDate method */
+    /**
+     * Series of tests to test the niceDate method */
     @Test
     public void niceDateNormalTest() {
         String date = "20230319";
@@ -283,7 +288,8 @@ public class PlayerControllerTest {
         assertEquals(getNiceDateFormat(date), "30th December, 9999");
     }
 
-    /** Test for playerController method calculateTotalPoints */
+    /**
+     * Test for playerController method calculateTotalPoints */
     @Test
     public void calculateTotalPointsTest() {
         Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
@@ -304,7 +310,8 @@ public class PlayerControllerTest {
         assertEquals(calculateTotalPoints(player1), 150);
     }
 
-    /** Test for playerController method calculateHighestValue */
+    /**
+     * Test for playerController method calculateHighestValue */
     @Test
     public void calculateHighestValueTest() {
         Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
