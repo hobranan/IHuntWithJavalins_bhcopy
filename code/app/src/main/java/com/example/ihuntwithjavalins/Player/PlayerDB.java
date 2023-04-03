@@ -143,6 +143,10 @@ public class PlayerDB {
         });
     }
 
+    /**
+     * Gets all player data from database
+     * @param listener the listener to call after data retrieval
+     */
     public void getAllPlayers(OnCompleteListener<ArrayList<Player>> listener) {
         collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override

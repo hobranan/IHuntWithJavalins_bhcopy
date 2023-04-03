@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
+import com.example.ihuntwithjavalins.QRCode.QRCodeController;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -96,6 +97,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
     private Location thislocation;
 
     private boolean takePhotoFlag = false;
+    private QRCodeController codeController;
 
     /**
      * Called when the activity is starting. Sets the UI layout, initializes the UI components, and gets the QR code object from the previous activity's intent.
@@ -105,6 +107,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        codeController = new QRCodeController(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         setContentView(R.layout.scannedcode_new);
         codeName = findViewById(R.id.civ_qr_code_name);
@@ -144,25 +147,13 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
         dataMap.put("Lat Value", "");
         dataMap.put("Lon Value", "");
         dataMap.put("Photo Ref", "");
-        subColRef_Codes
-                .document(thisCode.getCodeHash())// point to at document (hashcode) then...
-                .set(dataMap) // add key-value-pairs (to fields of document)
-                .addOnSuccessListener(new OnSuccessListener<Void>() { // log the success on your console (this helps you verify that the firestore sending-action worked)
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // These are a method which gets executed when the task is succeeded
-                        Log.d(TAG, "Data has been added successfully!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() { // log the failure on your console (if sending-action failed)
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // These are a method which gets executed if there’s any problem
-                        Log.d(TAG, "Data could not be added!" + e.toString());
-                    }
-                });
-
-
+        codeController.overwriteCode(thisCode, dataMap, (overwrittenCode, success) -> {
+            if (success) {
+                Log.d(TAG, "Data has been added successfully!");
+            } else {
+                Log.d(TAG, "Data could not be added!");
+            }
+        });
 
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken()) // ignore this error
@@ -225,23 +216,13 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Not saving photo.", Toast.LENGTH_SHORT).show();
                 }
 
-                subColRef_Codes
-                        .document(thisCode.getCodeHash())// point to at document (hashcode) then...
-                        .set(dataMap2) // add key-value-pairs (to fields of document)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() { // log the success on your console (this helps you verify that the firestore sending-action worked)
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // These are a method which gets executed when the task is succeeded
-                                Log.d(TAG, "Data has been added successfully!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() { // log the failure on your console (if sending-action failed)
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // These are a method which gets executed if there’s any problem
-                                Log.d(TAG, "Data could not be added!" + e.toString());
-                            }
-                        });
+                codeController.overwriteCode(thisCode, dataMap2, (overwrittenCode, success) -> {
+                    if (success) {
+                        Log.d(TAG, "Data has been added successfully!");
+                    } else {
+                        Log.d(TAG, "Data could not be added!");
+                    }
+                });
 
                 if (takePhotoFlag) {
                     takePhotoFlag = false;

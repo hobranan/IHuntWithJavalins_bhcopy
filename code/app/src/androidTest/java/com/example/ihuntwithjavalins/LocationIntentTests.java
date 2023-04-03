@@ -1,6 +1,8 @@
 package com.example.ihuntwithjavalins;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -27,6 +29,7 @@ public class LocationIntentTests {
 
     /**
      * Sets up the Activity before every test
+     * @throws Exception Thrown when robotium setup fails
      */
     @Before
     public void setUp() throws Exception {

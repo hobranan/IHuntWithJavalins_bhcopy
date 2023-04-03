@@ -1,14 +1,10 @@
 package com.example.ihuntwithjavalins.QRCode;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,18 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.Camera.CameraCaughtNewActivity;
 import com.example.ihuntwithjavalins.Comment.Comment;
+import com.example.ihuntwithjavalins.Comment.CommentListForCommentAdapter;
 import com.example.ihuntwithjavalins.MonsterID;
-import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
-import com.example.ihuntwithjavalins.TitleActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,14 +36,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * QRCodeViewActivity is an Activity class that displays details of a QRCode and provides options to delete,
@@ -68,6 +56,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
     private TextView codeDateCaught;
     private QRCode thisCode;
     private String TAG = "Sample"; // used as starter string for debug-log messaging
+    private QRCodeController codeController;
 
     private ArrayList<Comment> commentsForThisCode = new ArrayList<>();
 
@@ -75,6 +64,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        codeController = new QRCodeController(this);
 
         setContentView(R.layout.code_view_individ_owned);
 
@@ -97,7 +87,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
         codeHash.setText(thisCode.getCodeHash());
         codePoints.setText(thisCode.getCodePoints());
 
-        String date_caught = getNiceDateFormat(thisCode.getCodeDate());
+        String date_caught = codeController.getNiceDateFormat(thisCode.getCodeDate());
         codeDateCaught.setText(date_caught);
 
 
@@ -159,12 +149,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
         ArrayAdapter<Comment> customCommentAdapter = new CommentListForCommentAdapter(this, commentsForThisCode); // create adapter (custom child class of Adapter) to link/use on backend-datalist
         commentList.setAdapter(customCommentAdapter);// Set the adapter for backend-datalist to be used with UI-datalist
         customCommentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-        Collections.sort(commentsForThisCode, new Comparator<Comment>() {
-            @Override
-            public int compare(Comment o1, Comment o2) {
-                return o1.getUnixMillis_DateTime().compareTo(o2.getUnixMillis_DateTime());
-            }
-        });
+        commentsForThisCode = codeController.sortComments(commentsForThisCode);
         customCommentAdapter.notifyDataSetChanged();
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -254,12 +239,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
                                                 // These are a method which gets executed when the task is succeeded
                                                 Log.d(TAG, "Comment has been added successfully!");
 //                                                customCommentAdapter.notifyDataSetChanged();
-                                                Collections.sort(commentsForThisCode, new Comparator<Comment>() {
-                                                    @Override
-                                                    public int compare(Comment o1, Comment o2) {
-                                                        return o1.getUnixMillis_DateTime().compareTo(o2.getUnixMillis_DateTime());
-                                                    }
-                                                });
+                                                commentsForThisCode = codeController.sortComments(commentsForThisCode);
                                                 customCommentAdapter.notifyDataSetChanged();
                                             }
                                         })
@@ -313,12 +293,7 @@ public class QRCodeViewActivity extends AppCompatActivity {
             @Override
             public void run() {
                 customCommentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-                Collections.sort(commentsForThisCode, new Comparator<Comment>() {
-                    @Override
-                    public int compare(Comment o1, Comment o2) {
-                        return o1.getUnixMillis_DateTime().compareTo(o2.getUnixMillis_DateTime());
-                    }
-                });
+                commentsForThisCode = codeController.sortComments(commentsForThisCode);
                 customCommentAdapter.notifyDataSetChanged();
             }
         }, 1000);
@@ -338,49 +313,5 @@ public class QRCodeViewActivity extends AppCompatActivity {
         finish();
     }
 
-    String getNiceDateFormat(String joinedDate) {
-        String date = joinedDate;
-        String date_joined = "";
-        if (date != null) {
-            String[] months = {
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December"
-            };
-            String year = date.substring(0, 4);
-            String month = date.substring(4, 6);
-            String day = date.substring(6, 8);
-            // Convert the day from a string to an integer
-            int dayInt = Integer.parseInt(day);
-            // Get the day suffix
-            String daySuffix;
-            if (dayInt % 10 == 1 && dayInt != 11) {
-                daySuffix = "st";
-            } else if (dayInt % 10 == 2 && dayInt != 12) {
-                daySuffix = "nd";
-            } else if (dayInt % 10 == 3 && dayInt != 13) {
-                daySuffix = "rd";
-            } else {
-                daySuffix = "th";
-            }
-            // Get the month name from the array
-            int monthInt = Integer.parseInt(month);
-            String monthName = months[monthInt - 1];
-            // Build the final date string
-            date_joined = dayInt + daySuffix + " " + monthName + ", " + year;
-        } else {
-            date_joined = "No date";
-        }
-        return date_joined;
-    }
 
 }

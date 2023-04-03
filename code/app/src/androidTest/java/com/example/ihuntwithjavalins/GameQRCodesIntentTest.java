@@ -74,6 +74,9 @@ public class GameQRCodesIntentTest {
         assertTrue(successAtomic.get());
     }
 
+    /**
+     * Clears the shared preferences data
+     */
     private void clearSharedData() {
         Activity activity = rule.getActivity();
         SharedPreferences mPrefs = activity.getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -90,10 +93,10 @@ public class GameQRCodesIntentTest {
 
     /**
      * Sets up the Activity before every test
-     * creates a player with 2 QR codes and logs in as that player
-     * Creates an extra QR code for later testing
+     *      * creates a player with 2 QR codes and logs in as that player
+     *      * Creates an extra QR code for later testing
+     * @throws Exception Thrown when setup fails
      */
-
     @Before
     public void setUp() throws Exception {
 
@@ -150,7 +153,8 @@ public class GameQRCodesIntentTest {
     }
 
     /**
-     * Makes sure the set up didn't fail
+     * Starts the activity
+     * @throws Exception Thrown when removing fails
      */
     @Test
     public void start() throws Exception{
@@ -161,8 +165,8 @@ public class GameQRCodesIntentTest {
     }
 
     /**
-     * Makes sure the player can open the camera to scan a QR Code for
-     * US 02.01.01
+     * Tests open camera
+     * @throws InterruptedException Thrown when removing player fails
      */
     @Test
     public void openCamera() throws InterruptedException {
@@ -203,6 +207,11 @@ public class GameQRCodesIntentTest {
         solo.clickOnView(solo.getView(R.id.comment_btn));
         solo.clickOnText("Confirm");
     }
+
+    /**
+     * Cleans up the player after each test
+     * @throws InterruptedException Thrown when removal fails
+     */
     @After
     public void cleanUp() throws InterruptedException{
         //removePlayer(mockPlayer);

@@ -10,8 +10,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
- * TODO: Change the Collection reference back to Users after sufficient testing
- *
  * Connects to Database, gettings the users unique firestore ID to identify them.
  * Predominantly code is from Well Fed project
  *
