@@ -46,7 +46,13 @@ import java.util.List;
     /**
      * Constructor for new instance of Player object
      */
-    public Player() {}
+    public Player() {
+        this.username = "UNKNOWN";
+        this.email = "UNKNOWN";
+        this.region = "UNKNOWN";
+        this.dateJoined = "00000000";
+
+    }
 
     public Player(String username) {
         this.username = username;

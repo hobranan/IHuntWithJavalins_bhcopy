@@ -6,18 +6,15 @@ import android.widget.EditText;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.ihuntwithjavalins.Map.OpenStreetMapActivity;
+import com.example.ihuntwithjavalins.Profile.ProfileActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-/**
- * SignUpActivityTest is a class that tests SignUpActivity
- *
- * @version 1.0
- */
-public class SignUpActivityTest {
+public class PlayerProfileIntentTests {
 
     /**
      * The Robotium variable we will be using to test the class
@@ -25,10 +22,10 @@ public class SignUpActivityTest {
     private Solo solo;
 
     /**
-     * Puts us in SignUpActivity
+     * Puts us in ProfilActivity
      */
     @Rule
-    public ActivityTestRule rule = new ActivityTestRule(SignUpActivity.class, true, true);
+    public ActivityTestRule rule = new ActivityTestRule(ProfileActivity.class, true, true);
 
     /**
      * Sets up the Activity before every test
@@ -47,15 +44,34 @@ public class SignUpActivityTest {
     }
 
     /**
+     * Checks if in current activity
+     */
+    @Test
+    public void checkCurrentActivity() {
+        solo.assertCurrentActivity("Wrong Activity", ProfileActivity.class);
+    }
+
+    /**
+     * Checks if backButton works for page
+     */
+    @Test
+    public void quickNavButton() {
+        solo.assertCurrentActivity("Wrong Activity", ProfileActivity.class);
+        solo.clickOnButton("Quick Nav");
+        solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
+    }
+
+    /**
      * Checks to make sure a properly filled out sign up works by inputting a name, email, and
      * selecting an item from the spinner then clicking confirm
      * we should be taken to QuickNavActivity
+     * US04.01.01 and US04.02.01
      */
     @Test
     public void goodSignUp() {
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.edittext_signup_username), "John Doe");
-        solo.enterText((EditText) solo.getView(R.id.edittext_signup_email), "JDoe@noMail.com");
+        solo.enterText((EditText) solo.getView(R.id.edittext_signup_username), "Khushi Shah");
+        solo.enterText((EditText) solo.getView(R.id.edittext_signup_email), "khushi3@ualberta.ca");
         solo.pressSpinnerItem(R.id.spinner_signup_region, 1);
         solo.clickOnButton("CONFIRM");
         solo.assertCurrentActivity("WrongActivity", QuickNavActivity.class);
@@ -63,7 +79,7 @@ public class SignUpActivityTest {
 
     /**
      * Checks to make sure an improperly filled out sign up doesn't progress us by filling out
-     * nothing weshould be told some info is empty
+     * nothing we should be told some info is empty
      */
     @Test
     public void badSignUp() {

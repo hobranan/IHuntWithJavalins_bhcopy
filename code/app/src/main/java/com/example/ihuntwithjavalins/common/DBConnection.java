@@ -9,8 +9,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.UUID;
-
 /**
  * TODO: Change the Collection reference back to Users after sufficient testing
  *
@@ -61,6 +59,11 @@ public class DBConnection {
 
         if (foundUsername == null) {
             sharedPreferences.edit().putString("UsernameTag", username).apply();
+    //        this.playerUsername = username; // added for intent tests, do not delete
+    //        SharedPreferences.Editor editor = sharedPreferences.edit();
+    //        editor.putString("Username", playerUsername);
+     //       editor.apply();
+//main
         }
     }
 
