@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ihuntwithjavalins.Map.CodeRefOpenStreetMapActivity;
 import com.example.ihuntwithjavalins.Camera.PhotoViewActivity;
 import com.example.ihuntwithjavalins.MonsterID;
+import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,6 +37,7 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
     TextView codeName;
     TextView codePoints;
     ImageView codePicImage;
+    private Button quickNavButton;
     private QRCode thisCode;
     /**
      * Initializes the activity and its components.
@@ -55,6 +57,7 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         codeName = findViewById(R.id.civ_qr_code_name);
         codePoints = findViewById(R.id.civ_total_points);
         codePicImage = findViewById(R.id.civ_display_img);
+        quickNavButton = findViewById(R.id.menu_btn3);
 
         // Get the intent from the previous activity
         Intent myIntent = getIntent();
@@ -112,7 +115,14 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
             }
         });
 
-
+        quickNavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QRCodeImageViewActivity.this, QuickNavActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
 }
