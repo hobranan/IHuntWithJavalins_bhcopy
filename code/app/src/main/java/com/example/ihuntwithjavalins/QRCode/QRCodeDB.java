@@ -28,9 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: When deleting a QRCode, firestore will not delete subcollections within it, if we want to get rid of comments, have to delete those first then delete QRCode
- * TODO: extending from above, it is inadvisable to delete whole collections from android client apparently so implementation may be sequential https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
- * TODO: Add comment adding functionality
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
  *

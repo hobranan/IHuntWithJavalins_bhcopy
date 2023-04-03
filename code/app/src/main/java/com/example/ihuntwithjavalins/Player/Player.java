@@ -13,7 +13,7 @@ import java.util.List;
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
  * Design Patterns: none
- * TODO: clean up constructors to allow only kind that we used (lots of variations here)
+ *
  * @version 1.0
  */
 //public class Player implements Serializable, Comparable<Player> {
@@ -47,16 +47,6 @@ import java.util.List;
      * Constructor for new instance of Player object
      */
     public Player() {}
-
-    public Player(String username) {
-        this.username = username;
-    }
-
-    public Player(String username, String email, String region) {
-        this.username = username;
-        this.email = email;
-        this.region = region;
-    }
 
     /**
      * Constructor for new instance of Player object without email given
@@ -215,11 +205,18 @@ import java.util.List;
         return sum;
     }
 
-
+    /**
+     * Gets the sum of codes Player has
+     * @return the sum of codes
+     */
     public int getSumOfCodes(){
         return codes.size();
     }
 
+    /**
+     * Gets the value of the highest code Player has
+     * @return the highest value of Player codes owned
+     */
     public int getHighestCode() {
         List<QRCode> all_codes = getCodes();
         int max_code = 0;
