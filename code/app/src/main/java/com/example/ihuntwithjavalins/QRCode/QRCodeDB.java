@@ -31,7 +31,11 @@ import java.util.Map;
  * TODO: Add comment adding functionality
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
- *
+ * Design Patterns:
+ * factory pattern - DBConnection object defining db and collection
+ * observer pattern - Use of OnCompleteListener
+ * command pattern - addQRCode, getQRCode, and deleteCode all pass commands to QRCodeDB
+ * singleton pattern - use of getINstance to access the FirebaseFirestore object
  * @version 1.0
  */
 public class QRCodeDB {

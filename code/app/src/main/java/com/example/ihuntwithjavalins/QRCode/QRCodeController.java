@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Manages the QR codes
+ * provides methods to get and sort user QR codes
+ * Design patterns: none
+ */
 public class QRCodeController {
     private AppCompatActivity activity;
     private DBConnection connection;
