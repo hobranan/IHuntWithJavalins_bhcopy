@@ -93,15 +93,9 @@ public class GameQRCodesIntentTest {
 
     /**
      * Sets up the Activity before every test
-<<<<<<< Updated upstream
-     *      * creates a player with 2 QR codes and logs in as that player
-     *      * Creates an extra QR code for later testing
-     * @throws Exception Thrown when setup fails
-=======
      * creates a player with 2 QR codes and logs in as that player
      * Creates an extra QR code for later testing
-     * @throws Exception if the setup fails
->>>>>>> Stashed changes
+     * @throws Exception Thrown when setup fails
      */
     @Before
     public void setUp() throws Exception {
@@ -159,13 +153,8 @@ public class GameQRCodesIntentTest {
     }
 
     /**
-<<<<<<< Updated upstream
      * Starts the activity
      * @throws Exception Thrown when removing fails
-=======
-     * Makes sure the set up didn't fail
-     *  @throws Exception if the setup fails
->>>>>>> Stashed changes
      */
     @Test
     public void start() throws Exception{
@@ -176,14 +165,9 @@ public class GameQRCodesIntentTest {
     }
 
     /**
-<<<<<<< Updated upstream
-     * Tests open camera
-     * @throws InterruptedException Thrown when removing player fails
-=======
      * Makes sure the player can open the camera to scan a QR Code for
      * US 02.01.01
-     *  @throws InterruptedException if the removePlayer method takes too long to function
->>>>>>> Stashed changes
+     * @throws InterruptedException if the removePlayer method takes too long to function
      */
     @Test
     public void openCamera() throws InterruptedException {

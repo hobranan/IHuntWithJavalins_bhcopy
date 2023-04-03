@@ -29,11 +29,7 @@ public class LocationIntentTests {
 
     /**
      * Sets up the Activity before every test
-<<<<<<< Updated upstream
      * @throws Exception Thrown when robotium setup fails
-=======
-     * @throws Exception if the setup fails
->>>>>>> Stashed changes
      */
     @Before
     public void setUp() throws Exception {

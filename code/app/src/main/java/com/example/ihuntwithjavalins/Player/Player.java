@@ -13,10 +13,6 @@ import java.util.List;
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
  * Design Patterns: none
-<<<<<<< Updated upstream
- *
-=======
->>>>>>> Stashed changes
  * @version 1.0
  */
     public class Player implements Serializable {
@@ -52,10 +48,6 @@ import java.util.List;
         this.email = "UNKNOWN";
         this.region = "UNKNOWN";
         this.dateJoined = "00000000";
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     }
 
     /**
@@ -205,24 +197,17 @@ import java.util.List;
         return sum;
     }
 
-<<<<<<< Updated upstream
     /**
      * Gets the sum of codes Player has
      * @return the sum of codes
      */
-=======
->>>>>>> Stashed changes
     public int getSumOfCodes(){
         return codes.size();
     }
-
-<<<<<<< Updated upstream
     /**
      * Gets the value of the highest code Player has
      * @return the highest value of Player codes owned
      */
-=======
->>>>>>> Stashed changes
     public int getHighestCode() {
         List<QRCode> all_codes = getCodes();
         int max_code = 0;

@@ -10,13 +10,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
-<<<<<<< Updated upstream
-=======
- *
->>>>>>> Stashed changes
  * Connects to Database, gettings the users unique firestore ID to identify them.
  * Predominantly code is from Well Fed project
- *
  * Design Patterns:
  * singleton pattern - FirebaseFireStore.getInstance() allows only 1 instance of the class to exist
  * factory pattern - DBConnection class itself acts as a factory for creating and returning references to different parts of the firebase

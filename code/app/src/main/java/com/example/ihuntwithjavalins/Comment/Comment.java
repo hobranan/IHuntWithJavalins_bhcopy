@@ -11,11 +11,7 @@ import java.util.Date;
 /**
  * This class represents a comment object containing the details of a comment made by a user on a code.
  * Design Patterns: none
-<<<<<<< Updated upstream
- *
  * @version 1.0
-=======
->>>>>>> Stashed changes
  */
 public class Comment {
     private String hashcode;
