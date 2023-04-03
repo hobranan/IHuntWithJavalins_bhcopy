@@ -40,7 +40,7 @@ public class TitleActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-// do nothing
+    // do nothing
     }
 
 }

@@ -101,6 +101,14 @@
             android:exported="true" />
 
         <activity
+            android:name=".QRCode.QRCodeViewOtherActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".QRCode.QRCodeImageViewOtherActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".Map.CodeRefOpenStreetMapActivity"
             android:exported="true" />
 
