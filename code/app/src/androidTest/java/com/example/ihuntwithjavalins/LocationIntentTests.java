@@ -65,6 +65,17 @@ public class LocationIntentTests {
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
 
     }
+    /**
+     * US 05.02.01 - CHeck to see if QRcode can be searched
+     * I have added this US story on this file as it corresponds to searching for QRcodes using GeoLocation
+     */
+    @Test
+    public void searchQRCode(){
+        solo.assertCurrentActivity("Wrong Activity", OpenStreetMapActivity.class);
+        solo.clickOnView(solo.getView(R.id.map_region_btn));
+    }
+
+
 }
 
 
