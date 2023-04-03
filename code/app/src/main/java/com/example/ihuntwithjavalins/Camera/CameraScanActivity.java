@@ -31,6 +31,9 @@ import java.util.Arrays;
 
 /**
  * Activity that uses the device's camera to scan barcodes and QR codes.
+ * Design Patterns
+ * builder pattern - new BarcodeDetector.builder(this)
+ * observer pattern - Surfaceholder.callback() with surefaceView
  * TODO: fix algorithm for code recognition to allow distinguishing between new and old QRcodes
  */
 public class CameraScanActivity extends AppCompatActivity {

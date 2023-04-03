@@ -22,7 +22,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * TODO: Update test after adding the added fields of player to playerdb
  * PlayerDBTest class is used for testing PlayerDB functionality.
  * Note this is a test in AndroidTest folder as it relies on Contexts which is a part of the instrumentation
  * Based on Well Fed Project DB test classes.
@@ -36,6 +35,9 @@ public class PlayerDBTest {
 
     QRCode mockCode;
 
+    /**
+     * Creates database connection and mock data before each test
+     */
     @Before
     public void before() {
         MockDBConnection connection = new MockDBConnection();
@@ -68,6 +70,11 @@ public class PlayerDBTest {
             assertTrue(successAtomic.get());
      }
 
+    /**
+     * Remove a Code we have added to the database during testing.
+     * @param mockCode The Code that is being removed
+     * @throws InterruptedException Thrown when deleting from PlayerDB fails
+     */
      private void removeCode(QRCode mockCode) throws InterruptedException {
          CountDownLatch latch = new CountDownLatch(1);
 
@@ -190,6 +197,10 @@ public class PlayerDBTest {
         assertEquals(mockPlayer, deletedPlayerAtomic.get());
     }
 
+    /**
+     * Tests updating email of player from the database
+     * @throws InterruptedException Thrown when updating email info fails
+     */
     @Test
     public void testUpdateEmail() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -242,6 +253,10 @@ public class PlayerDBTest {
         removePlayer(mockPlayer);    // note that even though we pass a player into removePlayer, only the username matters as usernames are unique so even though we updated the email, it should still delete the player with that username
     }
 
+    /**
+     * Tests updating region of Player in database
+     * @throws InterruptedException Thrown when updating fails
+     */
     @Test
     public void testUpdateRegion() throws InterruptedException{
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -294,6 +309,10 @@ public class PlayerDBTest {
         removePlayer(mockPlayer);
     }
 
+    /**
+     * Tests adding a code to player in playerDB
+     * @throws InterruptedException Thrown when adding code fails
+     */
     @Test
     public void testPlayerAddCode() throws InterruptedException{
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -316,6 +335,10 @@ public class PlayerDBTest {
         removeCode(mockCode);
     }
 
+    /**
+     * Tests removing a code from the player in playerDB
+     * @throws InterruptedException Thrown when removing code fails
+     */
     @Test
     public void testPlayerRemoveCode() throws InterruptedException{
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -349,17 +372,27 @@ public class PlayerDBTest {
         assertEquals(mockCode, deletedPlayerAtomic.get());
     }
 
+    /**
+     * Tests getting all codes player owns from database
+     * @throws InterruptedException Thrown when getting all codes fails
+     */
     @Test
     public void testPlayerGetCodes() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
 
-        CountDownLatch getLatch = new CountDownLatch(1);
+        CountDownLatch getLatchOne = new CountDownLatch(1);
+        CountDownLatch getLatchTwo = new CountDownLatch(1);
         List<QRCode> codeList1 = new ArrayList<>();
         playerDB.getUserCodes((foundCodes, success) ->{
             if (success) {
                 codeList1.addAll(foundCodes);
+                getLatchOne.countDown();
             }
         });
+
+        if (!getLatchOne.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
 
         assertEquals(0, codeList1.size());
 
@@ -381,11 +414,11 @@ public class PlayerDBTest {
         playerDB.getUserCodes((foundCodes, success) ->{
             if (success) {
                 codeList1.addAll(foundCodes);
-                getLatch.countDown();
+                getLatchTwo.countDown();
             }
         });
 
-        if (!getLatch.await(TIMEOUT, SECONDS)) {
+        if (!getLatchTwo.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 

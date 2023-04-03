@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
@@ -56,12 +57,15 @@ public class ScoreboardActivity extends AppCompatActivity {
     ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
     public static boolean sortAscend = false;
     public static boolean rankingNameFlag = false;
+    private PlayerController playerController;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scoreboard_main);
+
+        playerController = new PlayerController(this);
 
         TextView searchEditText = findViewById(R.id.search_user);
         Button names_btn = findViewById(R.id.sort_name_btn);
@@ -83,7 +87,6 @@ public class ScoreboardActivity extends AppCompatActivity {
 
 
         ListView listViewPlayerList;
-        playerList = new ArrayList<>();
 
         // Get the intent from the previous activity
         Intent myIntent = getIntent();
@@ -95,14 +98,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, regionalList);
         listViewPlayerList.setAdapter(playerArrayAdapter);
         playerArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-        Collections.sort(regionalList, new Comparator<Player>() {
-            @Override
-            public int compare(Player p1, Player p2) {
-                int p1size = p1.getSumOfCodePoints();
-                int p2size = p2.getSumOfCodePoints();
-                return Integer.compare(p2size, p1size);
-            }
-        });
+        playerController.sortPlayers(regionalList, "points");
         sortAscend = false;
         if (sortAscend) {
             Collections.reverse(regionalList);
@@ -112,64 +108,6 @@ public class ScoreboardActivity extends AppCompatActivity {
         playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, regionalList);
         listViewPlayerList.setAdapter(playerArrayAdapter);
         playerArrayAdapter.notifyDataSetChanged();
-
-//        // Access a Firestore instance
-//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        final CollectionReference collectionRef_Users = db.collection("Users");
-//        DocumentReference docRef_myPlayer = collectionRef_Users.document(mStringU);
-//        CollectionReference subColRef_myCodes = docRef_myPlayer.collection("QRCodesSubCollection");
-//
-//        // grab all players and their codes from firebase and put into player list
-//        collectionRef_Users
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot doc : task.getResult()) {
-//                                Player tempPlayer = new Player();
-//                                tempPlayer.setUsername(doc.getId());
-//                                tempPlayer.setEmail((String) doc.getData().get("Email"));
-//                                tempPlayer.setRegion((String) doc.getData().get("Region"));
-//                                tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));
-//                                DocumentReference docRef_thisPlayer = collectionRef_Users.document(doc.getId());
-//                                CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
-//                                ArrayList<QRCode> tempCodeList = new ArrayList<>();
-//                                subColRef_Codes
-//                                        .get()
-//                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                                if (task.isSuccessful()) {
-//                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-//                                                        String codeHash = doc.getId();
-//                                                        String codeName = (String) doc.getData().get("Code Name");
-//                                                        String codePoints = (String) doc.getData().get("Point Value");
-//                                                        String codeImgRef = (String) doc.getData().get("Img Ref");
-//                                                        String codeLatValue = (String) doc.getData().get("Lat Value");
-//                                                        String codeLonValue = (String) doc.getData().get("Lon Value");
-//                                                        String codePhotoRef = (String) doc.getData().get("Photo Ref");
-//                                                        String codeDate = (String) doc.getData().get("Code Date:");
-//                                                        tempCodeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
-//                                                    }
-//                                                    tempPlayer.addCodes(tempCodeList);
-//                                                    playerList.add(tempPlayer);
-//                                                    //if you, also put you in separate obj
-//                                                    if ((tempPlayer.getUsername()).equals(mStringU)) {
-//                                                        myPlayer = new Player();
-//                                                        myPlayer.setUsername(mStringU);
-//                                                        myPlayer.addCodes(tempCodeList);
-//                                                    }
-//                                                }
-//                                            }
-//                                        });
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
-//        playerArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
 
 
         region_btn.setOnClickListener(new View.OnClickListener() {
@@ -182,11 +120,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")){
                         regionalList = new ArrayList<>(playerList);
                 } else {
-                    for (Player player : playerList) {
-                        if (player.getRegion().contains(searchQuery)) {
-                            regionalList.add(player);
-                        }
-                    }
+                    regionalList.addAll(playerController.getPlayersContainQuery(playerList, searchQuery));
                 }
                 if (regionalList.size() == 0) {
                     Toast.makeText(ScoreboardActivity.this, "Couldn't find any people in region: " + searchQuery, Toast.LENGTH_SHORT).show();
@@ -196,14 +130,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 //                    playerArrayAdapter = new CustomListScoreBoard(ScoreboardActivity.this, regionalList);
 //                    listViewPlayerList.setAdapter(playerArrayAdapter);
 //                    playerArrayAdapter.notifyDataSetChanged();
-                    Collections.sort(regionalList, new Comparator<Player>() {
-                        @Override
-                        public int compare(Player p1, Player p2) {
-                            int p1size = p1.getSumOfCodePoints();
-                            int p2size = p2.getSumOfCodePoints();
-                            return Integer.compare(p2size, p1size);
-                        }
-                    });
+                    regionalList = playerController.sortPlayers(regionalList, "points");
                     sortAscend = false;
                     if (sortAscend) {
                         Collections.reverse(regionalList);
@@ -226,11 +153,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
                 ArrayList<Player> searchResultsList = new ArrayList<>();
-                for (Player player : regionalList) {
-                    if (player.getUsername().toLowerCase().contains(searchQuery)) {
-                        searchResultsList.add(player);
-                    }
-                }
+                searchResultsList.addAll(playerController.getPlayersContainQuery(regionalList, searchQuery));
                 if (searchQuery.equals("")){
                     rankingNameFlag = false;
                 } else {
@@ -253,12 +176,8 @@ public class ScoreboardActivity extends AppCompatActivity {
                 rankingNameFlag = true;
 //                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by name
-                Collections.sort(regionalList, new Comparator<Player>() {
-                    @Override
-                    public int compare(Player p1, Player p2) {
-                        return (p1.getUsername().toLowerCase()).compareTo(p2.getUsername().toLowerCase());
-                    }
-                });
+                regionalList = playerController.sortPlayers(regionalList, "name");
+
                 if (sortAscend) {
                     Collections.reverse(regionalList);
                 }
@@ -274,14 +193,7 @@ public class ScoreboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 rankingNameFlag = false;
 //                Toast.makeText(ScoreboardActivity.this, "Sort By Points", Toast.LENGTH_SHORT).show();
-                Collections.sort(regionalList, new Comparator<Player>() {
-                    @Override
-                    public int compare(Player p1, Player p2) {
-                        int p1size = p1.getSumOfCodePoints();
-                        int p2size = p2.getSumOfCodePoints();
-                        return Integer.compare(p2size, p1size);
-                    }
-                });
+                regionalList = playerController.sortPlayers(regionalList, "points");
                 if (sortAscend) {
                     Collections.reverse(regionalList);
                 }
@@ -298,14 +210,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 rankingNameFlag = false;
 //                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by num of codes
-                Collections.sort(regionalList, new Comparator<Player>() {
-                    @Override
-                    public int compare(Player p1, Player p2) {
-                        int p1size = p1.getCodes().size();
-                        int p2size = p2.getCodes().size();
-                        return Integer.compare(p2size, p1size);
-                    }
-                });
+                regionalList = playerController.sortPlayers(regionalList, "sum");
                 if (sortAscend) {
                     Collections.reverse(regionalList);
                 }
@@ -322,16 +227,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 rankingNameFlag = false;
 //                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by num of codes
-                Collections.sort(regionalList, new Comparator<Player>() {
-                    @Override
-                    public int compare(Player p1, Player p2) {
-                        // https://stackoverflow.com/questions/4258700/collections-sort-with-multiple-fields
-                        return ComparisonChain.start().compare(p2.getHighestCode(), p1.getHighestCode()).compare(p2.getSumOfCodePoints(), p1.getSumOfCodePoints()).result();
-//                        int p1size = p1.getHighestCode();
-//                        int p2size = p2.getHighestCode();
-//                        return Integer.compare(p2size, p1size);
-                    }
-                });
+                regionalList = playerController.sortPlayers(regionalList, "high+sum");
                 if (sortAscend) {
                     Collections.reverse(regionalList);
                 }

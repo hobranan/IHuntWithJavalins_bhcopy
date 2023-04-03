@@ -24,6 +24,8 @@ import java.util.Locale;
 
 /**
  * Adapter (customized) for linking/showing the backend-datalist (of objects) with the UI-content-list (in content.xml)
+ * Design Patterns:
+ * adapter pattern - it is an adapter
  */
 public class LibraryListForLibraryAdapter extends ArrayAdapter<QRCode> {
 

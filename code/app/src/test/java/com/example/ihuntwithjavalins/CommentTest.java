@@ -2,6 +2,7 @@ package com.example.ihuntwithjavalins;
 
 import com.example.ihuntwithjavalins.Comment.Comment;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -46,10 +47,10 @@ public class CommentTest {
     public void testComment() {
         Comment comment = mockComment();
 
-        assertEquals("51602", comment.getHashcode(), "Hash code should be 51602");
-        assertEquals("Sabel Storm", comment.getUsername(), "Username should be Sabel Storm");
-        assertEquals("1679865411702", comment.getUnixMillis_DateTime(), "Comment unix milliseconds should be 1679865411702");
-        assertEquals("This code art is fire", comment.getCodeComment(), "Comment message should be 'This code art is fire'");
+        assertEquals("51602", comment.getHashcode());
+        assertEquals("Sabel Storm", comment.getUsername());
+        assertEquals("1679865411702", comment.getUnixMillis_DateTime());
+        assertEquals("This code art is fire", comment.getCodeComment());
     }
 
     /**
@@ -61,7 +62,7 @@ public class CommentTest {
 
         assertNull(comment.getUsername(), "Username should be null");
         comment.setUsername("Sabel Storm");
-        assertEquals("Sabel Storm", comment.getUsername(), "Username should be Sabel Storm");
+        assertEquals("Sabel Storm", comment.getUsername());
     }
 
     /**
@@ -73,7 +74,7 @@ public class CommentTest {
 
         assertNull(comment.getHashcode(), "Comment hash should be null");
         comment.setHashcode("51602");
-        assertEquals("51602", comment.getHashcode(), "Comment hash should be 51602");
+        assertEquals("51602", comment.getHashcode());
     }
 
     /**
@@ -82,10 +83,9 @@ public class CommentTest {
     @Test
     public void testDateTime() {
         Comment comment = mockEmptyComment();
-
         assertNull(comment.getUnixMillis_DateTime(), "Comment datetime should be null");
         comment.setUnixMillis_DateTime("1679865411702");
-        assertEquals("1679865411702", comment.getUnixMillis_DateTime(), "Comment datetime should be 1679865411702");
+        assertEquals("1679865411702", comment.getUnixMillis_DateTime());
     }
 
     /**
@@ -94,9 +94,64 @@ public class CommentTest {
     @Test
     public void testMessage() {
         Comment comment = mockEmptyComment();
-
         assertNull(comment.getCodeComment(), "Comment message should be null");
         comment.setCodeComment("This code art is fire");
-        assertEquals("This code art is fire", comment.getCodeComment(), "Comment message should be 'This code art is fire'");
+        assertEquals("This code art is fire", comment.getCodeComment());
+    }
+
+    @Test
+    public void testGetHashcode() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("hash111", comment.getHashcode());
+    }
+
+    @Test
+    public void testSetHashcode() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals(comment.getHashcode(), "hash111");
+        comment.setHashcode("hash123");
+        assertEquals("hash123", comment.getHashcode());
+    }
+
+    @Test
+    public void testGetUsername() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("JamesBond", comment.getUsername());
+    }
+
+    @Test
+    public void testSetUsername() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("JamesBond", comment.getUsername());
+        comment.setUsername("JasonBourne");
+        assertEquals("JasonBourne", comment.getUsername());
+    }
+
+    @Test
+    public void testGetCodeComment() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("This qr looks so cool", comment.getCodeComment());
+    }
+
+    @Test
+    public void testSetCodeComment() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("This qr looks so cool", comment.getCodeComment());
+        comment.setCodeComment("This new code looks fire");
+        assertEquals("This new code looks fire", comment.getCodeComment());
+    }
+
+    @Test
+    public void testGetUnixMillis_DateTime() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("1679865411702", comment.getUnixMillis_DateTime());
+    }
+
+    @Test
+    public void testSetUnixMillis_DateTime() {
+        Comment comment = new Comment("hash111", "JamesBond", "1679865411702", "This qr looks so cool");
+        assertEquals("1679865411702", comment.getUnixMillis_DateTime());
+        comment.setUnixMillis_DateTime("1679865411705");
+        assertEquals("1679865411705", comment.getUnixMillis_DateTime());
     }
 }

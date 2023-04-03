@@ -10,24 +10,26 @@ import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: Add added Player class fields(like date) to this
- * TODO: Fix getPlayerCodes to use lambda expressions
- *
  * PlayerDB is a class which handles all database operations for Player objects.
  * Much functionality is derived from Well Fed project example given by TA
- *
+ * Design Patterns:
+ * observer pattern - onCompleteListener
  * @version 1.0
  */
 public class PlayerDB {
@@ -62,9 +64,19 @@ public class PlayerDB {
         collection = connection.getUserCollection();
 
         // Create new instance of QRCodeDB based on current connection
-        codeDB = new QRCodeDB(connection);
-        userUsername = connection.getUserDocument().getId();
+        if (connection.getUsername() != null) {
+            codeDB = new QRCodeDB(connection);
+        }
+        userUsername = connection.getUsername();
     }
+
+//    /**
+//     * Switches the codeDB connection to a new user based on username
+//     * @param username Username to switch codeDB connection to
+//     */
+//    public void switchPlayerDBConnection(String username) {
+//        codeDB.switchFromPlayerToPlayerCodes(username);
+//    }
 
     /**
      * Adds a player to the database(Use lambda to retrieve)
@@ -73,7 +85,8 @@ public class PlayerDB {
      * @param listener the listener to call when the player is added
      */
     public void addPlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
-        // creating batch and return value
+
+
         WriteBatch batch = db.batch();
 
         // add player info to batch
@@ -83,8 +96,6 @@ public class PlayerDB {
         item.put("Email", player.getEmail());
         item.put("Region", player.getRegion());
         item.put("Date Joined", player.getDateJoined());
-        //item.put("highest score", 0);
-        //item.put("total score", 0);
         batch.set(playerRef, item);
 
         // commits batch writes to firebase
@@ -132,6 +143,38 @@ public class PlayerDB {
         });
     }
 
+    public void getAllPlayers(OnCompleteListener<ArrayList<Player>> listener) {
+        collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Player> playerList = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        Log.d(myTAG, doc.getId() + " => " + doc.getData());
+
+                        Player player = new Player();
+                        player.setUsername(doc.getId());
+                        player.setEmail(doc.getString("Email"));
+                        player.setRegion(doc.getString("Region"));
+                        player.setDateJoined(doc.getString("Date Joined"));
+                        getPlayerCodes(player, (foundCodes, foundSuccess) -> {
+                            if (foundSuccess) {
+                                player.setCodes(foundCodes);
+                                playerList.add(player);
+                            } else {
+                                Log.d(myTAG, "Getting codes failed");
+                            }
+                        });
+                    }
+                    listener.onComplete(playerList, true);
+                } else {
+                    Log.d(myTAG, "Error getting documents: ", task.getException());
+                    listener.onComplete(null, false);
+                }
+            }
+        });
+    }
+
     /**
      * Deletes the player from the database(Use lambda to retrieve)
      * @param player the Player object representing the player to delete from database
@@ -155,34 +198,6 @@ public class PlayerDB {
             }
         });
     }
-
-//    /**
-//     * Updates the given player's username in the database
-//     * @param player the given player to update
-//     * @param newUsername the new username
-//     * @param listener the listener to call when the player is updated
-//     */
-//    public void updatePlayerUsername(Player player, String newUsername, OnCompleteListener<Player> listener) {
-//        String uuid = player.getId();
-//        DocumentReference playerRef = collection.document("user" + uuid);
-//        playerRef
-//                .update("Username", newUsername)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        player.setUsername(newUsername);
-//                        listener.onComplete(player, true);
-//                        Log.d(myTAG, "Username successfully updated!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        listener.onComplete(player, false);
-//                        Log.w(myTAG, "Error updating document", e);
-//                    }
-//                });
-//    }
 
     /**
      * Updates the given player's email in the database
@@ -301,10 +316,9 @@ public class PlayerDB {
      * Returns a list of QRCodes the user owns
      * @return list of user owned QRCodes
      */
-    public void getUserCodes (OnCompleteListener<List> listener){
+    public void getUserCodes (OnCompleteListener<ArrayList<QRCode>> listener){
         codeDB.getCodes((codeList, success)->{
             if (success) {
-                Log.d("Banana", "Hello");
                 listener.onComplete(codeList, true);
             } else {
                 listener.onComplete(null, false);
@@ -312,17 +326,22 @@ public class PlayerDB {
         });
     }
 
-//    /**
-//     * Returns a list of QRCodes the given player owns
-//     * @param player the given player who owns the codes
-//     * @return list of player owned QRCodes
-//     */
-//    public List<QRCode> getPlayerCodes(Player player){
-//        String playerUsername = player.getUsername();
-//        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
-//        List<QRCode> codeList = codeDB.getCodes();
-//        codeDB.switchFromPlayerToPlayerCodes(userUsername);
-//        return codeList;
-//    }
+    /**
+     * Returns a list of QRCodes the given player owns
+     * @param player the given player who owns the codes
+     * @return list of player owned QRCodes
+     */
+    public void getPlayerCodes(Player player, OnCompleteListener<ArrayList<QRCode>> listener){
+        String playerUsername = player.getUsername();
+        codeDB.switchFromPlayerToPlayerCodes(playerUsername);
+        codeDB.getCodes((codeList, success)->{
+            if (success) {
+                listener.onComplete(codeList, true);
+            } else {
+                listener.onComplete(null, false);
+            }
+        });
+        codeDB.switchFromPlayerToPlayerCodes(userUsername);
+    }
 
 }

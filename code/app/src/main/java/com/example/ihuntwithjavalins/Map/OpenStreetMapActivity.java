@@ -111,7 +111,8 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
 
 //                                Log.d(TAGmap, "playerlist 5");
-                                Player tempPlayer = new Player(doc.getId());
+                                Player tempPlayer = new Player();
+                                tempPlayer.setUsername(doc.getId());
 
                                 tempPlayer.setEmail((String) doc.getData().get("Email"));
                                 tempPlayer.setRegion((String) doc.getData().get("Region"));
@@ -216,12 +217,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
             public void run() {
                 //example map points (adding to array of points)
                 ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-//        GeoPoint Point_uofa = new GeoPoint(53.52730, -113.52841);
-//        items.add(new OverlayItem("NREF building poster1", "450", new GeoPoint(53.52670, -113.52895))); // Lat/Lon decimal degrees 'd'
-//                items.add(new OverlayItem("quad poster2", "1250", new GeoPoint(53.52724, -113.52779))); // Lat/Lon decimal degrees
-//                items.add(new OverlayItem("tree poster3", "2454", new GeoPoint(53.52744, -113.52723))); // Lat/Lon decimal degrees
-//                items.add(new OverlayItem("CSC building poster4", "12", new GeoPoint(53.52694, -113.52740))); // Lat/Lon decimal degrees
-//                items.add(new OverlayItem("DICE building poster5", "76", new GeoPoint(53.52793, -113.52888))); // Lat/Lon decimal degrees
 
                 ArrayList<QRCode> pointsCodeList = new ArrayList<>();
                 ArrayList<String> pointsCodeListStrings = new ArrayList<>();

@@ -26,17 +26,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * TODO: When deleting a QRCode, firestore will not delete subcollections within it, if we want to get rid of comments, have to delete those first then delete QRCode
+ * TODO: extending from above, it is inadvisable to delete whole collections from android client apparently so implementation may be sequential https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
+ * TODO: Add comment adding functionality
  * QRCodeDB is a class which handles all database operations for QRCode objects.
  * Much functionality is derived from Well Fed project example given by TA
- *
+ * Design Patterns:
+ * factory pattern - DBConnection object defining db and collection
+ * observer pattern - Use of OnCompleteListener
+ * command pattern - addQRCode, getQRCode, and deleteCode all pass commands to QRCodeDB
+ * singleton pattern - use of getINstance to access the FirebaseFirestore object
  * @version 1.0
  */
 public class QRCodeDB {
     /**
      * Holds the tag for logging
      */
-    private final static String TAG = "PlayerDB";
+    private final static String TAG = "QRCodeDB";
     /**
      * Holds the instance of the Firebase Firestore database
      */
@@ -60,7 +66,7 @@ public class QRCodeDB {
      * @param playerUsername given player's username to switch the collection reference to
      */
     public void switchFromPlayerToPlayerCodes(String playerUsername) {
-        this.collection = db.collection("Users").document(playerUsername).collection("QRCodes");
+        this.collection = db.collection("Users").document(playerUsername).collection("QRCodesSubCollection");
     }
 
     /**
@@ -115,7 +121,7 @@ public class QRCodeDB {
                     Log.d(TAG, ":exists:" + hashValue);
                     QRCode foundCode = new QRCode();
                     foundCode.setCodeHash(document.getId());
-                    foundCode.setCodeName(document.getString("Name"));
+                    foundCode.setCodeName(document.getString("Code Name"));
                     foundCode.setCodeLat(document.getString("Latitude"));
                     foundCode.setCodeLon(document.getString("Longitude"));
                     foundCode.setCodePhotoRef(document.getString("Photo Ref"));
@@ -165,18 +171,18 @@ public class QRCodeDB {
      * Citation: How to get data from firestore https://firebase.google.com/docs/firestore/query-data/get-data#java_14
      * @return list of QRCodes from the database collection
      */
-    public void getCodes(OnCompleteListener<List<QRCode>> listener) {
+    public void getCodes(OnCompleteListener<ArrayList<QRCode>> listener) {
         collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    List<QRCode> codeList = new ArrayList<>();
+                    ArrayList<QRCode> codeList = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Log.d(TAG, doc.getId() + " => " + doc.getData());
 
                         QRCode newCode = new QRCode();
                         newCode.setCodeHash(doc.getId());
-                        newCode.setCodeName((String) doc.getData().get("Name"));
+                        newCode.setCodeName((String) doc.getData().get("Code Name"));
                         newCode.setCodePoints((String) doc.getData().get("Point Value"));
                         newCode.setCodePhotoRef((String) doc.getData().get("Photo Ref"));
                         newCode.setCodeLon((String) doc.getData().get("Longitude"));

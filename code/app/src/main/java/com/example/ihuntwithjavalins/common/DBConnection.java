@@ -10,11 +10,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
- * TODO: Update javadoc comments as functionality changed from uuid to username
+ * TODO: Change the Collection reference back to Users after sufficient testing
  *
  * Connects to Database, gettings the users unique firestore ID to identify them.
  * Predominantly code is from Well Fed project
  *
+ * Design Patterns:
+ * singleton pattern - FirebaseFireStore.getInstance() allows only 1 instance of the class to exist
+ * factory pattern - DBConnection class itself acts as a factory for creating and returning references to different parts of the firebase
+ * dependency injection - DBConnection depends on Context to access share dperefences of the device
  * @version 1.0
  */
 public class DBConnection {
@@ -49,15 +53,17 @@ public class DBConnection {
      */
     public void setUsername(Context context, String username) {
         SharedPreferences sharedPreferences;
-        sharedPreferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
+        sharedPreferences = context.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
 
-        String foundUsername = sharedPreferences.getString("Username", null);    // second value null means return null if preference UUID does not exist
+        String foundUsername = sharedPreferences.getString("UsernameTag", null);    // second value null means return null if preference UUID does not exist
 
         if (foundUsername == null) {
-            this.playerUsername = username; // added for intent tests, do not delete
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("Username", playerUsername);
-            editor.apply();
+            sharedPreferences.edit().putString("UsernameTag", username).apply();
+    //        this.playerUsername = username; // added for intent tests, do not delete
+    //        SharedPreferences.Editor editor = sharedPreferences.edit();
+    //        editor.putString("Username", playerUsername);
+     //       editor.apply();
+//main
         }
     }
 
@@ -68,9 +74,9 @@ public class DBConnection {
      */
     public String getUsername(Context context) {
         SharedPreferences sharedPreferences;
-        sharedPreferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
+        sharedPreferences = context.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);    // Opening Preference files Citation: https://developer.android.com/reference/android/content/Context#getApplicationContext()
 
-        String username = sharedPreferences.getString("Username", null);    // second value null means return null if preference UUID does not exist
+        String username = sharedPreferences.getString("UsernameTag", null);    // second value null means return null if preference UUID does not exist
 
         return username;
     }
@@ -98,8 +104,7 @@ public class DBConnection {
      * Gets the reference to the collection of users of the application
      * @return reference to user collection
      */
-    public CollectionReference getUserCollection() {
-        return this.db.collection("Users");
+    public CollectionReference getUserCollection() {return this.db.collection("Users");
     }
 
     /**
@@ -107,8 +112,11 @@ public class DBConnection {
      * @return reference to the user document
      */
     public DocumentReference getUserDocument() {
-
-        return this.db.collection("Users").document(playerUsername);
+        if (playerUsername == null) {
+            return null;
+        } else {
+            return this.db.collection("Users").document(playerUsername);
+        }
     }
 
     /**

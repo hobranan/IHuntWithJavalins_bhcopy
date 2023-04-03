@@ -1,5 +1,7 @@
 package com.example.ihuntwithjavalins.Player;
 
+import android.util.Log;
+
 import com.example.ihuntwithjavalins.Comment.Comment;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
@@ -10,6 +12,7 @@ import java.util.List;
 /**
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
+ * Design Patterns: none
  * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
@@ -36,7 +39,7 @@ import java.util.List;
      * Holds the QRCodes the Player has scanned
      */
 //    private ArrayList<QRCode> codes = new ArrayList<>();
-    private List<QRCode> codes = new ArrayList<>();
+    private ArrayList<QRCode> codes = new ArrayList<>();
 
     private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
 
@@ -150,6 +153,15 @@ import java.util.List;
     }
 
     /**
+     * Adds all codes from list to Player costs
+     * @param codes Codes to add to player
+     */
+    public void setCodes(ArrayList<QRCode> codes) {
+        this.codes.clear();
+        this.codes.addAll(codes);
+    }
+
+    /**
      * Adds a QRCode to the list of codes the Player has scanned
      * @param code The QRCode the Player scanned to be added to list of codes
      */
@@ -224,8 +236,4 @@ import java.util.List;
         }
         return max_code;
     }
-
-
-
-
 }
