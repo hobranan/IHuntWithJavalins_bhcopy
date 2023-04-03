@@ -55,7 +55,7 @@ public class QRCodeViewActivityTest {
     @Test
     public void backButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
-        solo.clickOnButton(R.id.btn_cvi_back);
+        solo.clickOnView(solo.getView(R.id.btn_cvi_back));
         solo.assertCurrentActivity("Wrong Activity", QRCodeLibraryActivity.class);
     }
 
@@ -66,11 +66,8 @@ public class QRCodeViewActivityTest {
     @Test
     public void quickNavButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
-
-      solo.clickOnButton(R.id.btn_cvi_quicknav);
-
+        solo.clickOnView(solo.getView(R.id.btn_cvi_quicknav));
     //    solo.clickOnButton(R.id.btn_cvi_image);
-
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
     }
 
@@ -81,7 +78,7 @@ public class QRCodeViewActivityTest {
     @Test
     public void QRImageButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
-        solo.clickOnButton(R.id.image_button);
+        solo.clickOnView(solo.getView(R.id.btn_cvi_image));
         solo.assertCurrentActivity("Wrong Activity", QRCodeImageViewActivity.class);
     }
 
@@ -93,11 +90,11 @@ public class QRCodeViewActivityTest {
     @Test
     public void deleteQRButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
-        solo.clickOnButton(R.id.btn_remove_code);
+        solo.clickOnView(solo.getView(R.id.btn_remove_code));
         solo.waitForText("Confirmation", 1, 2000);
         solo.clickOnButton("NO");
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
-        solo.clickOnButton(R.id.btn_remove_code);
+        solo.clickOnView(solo.getView(R.id.btn_remove_code));
         solo.waitForText("Confirmation", 1, 2000);
         solo.clickOnButton("YES");
         solo.assertCurrentActivity("Wrong Activity", QRCodeLibraryActivity.class);
