@@ -51,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Button quickNavButton;
     private Button logoutButton;
+    private Button backButton;
     private TextView username;
     private TextView userdateJoined;
     private TextView userregion;
@@ -74,6 +75,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         quickNavButton = findViewById(R.id.button_prf_quicknav);
         logoutButton = findViewById(R.id.button_prf_logout);
+        backButton = findViewById(R.id.prf_back);
+        backButton.setVisibility(View.INVISIBLE);
 
         username = findViewById(R.id.prf_username_data);
         userEmail = findViewById(R.id.prf_email_data);
@@ -109,68 +112,6 @@ public class ProfileActivity extends AppCompatActivity {
         rankString = playerController.getRanking(myPlayer, players, "Everywhere: #", "high");
         rankString = playerController.getRanking(myPlayer, regionalPlayers, rankString + "\n" + "Regional: #", "high");
         highestCodeValuePlacing.setText(rankString);
-
-//        // Access a Firestore instance
-//        final FirebaseFirestore db = FirebaseFirestore.getInstance(); // pull instance of database from firestore
-//        final CollectionReference collectionRef_Users = db.collection("Users"); // pull instance of specific collection in firestore
-//        final DocumentReference docRef_thisPlayer = collectionRef_Users.document(myPlayer.getUsername()); // pull instance of specific collection in firestore
-//
-//        //https://firebase.google.com/docs/firestore/query-data/get-data
-//        docRef_thisPlayer.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d(TAG, "DocumentSnapshot data" + document.getData());
-//                        myPlayer.setEmail(document.getString("Email"));
-//                        myPlayer.setRegion(document.getString("Region"));
-//                        myPlayer.setDateJoined(document.getString("Date Joined"));
-//                        username.setText(myPlayer.getUsername());
-//                        userEmail.setText(myPlayer.getEmail());
-//                        userregion.setText(myPlayer.getRegion());
-//                        userdateJoined.setText(myPlayer.getDateJoined());
-//                    } else {
-//                        Log.d(TAG, "No such document");
-//                    }
-//                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
-//                }
-//            }
-//        });
-//
-//        final CollectionReference subColRef_Codes = docRef_thisPlayer.collection("QRCodesSubCollection");
-//        // This listener will pull the firestore data into your android app (if you reopen the app)
-//        subColRef_Codes.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-//            FirebaseFirestoreException error) {
-//                codeList.clear(); // Clear the old list
-//                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) { // Re-add firestore collection sub-documents and sub-sub-collection items)
-//                    String codeHash = doc.getId();
-//                    String codeName = (String) doc.getData().get("Code Name");
-//                    String codePoints = (String) doc.getData().get("Point Value");
-//                    String codeImgRef = (String) doc.getData().get("Img Ref");
-//                    String codeLatValue = (String) doc.getData().get("Lat Value");
-//                    String codeLonValue = (String) doc.getData().get("Lon Value");
-//                    String codePhotoRef = (String) doc.getData().get("Photo Ref");
-//                    String codeDate = (String) doc.getData().get("Date:");
-//                    codeList.add(new QRCode(codeHash, codeName, codePoints, codeImgRef, codeLatValue, codeLonValue, codePhotoRef, codeDate));
-//                }
-//                // calc most codes and points
-//                int totalPointsInt = 0;
-//                int highestcodeval = 0;
-//                for (QRCode code: codeList ) {
-//                    totalPointsInt = totalPointsInt + Integer.parseInt(code.getCodePoints());
-//                    if (Integer.parseInt(code.getCodePoints()) > highestcodeval) {
-//                        highestcodeval = Integer.parseInt(code.getCodePoints());
-//                    }
-//                }
-//                totalPoints.setText(String.valueOf(totalPointsInt));
-//                totalCodes.setText(String.valueOf(codeList.size()));
-//                highestCodeValue.setText(String.valueOf(highestcodeval));
-//            }
-//        });
 
         quickNavButton.setOnClickListener(new View.OnClickListener() {
             @Override

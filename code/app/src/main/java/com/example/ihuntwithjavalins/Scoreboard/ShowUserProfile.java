@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.Player.PlayerController;
+import com.example.ihuntwithjavalins.Profile.ProfileActivity;
+import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
 
 import java.util.ArrayList;
@@ -60,6 +62,14 @@ public class ShowUserProfile extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.button_prf_logout);
         quickNavButton.setVisibility(View.INVISIBLE);
         logoutButton.setVisibility(View.INVISIBLE);
+        Button backButton = findViewById(R.id.prf_back);
+        backButton.setVisibility(View.VISIBLE);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         TextView username = findViewById(R.id.prf_username_data);
         TextView userEmail = findViewById(R.id.prf_email_data);

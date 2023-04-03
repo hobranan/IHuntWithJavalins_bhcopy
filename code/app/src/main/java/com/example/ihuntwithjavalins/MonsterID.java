@@ -108,8 +108,6 @@ public class MonsterID {
         } else {
             throw new IllegalArgumentException("View must be either an ImageView or ImageButton");
         }
-
-//        Toast.makeText(view.getContext(), "Monster generated successfully!", Toast.LENGTH_SHORT).show();
     }
 
 

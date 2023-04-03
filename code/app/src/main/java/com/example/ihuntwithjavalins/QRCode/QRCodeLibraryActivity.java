@@ -77,9 +77,9 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
         btn_sortDates = findViewById(R.id.ml_sort_date_btn);
 
         // Get the intent from the previous activity
-        Intent myIntent = getIntent();
-        player = (Player) myIntent.getSerializableExtra("myPlayer");
-        codeList = (ArrayList<QRCode>) player.getCodes();
+//        Intent myIntent = getIntent();
+//        player = (Player) myIntent.getSerializableExtra("myPlayer");
+//        codeList = (ArrayList<QRCode>) player.getCodes();
 
         // Setup/link list to new adapter for linking data and UI
         libraryList = findViewById(R.id.code_list_listview); // grab UI-datalist var

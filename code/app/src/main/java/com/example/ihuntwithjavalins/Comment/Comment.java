@@ -27,24 +27,6 @@ public class Comment {
     private String unixMillis_DateTime;
 
 
-
-//    /**
-//     * Creates a new comment object with the specified user and text content.
-//     * @param username The user who made the comment.
-//     * @param codeComment The text content of the comment.
-//     */
-//    public Comment(String username, String codeComment, String hashcode) {
-//        this.username = username;
-//        this.codeComment = codeComment;
-//        Date dateOfComment = new Date();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            LocalTime timeOfComment = LocalTime.now();
-//        }
-//        this.dateOfComment = dateOfComment.toString();
-//        this.timeOfComment = timeOfComment.toString();
-//        this.hashcode = hashcode;
-//    }
-
     /**
      * Empty constructor for Comment class
      */

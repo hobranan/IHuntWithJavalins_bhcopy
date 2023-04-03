@@ -162,17 +162,17 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            Log.d(TAG, "locationadded 2");
+//                            Log.d(TAG, "locationadded 2");
 //                                        myGPS_point[0] = new GeoPoint(location.getLatitude(), location.getLongitude()); // current 'location tracker' point
 //                                        //my location map point 'item'
 //                                        OverlayItem myGPSoverlayItem = new OverlayItem("My Location", " ", myGPS_point[0]);
 //                                        items.add(myGPSoverlayItem);
 //                                        mapController.setCenter(myGPS_point[0]);//
-                            // String longitude = String.valueOf(locationTrack.getLongitude());//*hide to prevent current location tracking (use fake below)
-                            // String latitude = String.valueOf(locationTrack.getLatitude());
+//                             String longitude = String.valueOf(locationTrack.getLongitude());//*hide to prevent current location tracking (use fake below)
+//                             String latitude = String.valueOf(locationTrack.getLatitude());
                             thislocation = location;
                         } else {
-                            Log.d(TAG, "locationadded 3");
+//                            Log.d(TAG, "locationadded 3");
                             Toast.makeText(getApplicationContext(), "Cannot grab geolocation", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -267,7 +267,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
 
     }
 
-    private void onPictureTaken(QRCode code) {
+    public void onPictureTaken(QRCode code) {
         String hashCode = code.getCodeHash();
         MonsterID monsterID = new MonsterID();
         // Get the AssetManager object

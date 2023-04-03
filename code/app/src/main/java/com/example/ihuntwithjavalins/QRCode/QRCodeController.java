@@ -16,6 +16,10 @@ import java.util.HashMap;
 
 /**
  * Controller class for QRCode related operations
+ *
+ * Manages the QR codes
+ * provides methods to get and sort user QR codes
+ * Design patterns: none
  */
 public class QRCodeController {
     /**

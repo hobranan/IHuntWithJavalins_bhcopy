@@ -20,7 +20,7 @@ import org.junit.Test;
  *
  * @version 1.0
  */
-public class QRCodeImageViewActivityTest {
+public class OwnerIntentTest {
 
     /**
      * The Robotium variable we will be using to test the class
@@ -56,7 +56,7 @@ public class QRCodeImageViewActivityTest {
     @Test
     public void backButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeImageViewActivity.class);
-        solo.clickOnButton(R.id.civ_go_back);
+        solo.clickOnView(solo.getView(R.id.civ_go_back));
         solo.assertCurrentActivity("Wrong Activity", QRCodeViewActivity.class);
     }
 
@@ -67,7 +67,7 @@ public class QRCodeImageViewActivityTest {
     @Test
     public void seeAttachedPhotoButton() {
         solo.assertCurrentActivity("Wrong Activity", QRCodeImageViewActivity.class);
-        solo.clickOnButton(R.id.civ_show_attached);
+        solo.clickOnView(solo.getView(R.id.civ_show_attached));
         solo.assertCurrentActivity("Wrong Activity", PhotoViewActivity.class);
     }
 
