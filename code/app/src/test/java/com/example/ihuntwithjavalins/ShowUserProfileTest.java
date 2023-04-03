@@ -22,8 +22,6 @@ import java.util.List;
 
 public class ShowUserProfileTest {
 
-
-
     ArrayList<Player> playerList;
     ArrayList<Player> regional_players;
     Player player_details;

@@ -16,7 +16,6 @@ import java.util.List;
  * TODO: clean up constructors to allow only kind that we used (lots of variations here)
  * @version 1.0
  */
-//public class Player implements Serializable, Comparable<Player> {
     public class Player implements Serializable {
     /**
      * Holds the username of the Player
@@ -29,7 +28,7 @@ import java.util.List;
     /**
      * Holds the region the Player competes/lives in
      */
-    private String region;    // in login activity, there should be limits so user does not enter invalid region
+    private String region;
 
     /**
      * Holds the the date the Player signed up
@@ -38,7 +37,6 @@ import java.util.List;
     /**
      * Holds the QRCodes the Player has scanned
      */
-//    private ArrayList<QRCode> codes = new ArrayList<>();
     private ArrayList<QRCode> codes = new ArrayList<>();
 
     private ArrayList<Comment> comments = new ArrayList<>();    // add QRCode class later
@@ -54,10 +52,16 @@ import java.util.List;
 
     }
 
+    /**
+     * TODO
+     */
     public Player(String username) {
         this.username = username;
     }
 
+    /**
+     * TODO
+     */
     public Player(String username, String email, String region) {
         this.username = username;
         this.email = email;
@@ -200,14 +204,6 @@ import java.util.List;
         }
     }
 
-//    //unneccasry comapre to since there are other factors to comapre
-//    @Override
-//    public int compareTo(Player other) {
-//        return Integer.compare(this.getSumOfCodePoints(), other.getSumOfCodePoints());
-//
-//    }
-
-
     /**
      * Gets the sum of points from QRCode objects the Player has scanned
      * @return sum of points from QRCode objects the Player has scanned
@@ -221,11 +217,16 @@ import java.util.List;
         return sum;
     }
 
-
+    /**
+     * TODO
+     */
     public int getSumOfCodes(){
         return codes.size();
     }
 
+    /**
+     * TODO
+     */
     public int getHighestCode() {
         List<QRCode> all_codes = getCodes();
         int max_code = 0;

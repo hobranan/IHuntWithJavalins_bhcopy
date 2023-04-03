@@ -65,14 +65,13 @@ public class QuickNavActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         playerController = new PlayerController(this);
-        // MODEL
+
         // grabbed any device stored username variables within app local date storage
         SharedPreferences mPrefs = this.getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
 //        mPrefs.edit().clear().commit();    // uncomment to easily clear the shared preferences for login testing
         String mString = mPrefs.getString("UsernameTag", "default_username_not_found");
 
 
-        // VIEW
         setContentView(R.layout.quick_navigation);
 
         cameraButton = findViewById(R.id.button_qn_scanCode);
@@ -84,9 +83,6 @@ public class QuickNavActivity extends AppCompatActivity {
         userNameDisplay = findViewById(R.id.tv_userNameDisplay);
         userTotalPoints = findViewById(R.id.tv_userTotalPoints);
         userTotalCodes = findViewById(R.id.tv_userTotalCodes);
-
-
-        // CONTROLLER
 
 
         // open signup/login activity if shared pref not there, otherwise: grab database data
@@ -122,7 +118,6 @@ public class QuickNavActivity extends AppCompatActivity {
                     Log.d(TAG, "Failed to retrieve all player data");
                 }
             });
-            // Gets player QRCode info
 
             cameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,8 +171,10 @@ public class QuickNavActivity extends AppCompatActivity {
 
         }
     }
+
+    /* Overwrites back button so that it doesn't close on Quick Nav page*/
     @Override
     public void onBackPressed() {
-// do nothing
+    // do nothing
     }
 }
