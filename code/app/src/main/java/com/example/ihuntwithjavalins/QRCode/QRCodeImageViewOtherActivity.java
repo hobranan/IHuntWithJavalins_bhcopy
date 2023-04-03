@@ -28,12 +28,12 @@ import java.io.Serializable;
  * The user can also click on a back button to return to the previous activity.
  */
 public class QRCodeImageViewOtherActivity extends AppCompatActivity {
-    Button backButton;
-    Button photoButton;
-    Button geoButton;
-    TextView codeName;
-    TextView codePoints;
-    ImageView codePicImage;
+    private Button backButton;
+    private Button photoButton;
+    private Button geoButton;
+    private TextView codeName;
+    private TextView codePoints;
+    private ImageView codePicImage;
     private QRCode thisCode;
     /**
      * Initializes the activity and its components.

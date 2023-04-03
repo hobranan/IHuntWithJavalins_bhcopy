@@ -18,8 +18,6 @@ import com.example.ihuntwithjavalins.Camera.PhotoViewActivity;
 import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 
@@ -31,12 +29,12 @@ import java.io.Serializable;
  * The user can also click on a back button to return to the previous activity.
  */
 public class QRCodeImageViewActivity extends AppCompatActivity {
-    Button backButton;
-    Button photoButton;
-    Button geoButton;
-    TextView codeName;
-    TextView codePoints;
-    ImageView codePicImage;
+    private Button backButton;
+    private Button photoButton;
+    private Button geoButton;
+    private TextView codeName;
+    private TextView codePoints;
+    private ImageView codePicImage;
     private Button quickNavButton;
     private QRCode thisCode;
     /**

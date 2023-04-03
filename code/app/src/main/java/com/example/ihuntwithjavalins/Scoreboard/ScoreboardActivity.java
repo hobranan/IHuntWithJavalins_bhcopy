@@ -35,11 +35,11 @@ import java.util.List;
  * The class also creates an instance of CustomListScoreBoard class to populate the ListView with data from the ArrayList.
  */
 public class ScoreboardActivity extends AppCompatActivity {
-    Player myPlayer = new Player();
-    ArrayList<Player> playerList = new ArrayList<>();
-    ArrayList<Player> regionalList = new ArrayList<>();
-    ArrayAdapter<Player> playerArrayAdapter;
-    ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
+    private  Player myPlayer = new Player();
+    private  ArrayList<Player> playerList = new ArrayList<>();
+    private  ArrayList<Player> regionalList = new ArrayList<>();
+    private  ArrayAdapter<Player> playerArrayAdapter;
+    private  ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
     public static boolean sortAscend = false;
     public static boolean rankingNameFlag = false;
     private PlayerController playerController;

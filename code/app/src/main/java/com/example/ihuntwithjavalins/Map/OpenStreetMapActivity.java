@@ -91,15 +91,10 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        Log.d(TAGmap, "playerlist 3");
                         if (task.isSuccessful()) {
-//                            Log.d(TAGmap, "playerlist 4");
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-
-//                                Log.d(TAGmap, "playerlist 5");
                                 Player tempPlayer = new Player();
                                 tempPlayer.setUsername(doc.getId());
-
                                 tempPlayer.setEmail((String) doc.getData().get("Email"));
                                 tempPlayer.setRegion((String) doc.getData().get("Region"));
                                 tempPlayer.setDateJoined((String) doc.getData().get("Date Joined"));

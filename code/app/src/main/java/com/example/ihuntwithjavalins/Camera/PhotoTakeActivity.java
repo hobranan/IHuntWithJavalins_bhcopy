@@ -42,9 +42,9 @@ import java.util.Random;
  * singleton pattern - only 1 instance of firebase firestore throughout the class. Uses getinstance to ensure that.
  * */
 public class PhotoTakeActivity extends AppCompatActivity {
-    Button btnTakePhoto;
-    Button btnSavePhoto;
-    ImageView imageView;
+    private Button btnTakePhoto;
+    private Button btnSavePhoto;
+    private ImageView imageView;
     public static final int RequestPermissionCode = 1;
     private QRCode code;
     private String TAG = "Sample"; // used as starter string for debug-log messaging

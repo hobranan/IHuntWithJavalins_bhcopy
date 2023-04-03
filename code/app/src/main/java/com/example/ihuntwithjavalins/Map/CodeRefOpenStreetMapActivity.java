@@ -15,12 +15,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
 import com.example.ihuntwithjavalins.R;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -139,7 +136,6 @@ public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
                 mapController.setCenter(items.get(0).getPoint());
             }
         }, 1000);
-
 
 
     }
