@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import android.util.Log;
 
 import com.example.ihuntwithjavalins.Player.Player;
+import com.example.ihuntwithjavalins.Player.PlayerController;
+import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.google.common.collect.ComparisonChain;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-/** Contains copies of all the methods that don't involve the database or app in the PLayerController class */
+/** Contains copies of all the methods that don't involve the database or app in the PLayerController class
+ * TODO: The test for getRanking*/
 public class PlayerControllerUnitTests {
 
     private String TAG = "PlayerController";
@@ -25,7 +28,7 @@ public class PlayerControllerUnitTests {
         for (Player plr : playerList) {
             if ((user.getRegion()).equals(plr.getRegion())) {
                 regionalPlayers.add(plr);
-                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " "+ plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
+//                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " "+ plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
             }
         }
         return regionalPlayers;
@@ -40,7 +43,7 @@ public class PlayerControllerUnitTests {
         playerList = sortPlayers(playerList, rankType);
 
         for (Player plr : playerList) {
-            Log.d(TAG, "BANANA");
+//            Log.d(TAG, "BANANA");
             if ((plr.getUsername()).equals(user.getUsername())) {
                 codeString = wordBrake + (playerList.indexOf(plr) + 1);
                 String rankString = "";
@@ -183,20 +186,110 @@ public class PlayerControllerUnitTests {
     /** Series of tests to test the getRegionalPlayers method */
     @Test
     public void getRegionalTest() {
-        ArrayList<Player> mockPlayers = Mockito.mock(ArrayList.class);
-        mockPlayers.add(new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton"));
-        mockPlayers.add(new Player("JamesBond", "doubleohseven@james.com", "Edmonton"));
-        mockPlayers.add(new Player("EthanHunt", "mission@impossible.com", "Calgary"));
-        mockPlayers.add(new Player("NatashaRomanoff", "black@widow.com", "Regina"));
+        ArrayList<Player> mockPlayers = new ArrayList<>();
+        Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
+        Player player2 = new Player("JamesBond", "doubleohseven@james.com", "Edmonton");
+        Player player3 = new Player("EthanHunt", "mission@impossible.com", "Calgary");
+        Player player4 = new Player("NatashaRomanoff", "black@widow.com", "Regina");
+        mockPlayers.add(player1);
+        mockPlayers.add(player2);
+        mockPlayers.add(player3);
+        mockPlayers.add(player4);
 
-        Player mockUser = Mockito.mock(Player.class);
+        Player mockUser = new Player();
         mockUser.setRegion("Edmonton");
         mockUser.setEmail("john@gmail.com");
         mockUser.setUsername("JohnDoe");
 
-        assertEquals(getRegionalPlayers(mockUser, mockPlayers), "something idk");
+        ArrayList<Player> expectedOutput = new ArrayList<>();
+        expectedOutput.add(player1);
+        expectedOutput.add(player2);
+
+        // Checking regular test case
+        assertEquals(getRegionalPlayers(mockUser, mockPlayers), expectedOutput);
+        expectedOutput.clear();
+
+        // Checking null ArrayList for empty return value using cleared expectedOutput
+        assertEquals(getRegionalPlayers(mockUser, expectedOutput), expectedOutput);
+
     }
 
+    /** Series of tests to test the getRanking method */
+    @Test
+    public void getRankingTest() {
+        // Setup test data
+        ArrayList<Player> playerList = new ArrayList<Player>();
+
+        //QRCode Objects
+        QRCode qrCodeObj1 = new QRCode("hash123", "MyQRCode1", "10", "imgRef123", "123.456", "789.012", "photoRef123", "2022-04-01");
+        QRCode qrCodeObj2 = new QRCode("hash456", "MyQRCode2", "20", "imgRef456", "456.789", "012.345", "photoRef456", "2022-04-02");
+        QRCode qrCodeObj3 = new QRCode("hash789", "MyQRCode3", "30", "imgRef789", "789.012", "345.678", "photoRef789", "2022-04-03");
+        QRCode qrCodeObj4 = new QRCode("hash111", "MyQRCode4", "40", "imgRef111", "111.222", "333.444", "photoRef111", "2022-04-04");
+        QRCode qrCodeObj5 = new QRCode("hash222", "MyQRCode5", "50", "imgRef222", "222.333", "444.555", "photoRef222", "2022-04-05");
+
+        Player player1 = new Player("John Doe", "john.doe@example.com", "Edmonton");
+        Player player2 = new Player("Jane Smith", "jane.smith@example.com", "Edmonton");
+        Player player3 = new Player("Bob Johnson", "bob.johnson@example.com", "Vancouver");
+
+        Player player_details = new Player("John Doe","murab@ualberta.ca","Edmonton");
+
+        player1.addCode(qrCodeObj1);
+        player1.addCode(qrCodeObj1);
+        player1.addCode(qrCodeObj2);
+
+        player2.addCode(qrCodeObj2);
+        player2.addCode(qrCodeObj4);
+        player2.addCode(qrCodeObj5);
+
+        player3.addCode(qrCodeObj3);
+        player3.addCode(qrCodeObj2);
+        player3.addCode(qrCodeObj1);
+
+        player_details.addCode(qrCodeObj1);
+        player_details.addCode(qrCodeObj4);
+        player_details.addCode(qrCodeObj5);
+
+        playerList.add(player1);
+        playerList.add(player2);
+        playerList.add(player3);
+
+        // Test getRanking method
+        ArrayList<Player> regionalPlayers = getRegionalPlayers(player_details, playerList);
+        String rankString = getRanking(player_details, playerList, "Everywhere: #", "points");
+        rankString = getRanking(player_details, regionalPlayers, rankString + "\n" + "Regional: #", "points");
+        String expected = "Everywhere: #3\nRegional: #2";
+        assertEquals(expected, rankString);
+    }
+
+
+
+    /** Series of tests to test the sortPlayers method */
+    @Test
+    public void sortPlayersTest() {
+        ArrayList<Player> mockPlayers = new ArrayList<>();
+        Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
+        Player player2 = new Player("JamesBond", "doubleohseven@james.com", "Edmonton");
+        Player player3 = new Player("EthanHunt", "mission@impossible.com", "Calgary");
+        Player player4 = new Player("NatashaRomanoff", "black@widow.com", "Regina");
+        mockPlayers.add(player1);
+        mockPlayers.add(player2);
+        mockPlayers.add(player3);
+        mockPlayers.add(player4);
+
+        ArrayList<Player> initialList = mockPlayers;
+        ArrayList<Player> output = sortPlayers(mockPlayers, "name");
+
+
+        for(Player plr : initialList) {
+            System.out.println(plr.getUsername());
+        }
+
+        for(Player plr : output) {
+            System.out.println(plr.getUsername());
+        }
+
+        assertEquals(output, initialList);
+    }
 
     /** Series of tests to test the niceDate method */
     @Test
