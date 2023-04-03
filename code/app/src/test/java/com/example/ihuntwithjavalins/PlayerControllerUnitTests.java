@@ -116,16 +116,6 @@ public class PlayerControllerUnitTests {
         return playerList;
     }
 
-    public ArrayList<Player> getPlayersContainQuery(ArrayList<Player> players, String query) {
-        ArrayList<Player> foundPlayers = new ArrayList<>();
-        for (Player player : players) {
-            if (player.getRegion().contains(query)) {
-                foundPlayers.add(player);
-            }
-        }
-
-        return foundPlayers;
-    }
     public String getNiceDateFormat (String joinedDate){
         String date = joinedDate;
         String date_joined = "";
@@ -179,40 +169,36 @@ public class PlayerControllerUnitTests {
         return player.getHighestCode();
     }
 
-    public int getTotalCodes(Player player) {
-        return player.getSumOfCodes();
-    }
-
     /** Series of tests to test the getRegionalPlayers method */
     @Test
-    public void getRegionalTest() {
-        ArrayList<Player> mockPlayers = new ArrayList<>();
+    void getRegionalTest() {
+        Player user = new Player("John Doe","murab@ualberta.ca","Edmonton");
+        ArrayList<Player> playerList = new ArrayList<>();
         Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
         Player player2 = new Player("JamesBond", "doubleohseven@james.com", "Edmonton");
         Player player3 = new Player("EthanHunt", "mission@impossible.com", "Calgary");
         Player player4 = new Player("NatashaRomanoff", "black@widow.com", "Regina");
-        mockPlayers.add(player1);
-        mockPlayers.add(player2);
-        mockPlayers.add(player3);
-        mockPlayers.add(player4);
+        Player player5 = new Player("AustinPowers", "spy@me.com", "Edmonton");
+        Player player6 = new Player("JohnnyEnglish", "british@intelligence.com", "Calgary");
 
-        Player mockUser = new Player();
-        mockUser.setRegion("Edmonton");
-        mockUser.setEmail("john@gmail.com");
-        mockUser.setUsername("JohnDoe");
+        playerList.add(player1);
+        playerList.add(player2);
+        playerList.add(player3);
+        playerList.add(player4);
+        playerList.add(player5);
+        playerList.add(player6);
 
-        ArrayList<Player> expectedOutput = new ArrayList<>();
-        expectedOutput.add(player1);
-        expectedOutput.add(player2);
+        ArrayList<Player> regionalPlayers = getRegionalPlayers(user, playerList);
 
-        // Checking regular test case
-        assertEquals(getRegionalPlayers(mockUser, mockPlayers), expectedOutput);
-        expectedOutput.clear();
-
-        // Checking null ArrayList for empty return value using cleared expectedOutput
-        assertEquals(getRegionalPlayers(mockUser, expectedOutput), expectedOutput);
-
+        assertEquals(3, regionalPlayers.size());
+        assertTrue(regionalPlayers.contains(player1));
+        assertTrue(regionalPlayers.contains(player2));
+        assertTrue(regionalPlayers.contains(player5));
+        assertFalse(regionalPlayers.contains(player3));
+        assertFalse(regionalPlayers.contains(player4));
+        assertFalse(regionalPlayers.contains(player6));
     }
+
 
     /** Series of tests to test the getRanking method */
     @Test
@@ -231,7 +217,7 @@ public class PlayerControllerUnitTests {
         Player player2 = new Player("Jane Smith", "jane.smith@example.com", "Edmonton");
         Player player3 = new Player("Bob Johnson", "bob.johnson@example.com", "Vancouver");
 
-        Player player_details = new Player("John Doe","murab@ualberta.ca","Edmonton");
+        Player user = new Player("John Doe","murab@ualberta.ca","Edmonton");
 
         player1.addCode(qrCodeObj1);
         player1.addCode(qrCodeObj1);
@@ -245,23 +231,21 @@ public class PlayerControllerUnitTests {
         player3.addCode(qrCodeObj2);
         player3.addCode(qrCodeObj1);
 
-        player_details.addCode(qrCodeObj1);
-        player_details.addCode(qrCodeObj4);
-        player_details.addCode(qrCodeObj5);
+        user.addCode(qrCodeObj1);
+        user.addCode(qrCodeObj4);
+        user.addCode(qrCodeObj5);
 
         playerList.add(player1);
         playerList.add(player2);
         playerList.add(player3);
 
         // Test getRanking method
-        ArrayList<Player> regionalPlayers = getRegionalPlayers(player_details, playerList);
-        String rankString = getRanking(player_details, playerList, "Everywhere: #", "points");
-        rankString = getRanking(player_details, regionalPlayers, rankString + "\n" + "Regional: #", "points");
+        ArrayList<Player> regionalPlayers = getRegionalPlayers(user, playerList);
+        String rankString = getRanking(user, playerList, "Everywhere: #", "points");
+        rankString = getRanking(user, regionalPlayers, rankString + "\n" + "Regional: #", "points");
         String expected = "Everywhere: #3\nRegional: #2";
         assertEquals(expected, rankString);
     }
-
-
 
     /** Series of tests to test the sortPlayers method */
     @Test
@@ -302,5 +286,47 @@ public class PlayerControllerUnitTests {
 
         date = "99991230";
         assertEquals(getNiceDateFormat(date), "30th December, 9999");
+    }
+
+    /** Test for playerController method calculateTotalPoints */
+    @Test
+    public void calculateTotalPointsTest() {
+        Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
+        QRCode qrCodeObj1 = new QRCode("hash123", "MyQRCode1", "10", "imgRef123", "123.456", "789.012", "photoRef123", "2022-04-01");
+        QRCode qrCodeObj2 = new QRCode("hash456", "MyQRCode2", "20", "imgRef456", "456.789", "012.345", "photoRef456", "2022-04-02");
+        QRCode qrCodeObj3 = new QRCode("hash789", "MyQRCode3", "30", "imgRef789", "789.012", "345.678", "photoRef789", "2022-04-03");
+        QRCode qrCodeObj4 = new QRCode("hash111", "MyQRCode4", "40", "imgRef111", "111.222", "333.444", "photoRef111", "2022-04-04");
+        QRCode qrCodeObj5 = new QRCode("hash222", "MyQRCode5", "50", "imgRef222", "222.333", "444.555", "photoRef222", "2022-04-05");
+
+        assertEquals(player1.getSumOfCodePoints(), 0);
+
+        player1.addCode(qrCodeObj1);
+        player1.addCode(qrCodeObj2);
+        player1.addCode(qrCodeObj3);
+        player1.addCode(qrCodeObj4);
+        player1.addCode(qrCodeObj5);
+
+        assertEquals(calculateTotalPoints(player1), 150);
+    }
+
+    /** Test for playerController method calculateHighestValue */
+    @Test
+    public void calculateHighestValueTest() {
+        Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
+        QRCode qrCodeObj1 = new QRCode("hash123", "MyQRCode1", "10", "imgRef123", "123.456", "789.012", "photoRef123", "2022-04-01");
+        QRCode qrCodeObj2 = new QRCode("hash456", "MyQRCode2", "20", "imgRef456", "456.789", "012.345", "photoRef456", "2022-04-02");
+        QRCode qrCodeObj3 = new QRCode("hash789", "MyQRCode3", "30", "imgRef789", "789.012", "345.678", "photoRef789", "2022-04-03");
+        QRCode qrCodeObj4 = new QRCode("hash111", "MyQRCode4", "40", "imgRef111", "111.222", "333.444", "photoRef111", "2022-04-04");
+        QRCode qrCodeObj5 = new QRCode("hash222", "MyQRCode5", "50", "imgRef222", "222.333", "444.555", "photoRef222", "2022-04-05");
+
+        assertEquals(player1.getSumOfCodePoints(), 0);
+
+        player1.addCode(qrCodeObj1);
+        player1.addCode(qrCodeObj2);
+        player1.addCode(qrCodeObj3);
+        player1.addCode(qrCodeObj4);
+        player1.addCode(qrCodeObj5);
+
+        assertEquals(calculateHighestValue(player1), 50);
     }
 }
