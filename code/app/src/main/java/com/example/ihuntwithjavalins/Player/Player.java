@@ -51,6 +51,19 @@ public class Player implements Serializable {
     }
 
     /**
+     * Constructor for new instance of Player object without date given
+     *
+     * @param username   The username of the Player
+     * @param region     The region the Player is in
+     * @param email      the email of the player
+     */
+    public Player(String username, String email, String region) {
+        this.username = username;
+        this.email = email;
+        this.region = region;
+    }
+
+    /**
      * Constructor for new instance of Player object without email given
      *
      * @param username   The username of the Player

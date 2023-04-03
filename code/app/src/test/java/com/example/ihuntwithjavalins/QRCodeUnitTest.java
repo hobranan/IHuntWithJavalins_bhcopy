@@ -2,7 +2,6 @@ package com.example.ihuntwithjavalins;
 
 import static org.junit.Assert.assertEquals;
 
-import com.example.ihuntwithjavalins.QRCode.CommentListForCommentAdapter;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
 import org.junit.jupiter.api.Assertions;
