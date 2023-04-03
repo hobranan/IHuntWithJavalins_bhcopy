@@ -204,7 +204,6 @@ public class ScoreboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rankingNameFlag = false;
-//                Toast.makeText(ScoreboardActivity.this, "Sort by names", Toast.LENGTH_SHORT).show();
                 // Sort the player list by num of codes
                 regionalList = playerController.sortPlayers(regionalList, "high+sum");
                 if (sortAscend) {
