@@ -1,16 +1,34 @@
 package com.example.ihuntwithjavalins;
 
+import static org.junit.Assert.assertEquals;
+
 import com.example.ihuntwithjavalins.QRCode.CommentListForCommentAdapter;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /** Tests various methods from the QRCode folder in the project */
 public class QRCodeUnitTest {
+    /**
+     * Method to convert a given Unix format to Datetime string from the CommentListForCommentAdapter class in the QRCode folder
+     * Method has been copied due to the Dependency of the class on context */
+    public String convertUnixMillisToDateTime(String unixMillis) {
+        // https://javarevisited.blogspot.com/2012/12/how-to-convert-millisecond-to-date-in-java-example.html#axzz7wzpr7WmN
+        //current time in milliseconds
+        long tempDateTime = Long.parseLong(unixMillis);
+        //creating Date from millisecond
+        Date tempDate = new Date(tempDateTime);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.format(tempDate);
+    }
 
     /**
      * Method to sort codes copied from the QRCodeController class in the QRCodes folder
@@ -93,21 +111,56 @@ public class QRCodeUnitTest {
 
     /** Test method from the CommentListForCommentAdapter class in the QRCode folder */
     @Test
-    public void convertUnixMillisToDateTimeTest() {
-
+    public void testConvertUnixMillisToDateTime() {
+        // Test for valid Unix timestamp
+        String validUnixMillis = "1649123456789"; // April 4, 2022, 19:50:56 AM UTC
+        String expectedDateTime = "2022-04-04 19:50:56";
+        String actualDateTime = convertUnixMillisToDateTime(validUnixMillis);
+        Assertions.assertEquals(expectedDateTime, actualDateTime, "Conversion of valid Unix timestamp is incorrect");
     }
 
     /**
      * Test method from QRCodeController class for sorting a given list of QRCodes based on a query string */
     @Test
     public void sortCodesTest() {
+        // Create a list of QRCode objects to be sorted
+        ArrayList<QRCode> codeList = new ArrayList<>();
+        QRCode code1 = new QRCode("hash123", "MyQRCode1", "10", "imgRef123", "123.456", "789.012", "photoRef123", "2022-04-01");
+        QRCode code2 = new QRCode("hash456", "MyQRCode2", "20", "imgRef456", "456.789", "012.345", "photoRef456", "2022-04-02");
+        QRCode code3 = new QRCode("hash789", "MyQRCode3", "30", "imgRef789", "789.012", "345.678", "photoRef789", "2022-04-03");
+        codeList.add(code2);
+        codeList.add(code1);
+        codeList.add(code3);
 
+        // Test sorting by name
+        ArrayList<QRCode> sortedList = sortCodes(codeList, "name");
+        assertEquals(sortedList.get(0), code1);
+        assertEquals(sortedList.get(1), code2);
+        assertEquals(sortedList.get(2), code3);
+
+        // Test sorting by points
+        sortedList = sortCodes(codeList, "points");
+        assertEquals(sortedList.get(0), code3);
+        assertEquals(sortedList.get(1), code2);
+        assertEquals(sortedList.get(2), code1);
+
+        // Test sorting by date
+        sortedList = sortCodes(codeList, "date");
+        assertEquals(sortedList.get(0), code1);
+        assertEquals(sortedList.get(1), code2);
+        assertEquals(sortedList.get(2), code3);
     }
 
     /**
      * Test method from QRCodeViewActivity for converting a given date string to a nicer format */
     @Test
     public void getNiceDateFormatTest() {
+        // Test with a valid date string
+        String niceDate = getNiceDateFormat("20220103");
+        assertEquals(niceDate, "3rd January, 2022");
 
+        // Test with an invalid date string
+        niceDate = getNiceDateFormat(null);
+        assertEquals(niceDate, "No date");
     }
 }
