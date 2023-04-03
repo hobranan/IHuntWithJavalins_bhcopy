@@ -51,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Button quickNavButton;
     private Button logoutButton;
+    private Button backButton;
     private TextView username;
     private TextView userdateJoined;
     private TextView userregion;
@@ -74,6 +75,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         quickNavButton = findViewById(R.id.button_prf_quicknav);
         logoutButton = findViewById(R.id.button_prf_logout);
+        backButton = findViewById(R.id.prf_back);
+        backButton.setVisibility(View.INVISIBLE);
 
         username = findViewById(R.id.prf_username_data);
         userEmail = findViewById(R.id.prf_email_data);
