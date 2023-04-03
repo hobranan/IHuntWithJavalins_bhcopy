@@ -2,24 +2,19 @@ package com.example.ihuntwithjavalins;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import android.util.Log;
-
 import com.example.ihuntwithjavalins.Player.Player;
-import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.QRCode.QRCode;
 import com.google.common.collect.ComparisonChain;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 /** Contains copies of all the methods that don't involve the database or app in the PLayerController class
  * TODO: The test for getRanking*/
-public class PlayerControllerUnitTests {
+public class PlayerControllerTest {
 
     private String TAG = "PlayerController";
 

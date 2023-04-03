@@ -286,7 +286,7 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
 
     }
 
-    private void onPictureTaken(QRCode code) {
+    public void onPictureTaken(QRCode code) {
         String hashCode = code.getCodeHash();
         MonsterID monsterID = new MonsterID();
         // Get the AssetManager object
