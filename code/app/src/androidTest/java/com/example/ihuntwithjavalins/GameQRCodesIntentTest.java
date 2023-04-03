@@ -42,12 +42,9 @@ public class GameQRCodesIntentTest {
     private static final long TIMEOUT = 5;
     PlayerDB playerDB;
     Player mockPlayer;
-    Player mockPlayer2;
-
     QRCode mockCode1;
     QRCode mockCode2;
     QRCode mockCode3;
-
 
 
     /**
@@ -95,6 +92,7 @@ public class GameQRCodesIntentTest {
      * Sets up the Activity before every test
      * creates a player with 2 QR codes and logs in as that player
      * Creates an extra QR code for later testing
+     *
      * @throws Exception Thrown when setup fails
      */
     @Before
@@ -149,15 +147,15 @@ public class GameQRCodesIntentTest {
                 });
 
 
-
     }
 
     /**
      * Starts the activity
+     *
      * @throws Exception Thrown when removing fails
      */
     @Test
-    public void start() throws Exception{
+    public void start() throws Exception {
         Activity activity = rule.getActivity();
 
         removePlayer(mockPlayer);
@@ -167,6 +165,7 @@ public class GameQRCodesIntentTest {
     /**
      * Makes sure the player can open the camera to scan a QR Code for
      * US 02.01.01
+     *
      * @throws InterruptedException if the removePlayer method takes too long to function
      */
     @Test
@@ -210,10 +209,11 @@ public class GameQRCodesIntentTest {
 
     /**
      * Cleans up the player after each test
+     *
      * @throws InterruptedException Thrown when removal fails
      */
     @After
-    public void cleanUp() throws InterruptedException{
+    public void cleanUp() throws InterruptedException {
         //removePlayer(mockPlayer);
     }
 

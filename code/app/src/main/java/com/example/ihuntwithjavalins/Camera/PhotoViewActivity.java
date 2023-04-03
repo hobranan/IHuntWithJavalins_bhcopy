@@ -25,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 public class PhotoViewActivity extends Activity {
     /**
      * Creates the activity layout and retrieves the photo from Firebase Storage to set it as the image of an ImageView.
+     *
      * @param savedInstanceState the saved instance state of the activity
      */
     @Override

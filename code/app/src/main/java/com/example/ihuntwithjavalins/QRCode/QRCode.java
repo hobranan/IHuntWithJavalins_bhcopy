@@ -15,6 +15,7 @@ import java.util.Date;
 
 /**
  * This class represents a QRCode scanned by Players in the application.
+ *
  * @version 1.0
  */
 public class QRCode implements Serializable {
@@ -51,8 +52,10 @@ public class QRCode implements Serializable {
      * Holds code acquisition date
      */
     private String codeDate;
+
     /**
      * Constructor for new instance of QRCode object initialized based on textCode string
+     *
      * @param textCode the textCode to be converted into QRCode data
      */
     public QRCode(String textCode) {
@@ -71,18 +74,20 @@ public class QRCode implements Serializable {
     /**
      * Constructor for new instance of QRCode object
      */
-    public QRCode(){}
+    public QRCode() {
+    }
 
     /**
      * Constructor for new instance of QRCode object, initalizes fields based on parameters
-     * @param codeHash the hash value of the QRCode
-     * @param codeName the name of the QRCode
-     * @param codePoints the point value of the QRCode
+     *
+     * @param codeHash         the hash value of the QRCode
+     * @param codeName         the name of the QRCode
+     * @param codePoints       the point value of the QRCode
      * @param codeGendImageRef the image reference of the QRCode
-     * @param codeLat the latitude of the QRCode geolocation
-     * @param codeLon the longitude of the QRCode geologcation
-     * @param codePhotoRef the photo reference of the QRCode
-     * @param codeDate the QRCode acquisition date
+     * @param codeLat          the latitude of the QRCode geolocation
+     * @param codeLon          the longitude of the QRCode geologcation
+     * @param codePhotoRef     the photo reference of the QRCode
+     * @param codeDate         the QRCode acquisition date
      */
     public QRCode(String codeHash, String codeName, String codePoints, String codeGendImageRef, String codeLat, String codeLon, String codePhotoRef, String codeDate) {
         this.codeHash = codeHash;
@@ -98,36 +103,52 @@ public class QRCode implements Serializable {
 
     /**
      * Sets the unique firestore id of the QRCode
+     *
      * @param date the id to set the QRCode to
      */
-    public void setCodeDate(String date) {this.codeDate = date;}
+    public void setCodeDate(String date) {
+        this.codeDate = date;
+    }
 
     /**
      * Sets the Hash Value of the QRCode
+     *
      * @param hash the hash value to set the QRCode to
      */
-    public void setCodeHash(String hash) {this.codeHash = hash;}
+    public void setCodeHash(String hash) {
+        this.codeHash = hash;
+    }
 
     /**
      * Sets the name of the QRCode
+     *
      * @param name the name to set the QRCode to
      */
-    public void setCodeName(String name) {this.codeName = name;}
+    public void setCodeName(String name) {
+        this.codeName = name;
+    }
 
     /**
      * Sets the point value of the QRCode
+     *
      * @param points the point value to set the QRCode to
      */
-    public void setCodePoints(String points) {this.codePoints = points;}
+    public void setCodePoints(String points) {
+        this.codePoints = points;
+    }
 
     /**
      * Sets the image reference of the QRCode
+     *
      * @param imageRef the image reference to set the QRCode to
      */
-    public void setCodeGendImageRef(String imageRef) {this.codeGendImageRef = imageRef;}
+    public void setCodeGendImageRef(String imageRef) {
+        this.codeGendImageRef = imageRef;
+    }
 
     /**
      * Sets the photo reference of the QRCode
+     *
      * @param codePhotoRef the photo reference to set the QRCode to
      */
     public void setCodePhotoRef(String codePhotoRef) {
@@ -136,6 +157,7 @@ public class QRCode implements Serializable {
 
     /**
      * Sets the latitude of the QRCode
+     *
      * @param codeLat the latitude to set the QRCode to
      */
     public void setCodeLat(String codeLat) {
@@ -144,6 +166,7 @@ public class QRCode implements Serializable {
 
     /**
      * Sets the longitude of the QRCode
+     *
      * @param codeLon the longitude to set the QRCode to
      */
     public void setCodeLon(String codeLon) {
@@ -152,12 +175,16 @@ public class QRCode implements Serializable {
 
     /**
      * Gets the unique QRCode firestore id
+     *
      * @return the QRCode id
      */
-    public String getCodeDate() {return codeDate;}
+    public String getCodeDate() {
+        return codeDate;
+    }
 
     /**
      * Gets the Hash Value of the QRCode
+     *
      * @return the QRCode hash value
      */
     public String getCodeHash() {
@@ -166,6 +193,7 @@ public class QRCode implements Serializable {
 
     /**
      * Gets the name of the QRCode
+     *
      * @return the QRCode name
      */
     public String getCodeName() {
@@ -174,6 +202,7 @@ public class QRCode implements Serializable {
 
     /**
      * Gets the point value of the QRCode
+     *
      * @return the QRCode point value
      */
     public String getCodePoints() {
@@ -182,12 +211,16 @@ public class QRCode implements Serializable {
 
     /**
      * Gets the image reference of the QRCode
+     *
      * @return the QRCode image reference
      */
-    public String getCodeGendImageRef() { return codeGendImageRef;}
+    public String getCodeGendImageRef() {
+        return codeGendImageRef;
+    }
 
     /**
      * Gets the photo reference of the QRCode
+     *
      * @return the photo reference of the QRCode
      */
     public String getCodePhotoRef() {
@@ -196,6 +229,7 @@ public class QRCode implements Serializable {
 
     /**
      * Gets the latitude of the QRCode geolocation
+     *
      * @return the latitude of the QRCode
      */
     public String getCodeLat() {
@@ -204,6 +238,7 @@ public class QRCode implements Serializable {
 
     /**
      * Gets the longitude of the QRCode geolocation
+     *
      * @return the longitude of the QRCode
      */
     public String getCodeLon() {
@@ -212,6 +247,7 @@ public class QRCode implements Serializable {
 
     /**
      * Initializes the QRCode object's fields based on textCode
+     *
      * @param textCode the textCode to convert into QRCode object field data
      */
     void analyzeWordToHashToNameToPoints(String textCode) {

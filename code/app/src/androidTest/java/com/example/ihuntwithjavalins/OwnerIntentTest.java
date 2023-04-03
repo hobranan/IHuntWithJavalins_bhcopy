@@ -35,6 +35,7 @@ public class OwnerIntentTest {
 
     /**
      * Sets up the Activity before every test
+     *
      * @throws Exception if the setup fails
      */
     @Before
@@ -44,6 +45,7 @@ public class OwnerIntentTest {
 
     /**
      * Makes sure the set up didn't fail
+     *
      * @throws Exception if the setup fails
      */
     @Test

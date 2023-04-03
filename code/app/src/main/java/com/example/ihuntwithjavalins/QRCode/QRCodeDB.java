@@ -3,6 +3,7 @@ package com.example.ihuntwithjavalins.QRCode;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
 import com.example.ihuntwithjavalins.common.DBConnection;
 import com.example.ihuntwithjavalins.common.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,6 +30,7 @@ import java.util.Map;
  * observer pattern - Use of OnCompleteListener
  * command pattern - addQRCode, getQRCode, and deleteCode all pass commands to QRCodeDB
  * singleton pattern - use of getINstance to access the FirebaseFirestore object
+ *
  * @version 1.0
  */
 public class QRCodeDB {
@@ -47,6 +49,7 @@ public class QRCodeDB {
 
     /**
      * Constructor for QRCodeDB class, initializes initial fields
+     *
      * @param connection the DBConnection object used to access the database
      */
     public QRCodeDB(DBConnection connection) {
@@ -56,6 +59,7 @@ public class QRCodeDB {
 
     /**
      * Switches the collection reference from one player to another
+     *
      * @param playerUsername given player's username to switch the collection reference to
      */
     public void switchFromPlayerToPlayerCodes(String playerUsername) {
@@ -64,7 +68,8 @@ public class QRCodeDB {
 
     /**
      * Adds a new QRCode document to the database
-     * @param code the code to add to the database
+     *
+     * @param code     the code to add to the database
      * @param listener the listener to call when the code is added
      */
     public void addQRCode(@NonNull QRCode code, OnCompleteListener<QRCode> listener) {
@@ -99,8 +104,9 @@ public class QRCodeDB {
 
     /**
      * Overwrites(and creates new if not existing) QRCode in database based on HashMap
-     * @param code The QRCode to data to update
-     * @param dataMap The map of the data fields to update to
+     *
+     * @param code     The QRCode to data to update
+     * @param dataMap  The map of the data fields to update to
      * @param listener the listener to call after overwriting
      */
     public void overwriteCode(QRCode code, HashMap<String, String> dataMap, OnCompleteListener<QRCode> listener) {
@@ -121,7 +127,8 @@ public class QRCodeDB {
 
     /**
      * Gets the QRCode from the database(Use Lambda to retrieve)
-     * @param code the code to retrieve from database
+     *
+     * @param code     the code to retrieve from database
      * @param listener the listener to call after getting code
      */
     public void getCode(QRCode code, OnCompleteListener<QRCode> listener) {
@@ -158,7 +165,8 @@ public class QRCodeDB {
 
     /**
      * Deletes given code from the database
-     * @param code the given code to delete
+     *
+     * @param code     the given code to delete
      * @param listener the listener to call when the code is deleted
      */
     public void deleteCode(@NonNull QRCode code, OnCompleteListener<QRCode> listener) {
@@ -184,6 +192,7 @@ public class QRCodeDB {
      * Gets and returns a list of QRCodes from the collection in the database
      * Used Lab 5 Code to iterate over Document Snapshots.
      * Citation: How to get data from firestore https://firebase.google.com/docs/firestore/query-data/get-data#java_14
+     *
      * @param listener the on complete listener for a list of QRCodes
      */
     public void getCodes(OnCompleteListener<ArrayList<QRCode>> listener) {
@@ -217,6 +226,7 @@ public class QRCodeDB {
 
     /**
      * Gets and returns reference to QRCode document
+     *
      * @param code given code to find document of
      * @return the document reference of QRCode in database
      */
@@ -227,6 +237,7 @@ public class QRCodeDB {
     /**
      * Gets and returns the Query for sorted QRCodes based on Point Value in database
      * Citation: How to sort firestore query: https://firebase.google.com/docs/firestore/query-data/order-limit-data
+     *
      * @param ascending true if sorting in ascending order, false if sorting in descending order
      * @return a query of the sorted QRCodes in the database
      */

@@ -27,6 +27,7 @@ public class ScoringIntentTests {
 
     /**
      * Sets up the Activity before every test
+     *
      * @throws Exception if the setup fails
      */
     @Before
@@ -36,6 +37,7 @@ public class ScoringIntentTests {
 
     /**
      * Makes sure the set up didn't fail
+     *
      * @throws Exception if the setup fails
      */
     @Test
@@ -54,13 +56,15 @@ public class ScoringIntentTests {
     /**
      * Checks players high scores when clicked on button US07.01.01
      * Able to see high-score when clicked on button
+     *
      * @throws Exception if the setup fails
      */
     @Test
-    public void highScores() throws Exception{
+    public void highScores() throws Exception {
         solo.assertCurrentActivity("Wrong Activity", ProfileActivity.class);
         solo.clickOnView(solo.getView(R.id.prf_totalpointsplacing_data));
     }
+
     /**
      * Checks players high scores when clicked on button US07.02.01
      * Able to see the ranking for highest scoring unique QR code

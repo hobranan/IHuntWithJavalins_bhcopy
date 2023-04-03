@@ -22,7 +22,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Class for the signup_login page that the user opens */
+ * Class for the signup_login page that the user opens
+ */
 public class SignUpActivity extends AppCompatActivity {
     private Button confirmSignup;
     private EditText editText_signup_Username;
@@ -60,10 +61,9 @@ public class SignUpActivity extends AppCompatActivity {
                 userEmail = editText_signup_Email.getText().toString().trim();
                 userRegion = spinnerRegion.getSelectedItem().toString();
 
-                if ( !Arrays.asList("Enter your username", "").contains(username) &
-                !Arrays.asList("Enter your email", "").contains(userEmail) &
-                !Arrays.asList("").contains(userRegion) )
-                {
+                if (!Arrays.asList("Enter your username", "").contains(username) &
+                        !Arrays.asList("Enter your email", "").contains(userEmail) &
+                        !Arrays.asList("").contains(userRegion)) {
                     // https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
                     String pattern = "yyyyMMdd"; //String pattern = "MM/dd/yyyy HH:mm:ss";
                     DateFormat df = new SimpleDateFormat(pattern);

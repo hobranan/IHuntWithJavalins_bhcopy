@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 public class CommentTest {
     /**
      * Creates mock comment with all fields null
+     *
      * @return the mock comment
      */
     public Comment mockEmptyComment() {
@@ -21,6 +22,7 @@ public class CommentTest {
 
     /**
      * Creates mock comment with initialized fields
+     *
      * @return the mock comment
      */
     public Comment mockComment() {

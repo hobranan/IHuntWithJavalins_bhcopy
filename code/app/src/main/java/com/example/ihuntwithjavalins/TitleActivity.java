@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * Displays the starter title page that the app opens to*/
+ * Displays the starter title page that the app opens to
+ */
 public class TitleActivity extends Activity {
 
     @Override
@@ -26,7 +27,7 @@ public class TitleActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-    // do nothing (so app doesn't close)
+        // do nothing (so app doesn't close)
     }
 
 }

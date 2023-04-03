@@ -304,7 +304,7 @@ public class QRCodeViewOtherActivity extends AppCompatActivity {
 
         customCommentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
 
-        //delay timer to move (used click instead, needs to be improved)
+        //delay timer to force update (in addition to click  )
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

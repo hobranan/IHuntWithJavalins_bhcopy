@@ -28,7 +28,6 @@ public class MockDBConnection extends DBConnection {
 
     /**
      * Constructor for the DBConnection, ie. Connects with the firestore database
-     *
      */
     public MockDBConnection() {
         super(null);

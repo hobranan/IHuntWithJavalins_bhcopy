@@ -35,15 +35,14 @@ import java.util.List;
  * The class also creates an instance of CustomListScoreBoard class to populate the ListView with data from the ArrayList.
  */
 public class ScoreboardActivity extends AppCompatActivity {
-    private  Player myPlayer = new Player();
-    private  ArrayList<Player> playerList = new ArrayList<>();
-    private  ArrayList<Player> regionalList = new ArrayList<>();
-    private  ArrayAdapter<Player> playerArrayAdapter;
-    private  ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
+    private Player myPlayer = new Player();
+    private ArrayList<Player> playerList = new ArrayList<>();
+    private ArrayList<Player> regionalList = new ArrayList<>();
+    private ArrayAdapter<Player> playerArrayAdapter;
+    private ArrayList<StoreNamePoints> StorageList = new ArrayList<>();
     public static boolean sortAscend = false;
     public static boolean rankingNameFlag = false;
     private PlayerController playerController;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +101,8 @@ public class ScoreboardActivity extends AppCompatActivity {
                 String searchQuery = regionDropdown.getSelectedItem().toString();
                 ArrayList<Player> savedInCase_List = new ArrayList<>(regionalList);
                 regionalList = new ArrayList<>();
-                if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")){
-                        regionalList = new ArrayList<>(playerList);
+                if (searchQuery.equals("") | searchQuery.equals("EVERYWHERE")) {
+                    regionalList = new ArrayList<>(playerList);
                 } else {
                     regionalList.addAll(playerController.getPlayersContainQuery(playerList, searchQuery, "region"));
                 }
@@ -136,7 +135,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 
                 ArrayList<Player> searchResultsList = new ArrayList<>();
                 searchResultsList.addAll(playerController.getPlayersContainQuery(regionalList, searchQuery, "within"));
-                if (searchQuery.equals("")){
+                if (searchQuery.equals("")) {
                     rankingNameFlag = false;
                 } else {
                     rankingNameFlag = true;

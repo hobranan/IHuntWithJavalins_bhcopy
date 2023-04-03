@@ -29,6 +29,7 @@ public class PlayerProfileIntentTests {
 
     /**
      * Sets up the Activity before every test
+     *
      * @throws Exception if the setup fails
      */
     @Before
@@ -38,6 +39,7 @@ public class PlayerProfileIntentTests {
 
     /**
      * Makes sure the set up didn't fail
+     *
      * @throws Exception if the setup fails
      */
     @Test

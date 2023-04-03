@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * singleton pattern - FirebaseFireStore.getInstance() allows only 1 instance of the class to exist
  * factory pattern - DBConnection class itself acts as a factory for creating and returning references to different parts of the firebase
  * dependency injection - DBConnection depends on Context to access share dperefences of the device
+ *
  * @version 1.0
  */
 public class DBConnection {
@@ -35,6 +36,7 @@ public class DBConnection {
     /**
      * Constructor for the DBConnection, ie. Connects with the firestore database and gives the
      * user a unique randomly generated UUID
+     *
      * @param context the context of the application
      */
     public DBConnection(Context context) {
@@ -45,7 +47,8 @@ public class DBConnection {
 
     /**
      * Sets the username in the shared preferences of the device to identify the user
-     * @param context the context of the application
+     *
+     * @param context  the context of the application
      * @param username the username to put into shared preferences
      */
     public void setUsername(Context context, String username) {
@@ -61,6 +64,7 @@ public class DBConnection {
 
     /**
      * Gets the Username for the device to identify user
+     *
      * @param context the context of the application
      * @return the unique username if found, null if not found
      */
@@ -75,6 +79,7 @@ public class DBConnection {
 
     /**
      * Gets the username of the user of the DBConnection
+     *
      * @return returns the username of the user
      */
     public String getUsername() {
@@ -83,6 +88,7 @@ public class DBConnection {
 
     /**
      * Gets the reference to the a given subcollection within the user document
+     *
      * @param subCollection the given subCollection id
      * @return reference to given subcollection
      */
@@ -94,13 +100,16 @@ public class DBConnection {
 
     /**
      * Gets the reference to the collection of users of the application
+     *
      * @return reference to user collection
      */
-    public CollectionReference getUserCollection() {return this.db.collection("Users");
+    public CollectionReference getUserCollection() {
+        return this.db.collection("Users");
     }
 
     /**
      * Gets the reference to the document of the current user
+     *
      * @return reference to the user document
      */
     public DocumentReference getUserDocument() {
@@ -113,6 +122,7 @@ public class DBConnection {
 
     /**
      * Gets the instance of the Firebase Firestore database
+     *
      * @return the instance of the Firebase Firestore database
      */
     public FirebaseFirestore getDB() {

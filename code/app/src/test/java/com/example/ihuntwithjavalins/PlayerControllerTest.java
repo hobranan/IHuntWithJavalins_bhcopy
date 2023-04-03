@@ -14,7 +14,8 @@ import java.util.Comparator;
 
 /**
  * Contains copies of all the methods that don't involve the database or app in the PLayerController class
- * TODO: The test for getRanking*/
+ * TODO: The test for getRanking
+ */
 public class PlayerControllerTest {
 
     private String TAG = "PlayerController";
@@ -90,7 +91,7 @@ public class PlayerControllerTest {
                     return Integer.compare(p2size, p1size);
                 }
             });
-        } else if (query.toLowerCase().equals("name")){
+        } else if (query.toLowerCase().equals("name")) {
             Collections.sort(playerList, new Comparator<Player>() {
                 @Override
                 public int compare(Player p1, Player p2) {
@@ -112,7 +113,7 @@ public class PlayerControllerTest {
         return playerList;
     }
 
-    public String getNiceDateFormat (String joinedDate){
+    public String getNiceDateFormat(String joinedDate) {
         String date = joinedDate;
         String date_joined = "";
         if (date != null) {
@@ -166,10 +167,11 @@ public class PlayerControllerTest {
     }
 
     /**
-     * Series of tests to test the getRegionalPlayers method */
+     * Series of tests to test the getRegionalPlayers method
+     */
     @Test
     void getRegionalTest() {
-        Player user = new Player("John Doe","murab@ualberta.ca","Edmonton");
+        Player user = new Player("John Doe", "murab@ualberta.ca", "Edmonton");
         ArrayList<Player> playerList = new ArrayList<>();
         Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
         Player player2 = new Player("JamesBond", "doubleohseven@james.com", "Edmonton");
@@ -198,7 +200,8 @@ public class PlayerControllerTest {
 
 
     /**
-     * Series of tests to test the getRanking method */
+     * Series of tests to test the getRanking method
+     */
     @Test
     public void getRankingTest() {
         // Setup test data
@@ -215,7 +218,7 @@ public class PlayerControllerTest {
         Player player2 = new Player("Jane Smith", "jane.smith@example.com", "Edmonton");
         Player player3 = new Player("Bob Johnson", "bob.johnson@example.com", "Vancouver");
 
-        Player user = new Player("John Doe","murab@ualberta.ca","Edmonton");
+        Player user = new Player("John Doe", "murab@ualberta.ca", "Edmonton");
 
         player1.addCode(qrCodeObj1);
         player1.addCode(qrCodeObj1);
@@ -246,7 +249,8 @@ public class PlayerControllerTest {
     }
 
     /**
-     * Series of tests to test the sortPlayers method */
+     * Series of tests to test the sortPlayers method
+     */
     @Test
     public void sortPlayersTest() {
         ArrayList<Player> mockPlayers = new ArrayList<>();
@@ -263,11 +267,11 @@ public class PlayerControllerTest {
         ArrayList<Player> output = sortPlayers(mockPlayers, "name");
 
 
-        for(Player plr : initialList) {
+        for (Player plr : initialList) {
             System.out.println(plr.getUsername());
         }
 
-        for(Player plr : output) {
+        for (Player plr : output) {
             System.out.println(plr.getUsername());
         }
 
@@ -275,7 +279,8 @@ public class PlayerControllerTest {
     }
 
     /**
-     * Series of tests to test the niceDate method */
+     * Series of tests to test the niceDate method
+     */
     @Test
     public void niceDateNormalTest() {
         String date = "20230319";
@@ -289,7 +294,8 @@ public class PlayerControllerTest {
     }
 
     /**
-     * Test for playerController method calculateTotalPoints */
+     * Test for playerController method calculateTotalPoints
+     */
     @Test
     public void calculateTotalPointsTest() {
         Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");
@@ -311,7 +317,8 @@ public class PlayerControllerTest {
     }
 
     /**
-     * Test for playerController method calculateHighestValue */
+     * Test for playerController method calculateHighestValue
+     */
     @Test
     public void calculateHighestValueTest() {
         Player player1 = new Player("JasonBourne", "thebournelegacy@jason.com", "Edmonton");

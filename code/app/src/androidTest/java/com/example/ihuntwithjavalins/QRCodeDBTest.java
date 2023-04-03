@@ -29,9 +29,7 @@ public class QRCodeDBTest {
     QRCodeDB codeDB;
 
     Comment mockComment;
-
     QRCode mockCodeTwo;
-
     QRCode mockCodeOne;
 
     /**
@@ -48,6 +46,7 @@ public class QRCodeDBTest {
 
     /**
      * Remove a Code we have added to the database during testing.
+     *
      * @param mockCode The Code that is being removed
      * @throws InterruptedException Thrown when deleting from PlayerDB fails
      */
@@ -69,6 +68,7 @@ public class QRCodeDBTest {
 
     /**
      * Tests adding QRCode to database
+     *
      * @throws InterruptedException Thrown if failed to add QRCode
      */
     @Test
@@ -94,6 +94,7 @@ public class QRCodeDBTest {
 
     /**
      * Tests getting one QRCode from database
+     *
      * @throws InterruptedException Thrown if failed to get QRCode
      */
     @Test
@@ -140,6 +141,7 @@ public class QRCodeDBTest {
 
     /**
      * Tests deleting code from codeDB
+     *
      * @throws InterruptedException Thrown when failed to delete from codeDB
      */
     @Test
@@ -173,6 +175,7 @@ public class QRCodeDBTest {
 
     /**
      * Tests getting multiple codes from codeDB
+     *
      * @throws InterruptedException Thrown if getting codes fails
      */
     @Test

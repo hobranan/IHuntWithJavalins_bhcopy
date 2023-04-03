@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+
 /**
  * The QRCodeLibraryActivity is responsible for displaying a list of QR codes in the user's library.
  * It retrieves QR codes data from a Firestore database, and displays them in a ListView using a custom ArrayAdapter.
@@ -51,6 +52,7 @@ public class QRCodeLibraryActivity extends AppCompatActivity {
     private Button btn_sortNames;
     private Button btn_sortPoints;
     private Button btn_sortDates;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

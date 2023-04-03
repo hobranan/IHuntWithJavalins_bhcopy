@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 // https://medium.com/analytics-vidhya/creating-a-barcode-scanner-using-android-studio-71cff11800a2
 // https://alitalhacoban.medium.com/barcode-scanner-app-android-studio-60f87b5a10cd
+
 /**
  * Activity that uses the device's camera to scan barcodes and QR codes.
  * Design Patterns
@@ -100,7 +101,7 @@ public class CameraScanActivity extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                // Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                //do nothing
             }
 
             @Override
@@ -113,7 +114,7 @@ public class CameraScanActivity extends AppCompatActivity {
                             barcodeData = "";
                             barcodeData = barcodes.valueAt(0).displayValue;
                             barcodeText.setText(barcodeData);
-                            Log.d(TAG, "barcodeText = "+ barcodeText.getText().toString());
+                            Log.d(TAG, "barcodeText = " + barcodeText.getText().toString());
                             if (!Arrays.asList(" ", "").contains(barcodeData)) {
                                 QRCode thisCode = new QRCode(barcodeText.getText().toString());
                                 Intent intent = new Intent(CameraScanActivity.this, CameraCaughtNewActivity.class);
@@ -127,7 +128,6 @@ public class CameraScanActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override

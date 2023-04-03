@@ -148,7 +148,6 @@ public class OpenStreetMapActivity extends AppCompatActivity {
         regionDropdown.setAdapter(ThisSpinAdapter);// Apply the adapter to the spinner
 
 
-
         backButton = findViewById(R.id.map_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,23 +265,23 @@ public class OpenStreetMapActivity extends AppCompatActivity {
                 String region = regionDropdown.getSelectedItem().toString();
                 float zoomlevel = 12.0f;
                 mapController.setZoom(zoomlevel);
-                if (region.equals("Edmonton")){
-                    mapController.setCenter( new GeoPoint(53.5461, -113.4937));
-                } else if (region.equals("Calgary")){
-                    mapController.setCenter( new GeoPoint(51.0447, -114.0719));
-                } else if (region.equals("Rural Alberta")){
+                if (region.equals("Edmonton")) {
+                    mapController.setCenter(new GeoPoint(53.5461, -113.4937));
+                } else if (region.equals("Calgary")) {
+                    mapController.setCenter(new GeoPoint(51.0447, -114.0719));
+                } else if (region.equals("Rural Alberta")) {
                     mapController.setZoom(9.0f);
-                    mapController.setCenter( new GeoPoint(52.2690, -113.8115));
-                } else if (region.equals("Vancouver")){
-                    mapController.setCenter( new GeoPoint(49.2827, -123.1207));
-                } else if (region.equals("Regina")){
-                    mapController.setCenter( new GeoPoint(50.4452, -104.6189));
-                } else if (region.equals("Toronto")){
-                    mapController.setCenter( new GeoPoint(43.6532, -79.3832));
-                } else if (region.equals("Montreal")){
-                    mapController.setCenter( new GeoPoint(45.5019, -73.5674));
+                    mapController.setCenter(new GeoPoint(52.2690, -113.8115));
+                } else if (region.equals("Vancouver")) {
+                    mapController.setCenter(new GeoPoint(49.2827, -123.1207));
+                } else if (region.equals("Regina")) {
+                    mapController.setCenter(new GeoPoint(50.4452, -104.6189));
+                } else if (region.equals("Toronto")) {
+                    mapController.setCenter(new GeoPoint(43.6532, -79.3832));
+                } else if (region.equals("Montreal")) {
+                    mapController.setCenter(new GeoPoint(45.5019, -73.5674));
                 } else {
-                    mapController.setCenter( new GeoPoint(53.5461, -113.4937)); // edmonton
+                    mapController.setCenter(new GeoPoint(53.5461, -113.4937)); // edmonton
                 }
             }
         });

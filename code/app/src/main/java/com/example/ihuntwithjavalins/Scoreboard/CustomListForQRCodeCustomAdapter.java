@@ -22,8 +22,8 @@ public class CustomListForQRCodeCustomAdapter extends ArrayAdapter<StoreNamePoin
     private ArrayList<StoreNamePoints> codes;
     private Context context;
 
-    public CustomListForQRCodeCustomAdapter(Context context, ArrayList<StoreNamePoints> codes){
-        super(context,0, codes);
+    public CustomListForQRCodeCustomAdapter(Context context, ArrayList<StoreNamePoints> codes) {
+        super(context, 0, codes);
         this.codes = codes;
         this.context = context;
     }
@@ -32,8 +32,8 @@ public class CustomListForQRCodeCustomAdapter extends ArrayAdapter<StoreNamePoin
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
-        if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.scoreboard_content_individual, parent,false);
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.scoreboard_content_individual, parent, false);
         }
         StoreNamePoints tempCode = codes.get(position);
         TextView codeName = view.findViewById(R.id.codeName);

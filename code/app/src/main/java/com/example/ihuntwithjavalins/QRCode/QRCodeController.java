@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 /**
  * Controller class for QRCode related operations
- *
+ * <p>
  * Manages the QR codes
  * provides methods to get and sort user QR codes
  * Design patterns: none
@@ -41,6 +41,7 @@ public class QRCodeController {
 
     /**
      * Constructor to initialize controller
+     *
      * @param activity the activity using the controller
      */
     public QRCodeController(AppCompatActivity activity) {
@@ -51,8 +52,9 @@ public class QRCodeController {
 
     /**
      * Overwrites(and creates new) QRCode document based on given data map
-     * @param code the QRCode to overwrite
-     * @param dataMap the data field map to overwrite the QRCode data with
+     *
+     * @param code     the QRCode to overwrite
+     * @param dataMap  the data field map to overwrite the QRCode data with
      * @param listener the listener to call after overwriting
      */
     public void overwriteCode(QRCode code, HashMap<String, String> dataMap, OnCompleteListener<QRCode> listener) {
@@ -69,8 +71,9 @@ public class QRCodeController {
 
     /**
      * Sorts a given array of QRCodes based on query field
+     *
      * @param codeList the array of QRCodes to sort
-     * @param query string which denotes how to sort the array
+     * @param query    string which denotes how to sort the array
      * @return the sorted codeList
      */
     public ArrayList<QRCode> sortCodes(ArrayList<QRCode> codeList, String query) {
@@ -103,6 +106,7 @@ public class QRCodeController {
 
     /**
      * Sorts comments of QRCodes by date time created
+     *
      * @param commentList the array of comments to sort
      * @return the sorted array of comments
      */
@@ -119,6 +123,7 @@ public class QRCodeController {
 
     /**
      * Converts datetime value to a string which is more human readable
+     *
      * @param joinedDate the date time the QRCode was created
      * @return string of formatted date time
      */

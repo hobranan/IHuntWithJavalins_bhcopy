@@ -29,6 +29,7 @@ public class LocationIntentTests {
 
     /**
      * Sets up the Activity before every test
+     *
      * @throws Exception Thrown when robotium setup fails
      */
     @Before
@@ -38,6 +39,7 @@ public class LocationIntentTests {
 
     /**
      * Makes sure the set up didn't fail
+     *
      * @throws Exception if the setup fails
      */
     @Test
@@ -57,6 +59,7 @@ public class LocationIntentTests {
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
     }
+
     /**
      * Checks the back button that takes us from OpenStreetMapActivity to
      * QuickNavActivity and throws an error if it doesn't
@@ -69,12 +72,13 @@ public class LocationIntentTests {
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
 
     }
+
     /**
      * US 05.02.01 - CHeck to see if QRcode can be searched
      * I have added this US story on this file as it corresponds to searching for QRcodes using GeoLocation
      */
     @Test
-    public void searchQRCode(){
+    public void searchQRCode() {
         solo.assertCurrentActivity("Wrong Activity", OpenStreetMapActivity.class);
         solo.clickOnView(solo.getView(R.id.map_region_btn));
     }

@@ -36,7 +36,7 @@
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
 
-    <!--        android:theme="@style/Light1"-->
+        <!--        android:theme="@style/Light1"-->
 
         <!--    for camera and barcode stuff-->
         <meta-data
@@ -122,8 +122,8 @@
 
         <activity
             android:name=".Scoreboard.ScoreboardActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".Scoreboard.ShowIndividualCodes"

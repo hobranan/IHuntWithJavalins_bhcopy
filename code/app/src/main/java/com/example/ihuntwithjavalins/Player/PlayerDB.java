@@ -29,6 +29,7 @@ import java.util.Map;
  * Much functionality is derived from Well Fed project example given by TA
  * Design Patterns:
  * observer pattern - onCompleteListener
+ *
  * @version 1.0
  */
 public class PlayerDB {
@@ -55,9 +56,10 @@ public class PlayerDB {
 
     /**
      * Constructor for the PlayerDB class, initializes declared fields
+     *
      * @param connection the DBConnection object used to access the database
      */
-    public PlayerDB(DBConnection connection){
+    public PlayerDB(DBConnection connection) {
         // Gets the database and user collection based on current connection
         db = connection.getDB();
         collection = connection.getUserCollection();
@@ -73,7 +75,8 @@ public class PlayerDB {
     /**
      * Adds a player to the database(Use lambda to retrieve)
      * Citation: Batch Update Info https://cloud.google.com/firestore/docs/samples/firestore-data-batch-writes
-     * @param player the Player object being added to the database
+     *
+     * @param player   the Player object being added to the database
      * @param listener the listener to call when the player is added
      */
     public void addPlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
@@ -102,10 +105,12 @@ public class PlayerDB {
             }
         });
     }
+
     /**
      * Gets the player from the database(Use lambda to retrieve)
+     *
      * @param selectedPlayer the player who's document is being accessed
-     * @param listener the listener to call when the player is found
+     * @param listener       the listener to call when the player is found
      */
     public void getPlayer(Player selectedPlayer, OnCompleteListener<Player> listener) {
         String playerUsername = selectedPlayer.getUsername();
@@ -137,6 +142,7 @@ public class PlayerDB {
 
     /**
      * Gets all player data from database
+     *
      * @param listener the listener to call after data retrieval
      */
     public void getAllPlayers(OnCompleteListener<ArrayList<Player>> listener) {
@@ -173,7 +179,8 @@ public class PlayerDB {
 
     /**
      * Deletes the player from the database(Use lambda to retrieve)
-     * @param player the Player object representing the player to delete from database
+     *
+     * @param player   the Player object representing the player to delete from database
      * @param listener the listener to call when the player is deleted
      */
     public void deletePlayer(@NonNull Player player, OnCompleteListener<Player> listener) {
@@ -197,7 +204,8 @@ public class PlayerDB {
 
     /**
      * Updates the given player's email in the database
-     * @param player the given player to update
+     *
+     * @param player   the given player to update
      * @param newEmail the new email
      * @param listener the listener to call when the player is updated
      */
@@ -225,9 +233,10 @@ public class PlayerDB {
 
     /**
      * Updates the given player's phone number in the database
-     * @param player the given player
+     *
+     * @param player    the given player
      * @param newRegion the new region
-     * @param listener the listener to call when the player is updated
+     * @param listener  the listener to call when the player is updated
      */
     public void updatePlayerRegion(Player player, String newRegion, OnCompleteListener<Player> listener) {
         String playerUsername = player.getUsername();
@@ -253,6 +262,7 @@ public class PlayerDB {
 
     /**
      * Gets reference to player document
+     *
      * @param player the Player object's document to be retrieved
      * @return reference to given player document
      */
@@ -262,7 +272,8 @@ public class PlayerDB {
 
     /**
      * Gets query of sorted player documents(Use .get to retrieve data)
-     * @param field the field to sort player documents by
+     *
+     * @param field     the field to sort player documents by
      * @param ascending true if sorting in ascending order, false if sorting in descending order
      * @return the query of sorted player documents
      */
@@ -272,7 +283,8 @@ public class PlayerDB {
 
     /**
      * Adds given code to player code collection in database
-     * @param code given code to add
+     *
+     * @param code     given code to add
      * @param listener the listener to call when code is added
      */
     public void playerAddQRCode(QRCode code, OnCompleteListener<QRCode> listener) {
@@ -291,10 +303,11 @@ public class PlayerDB {
 
     /**
      * Deletes given code from player code collection in database
-     * @param code given code to delete
+     *
+     * @param code     given code to delete
      * @param listener the listener to call when the code is deleted
      */
-    public void playerDelQRCode(QRCode code, OnCompleteListener<QRCode> listener){
+    public void playerDelQRCode(QRCode code, OnCompleteListener<QRCode> listener) {
         codeDB.getCode(code, (foundCode, success) -> {
             if (foundCode != null) {
                 codeDB.deleteCode(code, (deletedCode, success2) -> {
@@ -310,10 +323,11 @@ public class PlayerDB {
 
     /**
      * Returns a list of QRCodes the user owns
+     *
      * @param listener an on complete listener for a QRCOde array
      */
-    public void getUserCodes (OnCompleteListener<ArrayList<QRCode>> listener){
-        codeDB.getCodes((codeList, success)->{
+    public void getUserCodes(OnCompleteListener<ArrayList<QRCode>> listener) {
+        codeDB.getCodes((codeList, success) -> {
             if (success) {
                 listener.onComplete(codeList, true);
             } else {
@@ -324,13 +338,14 @@ public class PlayerDB {
 
     /**
      * Returns a list of QRCodes the given player owns
-     * @param player the given player who owns the codes
+     *
+     * @param player   the given player who owns the codes
      * @param listener the on complete listener for a list of QRCodes
      */
-    public void getPlayerCodes(Player player, OnCompleteListener<ArrayList<QRCode>> listener){
+    public void getPlayerCodes(Player player, OnCompleteListener<ArrayList<QRCode>> listener) {
         String playerUsername = player.getUsername();
         codeDB.switchFromPlayerToPlayerCodes(playerUsername);
-        codeDB.getCodes((codeList, success)->{
+        codeDB.getCodes((codeList, success) -> {
             if (success) {
                 listener.onComplete(codeList, true);
             } else {

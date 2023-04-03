@@ -43,12 +43,10 @@ public class PlayerIntentTest {
     private static final long TIMEOUT = 5;
     PlayerDB playerDB;
     Player mockPlayer;
-    Player mockPlayer2;
 
     QRCode mockCode1;
     QRCode mockCode2;
     QRCode mockCode3;
-
 
 
     /**
@@ -93,6 +91,7 @@ public class PlayerIntentTest {
      * Sets up the Activity before every test
      * creates a player with 2 QR codes and logs in as that player
      * Creates an extra QR code for later testing
+     *
      * @throws Exception if the setup fails
      */
     @Before
@@ -147,15 +146,15 @@ public class PlayerIntentTest {
                 });
 
 
-
     }
 
     /**
      * Makes sure the set up didn't fail
+     *
      * @throws Exception if the setup fails
      */
     @Test
-    public void start() throws Exception{
+    public void start() throws Exception {
         Activity activity = rule.getActivity();
 
         removePlayer(mockPlayer);
@@ -165,6 +164,7 @@ public class PlayerIntentTest {
     /**
      * Makes sure the player can open the camera to scan a QR Code for
      * US 01.01.01
+     *
      * @throws InterruptedException if the remove player takes too long to remove
      */
     @Test
@@ -229,6 +229,7 @@ public class PlayerIntentTest {
      * Navigates to the players profile and checks for the total codes a player has and their total points
      * US 01.05.01
      * US 01.06.01
+     *
      * @throws InterruptedException if the remove player takes too long to remove
      */
     @Test
@@ -240,8 +241,8 @@ public class PlayerIntentTest {
         solo.assertCurrentActivity("Wrong Activity", QuickNavActivity.class);
         solo.clickOnView(solo.getView(R.id.button_qn_profile));
         solo.assertCurrentActivity("Wrong Activity", ProfileActivity.class);
-        solo.searchText("Total Codes",1);
-        solo.searchText("Total Points",1);
+        solo.searchText("Total Codes", 1);
+        solo.searchText("Total Points", 1);
 
         removePlayer(mockPlayer);
     }
@@ -265,9 +266,8 @@ public class PlayerIntentTest {
     }
 
      */
-
     @After
-    public void cleanUp() throws InterruptedException{
+    public void cleanUp() throws InterruptedException {
         //removePlayer(mockPlayer);
     }
 

@@ -29,6 +29,7 @@ public class SearchingIntentTests {
 
     /**
      * Sets up the Activity before every test
+     *
      * @throws Exception if the setup fails
      */
     @Before
@@ -38,12 +39,14 @@ public class SearchingIntentTests {
 
     /**
      * Makes sure the set up didn't fail
+     *
      * @throws Exception if the setup fails
      */
     @Test
     public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
+
     /**
      * Able to test if player can search for other players or not in search
      * US05.01.01
@@ -53,9 +56,6 @@ public class SearchingIntentTests {
         solo.assertCurrentActivity("Wrong Activity", ScoreboardActivity.class);
         solo.enterText((EditText) solo.getView(R.id.search_user), "Khushi Shah");
     }
-
-
-
 
 
 }

@@ -40,7 +40,7 @@ import java.util.Random;
  * factory pattern - firebase getInstance for instance of FirebaseStorage
  * observer pattern - firestore onSuccess and onFailure
  * singleton pattern - only 1 instance of firebase firestore throughout the class. Uses getinstance to ensure that.
- * */
+ */
 public class PhotoTakeActivity extends AppCompatActivity {
     private Button btnTakePhoto;
     private Button btnSavePhoto;

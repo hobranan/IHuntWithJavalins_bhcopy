@@ -53,47 +53,49 @@ public class PlayerDBTest {
      * @throws InterruptedException Thrown when deleting from PlayerDB
      *                              fails.
      */
-     private void removePlayer(Player mockPlayer) throws InterruptedException {
-            CountDownLatch latch = new CountDownLatch(1);
+    private void removePlayer(Player mockPlayer) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
 
-            AtomicReference<Boolean> successAtomic = new AtomicReference<>();
-            playerDB.deletePlayer(mockPlayer,
-                    (deletedPlayer, success) -> {
-                        successAtomic.set(success);
-                        latch.countDown();
-                    });
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        playerDB.deletePlayer(mockPlayer,
+                (deletedPlayer, success) -> {
+                    successAtomic.set(success);
+                    latch.countDown();
+                });
 
-            if (!latch.await(TIMEOUT, SECONDS)) {
-                throw new InterruptedException();
-            }
+        if (!latch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
 
-            assertTrue(successAtomic.get());
-     }
+        assertTrue(successAtomic.get());
+    }
 
     /**
      * Remove a Code we have added to the database during testing.
+     *
      * @param mockCode The Code that is being removed
      * @throws InterruptedException Thrown when deleting from PlayerDB fails
      */
-     private void removeCode(QRCode mockCode) throws InterruptedException {
-         CountDownLatch latch = new CountDownLatch(1);
+    private void removeCode(QRCode mockCode) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
 
-         AtomicReference<Boolean> successAtomic = new AtomicReference<>();
-         playerDB.playerDelQRCode(mockCode,
-                 (deletedCode, success) -> {
-                     successAtomic.set(success);
-                     latch.countDown();
-                 });
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        playerDB.playerDelQRCode(mockCode,
+                (deletedCode, success) -> {
+                    successAtomic.set(success);
+                    latch.countDown();
+                });
 
-         if (!latch.await(TIMEOUT, SECONDS)) {
-             throw new InterruptedException();
-         }
+        if (!latch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
 
-         assertTrue(successAtomic.get());
-     }
+        assertTrue(successAtomic.get());
+    }
 
     /**
      * Tests adding a player to the database
+     *
      * @throws InterruptedException Thrown when adding from PlayerDB fails
      */
     @Test
@@ -120,6 +122,7 @@ public class PlayerDBTest {
 
     /**
      * Tests getting a player from the database
+     *
      * @throws InterruptedException Thrown when failed to get player from PlayerDB
      */
     @Test
@@ -162,6 +165,7 @@ public class PlayerDBTest {
 
     /**
      * Tests deleting a player from the database
+     *
      * @throws InterruptedException Thrown when adding a Player or deleting from PlayerDB fails
      */
     @Test
@@ -199,6 +203,7 @@ public class PlayerDBTest {
 
     /**
      * Tests updating email of player from the database
+     *
      * @throws InterruptedException Thrown when updating email info fails
      */
     @Test
@@ -255,10 +260,11 @@ public class PlayerDBTest {
 
     /**
      * Tests updating region of Player in database
+     *
      * @throws InterruptedException Thrown when updating fails
      */
     @Test
-    public void testUpdateRegion() throws InterruptedException{
+    public void testUpdateRegion() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch getLatch = new CountDownLatch(1);
         CountDownLatch updateLatch = new CountDownLatch(1);
@@ -311,10 +317,11 @@ public class PlayerDBTest {
 
     /**
      * Tests adding a code to player in playerDB
+     *
      * @throws InterruptedException Thrown when adding code fails
      */
     @Test
-    public void testPlayerAddCode() throws InterruptedException{
+    public void testPlayerAddCode() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
 
         AtomicReference<Boolean> successAtomic = new AtomicReference<>();
@@ -337,10 +344,11 @@ public class PlayerDBTest {
 
     /**
      * Tests removing a code from the player in playerDB
+     *
      * @throws InterruptedException Thrown when removing code fails
      */
     @Test
-    public void testPlayerRemoveCode() throws InterruptedException{
+    public void testPlayerRemoveCode() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch deleteLatch = new CountDownLatch(1);
 
@@ -374,6 +382,7 @@ public class PlayerDBTest {
 
     /**
      * Tests getting all codes player owns from database
+     *
      * @throws InterruptedException Thrown when getting all codes fails
      */
     @Test
@@ -383,7 +392,7 @@ public class PlayerDBTest {
         CountDownLatch getLatchOne = new CountDownLatch(1);
         CountDownLatch getLatchTwo = new CountDownLatch(1);
         List<QRCode> codeList1 = new ArrayList<>();
-        playerDB.getUserCodes((foundCodes, success) ->{
+        playerDB.getUserCodes((foundCodes, success) -> {
             if (success) {
                 codeList1.addAll(foundCodes);
                 getLatchOne.countDown();
@@ -411,7 +420,7 @@ public class PlayerDBTest {
 
         assertTrue(successAtomic.get());
 
-        playerDB.getUserCodes((foundCodes, success) ->{
+        playerDB.getUserCodes((foundCodes, success) -> {
             if (success) {
                 codeList1.addAll(foundCodes);
                 getLatchTwo.countDown();

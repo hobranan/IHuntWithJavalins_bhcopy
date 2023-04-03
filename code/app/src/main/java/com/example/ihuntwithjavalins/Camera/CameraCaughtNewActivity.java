@@ -167,7 +167,6 @@ public class CameraCaughtNewActivity extends AppCompatActivity {
                 });
 
 
-
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             @Override

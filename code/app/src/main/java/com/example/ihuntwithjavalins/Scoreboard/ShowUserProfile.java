@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.ihuntwithjavalins.Player.Player;
 import com.example.ihuntwithjavalins.Player.PlayerController;
 import com.example.ihuntwithjavalins.R;
+
 import java.util.ArrayList;
 
 /**
  * Shows the other user profiles from the scoreboaard
- * */
+ */
 public class ShowUserProfile extends AppCompatActivity {
     private Player player_details = new Player();
     private ArrayList<Player> playerList = new ArrayList<>();

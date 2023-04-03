@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 import org.junit.jupiter.api.*;
+
 import java.util.List;
 
 public class ShowUserProfileTest {
@@ -27,7 +29,7 @@ public class ShowUserProfileTest {
     Player player_details;
 
     @Before
-    public void LoadData(){
+    public void LoadData() {
         playerList = new ArrayList<Player>();
 
         //QRCode Objects
@@ -41,9 +43,7 @@ public class ShowUserProfileTest {
         Player jane = new Player("Jane Smith", "jane.smith@example.com", "Edmonton");
         Player bob = new Player("Bob Johnson", "bob.johnson@example.com", "Vancouver");
 
-        player_details = new Player("Jane Smith","murab@ualberta.ca","Edmonton");
-
-
+        player_details = new Player("Jane Smith", "murab@ualberta.ca", "Edmonton");
 
 
         john.addCode(qrCodeObj1);
@@ -67,11 +67,9 @@ public class ShowUserProfileTest {
         //total points for Bob Johnson = 30+20+10 = 60
 
 
-
         playerList.add(john);
         playerList.add(jane);
         playerList.add(bob);
-
 
 
     }
@@ -81,7 +79,7 @@ public class ShowUserProfileTest {
     float bronzeLevel = 0.25f;
 
 
-    public String sort_by_points(ArrayList<Player> playerList,Player player_details){
+    public String sort_by_points(ArrayList<Player> playerList, Player player_details) {
         String pointsString = "";
 
         regional_players = new ArrayList<>();
@@ -109,8 +107,6 @@ public class ShowUserProfileTest {
         });
 
 
-
-
         for (Player plr : playerList) {
             if ((plr.getUsername()).equals(player_details.getUsername())) {
                 pointsString = "Everywhere: #" + (playerList.indexOf(plr) + 1);
@@ -153,7 +149,7 @@ public class ShowUserProfileTest {
     }
 
 
-    public String sort_by_numberCodes(ArrayList<Player> playerList,Player player_details){
+    public String sort_by_numberCodes(ArrayList<Player> playerList, Player player_details) {
         String pointsString = "";
 
         regional_players = new ArrayList<>();
@@ -181,8 +177,6 @@ public class ShowUserProfileTest {
         });
 
 
-
-
         for (Player plr : playerList) {
             if ((plr.getUsername()).equals(player_details.getUsername())) {
                 pointsString = "Everywhere: #" + (playerList.indexOf(plr) + 1);
@@ -224,7 +218,7 @@ public class ShowUserProfileTest {
         return pointsString;
     }
 
-    public String sort_by_highestCode(ArrayList<Player> playerList,Player player_details){
+    public String sort_by_highestCode(ArrayList<Player> playerList, Player player_details) {
         String pointsString = "";
 
         regional_players = new ArrayList<>();
@@ -252,8 +246,6 @@ public class ShowUserProfileTest {
         });
 
 
-
-
         for (Player plr : playerList) {
             if ((plr.getUsername()).equals(player_details.getUsername())) {
                 pointsString = "Everywhere: #" + (playerList.indexOf(plr) + 1);
@@ -296,42 +288,37 @@ public class ShowUserProfileTest {
     }
 
 
-
-
     @Test
-    public void checkSortByPoints(){
+    public void checkSortByPoints() {
         LoadData();
-        String value = sort_by_points(playerList,player_details);
-        assertEquals(120,player_details.getSumOfCodePoints());
-        assertEquals("Jane Smith",playerList.get(0).getUsername()); // Testing if Jane Smith if 1st position Overall
-        assertEquals("Jane Smith",regional_players.get(0).getUsername()); // Testing if Jane Smith if 1st position Regionally
-        assertEquals("Everywhere: #1 Leader!\n" + "Regional: #1 Leader!",value);
+        String value = sort_by_points(playerList, player_details);
+        assertEquals(120, player_details.getSumOfCodePoints());
+        assertEquals("Jane Smith", playerList.get(0).getUsername()); // Testing if Jane Smith if 1st position Overall
+        assertEquals("Jane Smith", regional_players.get(0).getUsername()); // Testing if Jane Smith if 1st position Regionally
+        assertEquals("Everywhere: #1 Leader!\n" + "Regional: #1 Leader!", value);
     }
 
     @Test
-    public void checkSortByNumberCodes(){
+    public void checkSortByNumberCodes() {
         LoadData();
-        String value = sort_by_numberCodes(playerList,player_details);
-        assertEquals(4,player_details.getSumOfCodes());
-        assertEquals("Jane Smith",playerList.get(0).getUsername()); // Testing if Jane Smith if 1st position Overall
-        assertEquals("Jane Smith",regional_players.get(0).getUsername()); // Testing if Jane Smith if 1st position Regionally
-        assertEquals("Everywhere: #1 Leader!\n" + "Regional: #1 Leader!",value);
+        String value = sort_by_numberCodes(playerList, player_details);
+        assertEquals(4, player_details.getSumOfCodes());
+        assertEquals("Jane Smith", playerList.get(0).getUsername()); // Testing if Jane Smith if 1st position Overall
+        assertEquals("Jane Smith", regional_players.get(0).getUsername()); // Testing if Jane Smith if 1st position Regionally
+        assertEquals("Everywhere: #1 Leader!\n" + "Regional: #1 Leader!", value);
     }
 
     @Test
-    public void checkSortByHighestCode(){
+    public void checkSortByHighestCode() {
         LoadData();
-        String value = sort_by_highestCode(playerList,player_details);
-        assertEquals(50,player_details.getHighestCode()); //Checking the user's(i.e Jane Smith) highest code
-        assertEquals("Jane Smith",playerList.get(0).getUsername())
-
-
-
+        String value = sort_by_highestCode(playerList, player_details);
+        assertEquals(50, player_details.getHighestCode()); //Checking the user's(i.e Jane Smith) highest code
+        assertEquals("Jane Smith", playerList.get(0).getUsername())
 
 
         ; // Testing if Jane Smith if 1st position Overall
-        assertEquals("Jane Smith",regional_players.get(0).getUsername()); // Testing if Jane Smith if 1st position Regionally
-        assertEquals("Everywhere: #1 Leader!\n" + "Regional: #1 Leader!",value);
+        assertEquals("Jane Smith", regional_players.get(0).getUsername()); // Testing if Jane Smith if 1st position Regionally
+        assertEquals("Everywhere: #1 Leader!\n" + "Regional: #1 Leader!", value);
     }
 
 

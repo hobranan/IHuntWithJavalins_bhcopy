@@ -20,15 +20,12 @@ import java.util.Random;
 
 /**
  * A java version of the php script for MonsterID by splitbrain as taken from https://github.com/splitbrain/monsterID/blob/master/monsterid.php
- * */
+ */
 public class MonsterID {
-
     private static final int SIZE = 120;
-
-    private static final String[] PARTS = { "arms", "body", "eyes", "hair", "legs", "mouth" };
-    private static final int[] NUM_PARTS = { 5, 15, 15, 5, 5, 10 };
+    private static final String[] PARTS = {"arms", "body", "eyes", "hair", "legs", "mouth"};
+    private static final int[] NUM_PARTS = {5, 15, 15, 5, 5, 10};
     private static final String PARTS_PATH = "parts/";
-
     private static Random rand = new Random();
 
     public static void generate(OutputStream out, String hash, int size, AssetManager assetManager) throws IOException {
@@ -107,7 +104,6 @@ public class MonsterID {
             throw new IllegalArgumentException("View must be either an ImageView or ImageButton");
         }
     }
-
 
 
 }

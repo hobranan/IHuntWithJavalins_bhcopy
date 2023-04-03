@@ -11,13 +11,10 @@ import org.junit.jupiter.api.Test;
  */
 public class QRCodeTest {
 
-    // Needs to make QRCode based on textCode
-//    public QRCode mockScannedQRCode() {
-//        String textCode =
-//    }
 
     /**
      * Creates mock QRCode with all fields null
+     *
      * @return the mock QRCode
      */
     public QRCode mockEmptyQRCode() {
@@ -26,6 +23,7 @@ public class QRCodeTest {
 
     /**
      * Creates mock QRCode with initialized fields
+     *
      * @return the mock QRCode
      */
     public QRCode mockQRCode() {
@@ -94,7 +92,7 @@ public class QRCodeTest {
      * Test getting and setting code name
      */
     @Test
-    public void testCodeName(){
+    public void testCodeName() {
         QRCode code = mockEmptyQRCode();
 
         assertNull(code.getCodeName(), "Name should be null");

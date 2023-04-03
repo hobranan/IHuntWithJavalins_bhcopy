@@ -12,9 +12,10 @@ import java.util.List;
  * This class represents a Player who competes to scan and own more valuable QRCodes than other
  * Players in the application.
  * Design Patterns: none
+ *
  * @version 1.0
  */
-    public class Player implements Serializable {
+public class Player implements Serializable {
     /**
      * Holds the username of the Player
      */
@@ -51,9 +52,10 @@ import java.util.List;
 
     /**
      * Constructor for new instance of Player object without email given
-     * @param username The username of the Player
-     * @param region The region the Player is in
-     * @param email the email of the player
+     *
+     * @param username   The username of the Player
+     * @param region     The region the Player is in
+     * @param email      the email of the player
      * @param dateJoined the date the user created player
      */
     public Player(String username, String email, String region, String dateJoined) {
@@ -65,6 +67,7 @@ import java.util.List;
 
     /**
      * Gets the date the user joined
+     *
      * @return the date the user joined
      */
     public String getDateJoined() {
@@ -73,6 +76,7 @@ import java.util.List;
 
     /**
      * Sets the date the user joined
+     *
      * @param dateJoined the date to set as the user's join date
      */
     public void setDateJoined(String dateJoined) {
@@ -81,6 +85,7 @@ import java.util.List;
 
     /**
      * Gets the username of the Player
+     *
      * @return The String representing the username of the Player
      */
     public String getUsername() {
@@ -89,6 +94,7 @@ import java.util.List;
 
     /**
      * Sets the username of the Player
+     *
      * @param username The String representing the username of the Player
      */
     public void setUsername(String username) {     // This setter may be deleted if we decide a Player cannot change their username(although I think the functionality is good if an administrator wishes to get rid of someone's inappropriate name)
@@ -97,6 +103,7 @@ import java.util.List;
 
     /**
      * Gets the email of the Player
+     *
      * @return The String representing the email of the Player
      */
     public String getEmail() {
@@ -105,6 +112,7 @@ import java.util.List;
 
     /**
      * Sets the email of the Player
+     *
      * @param email The String representing the email of the Player
      */
     public void setEmail(String email) {
@@ -113,6 +121,7 @@ import java.util.List;
 
     /**
      * Gets the region the Player is playing in
+     *
      * @return The String representing the region the Player is playing in
      */
     public String getRegion() {
@@ -121,6 +130,7 @@ import java.util.List;
 
     /**
      * Sets the region the Player is playing in
+     *
      * @param region The String representing the region the Player is playing in
      */
     public void setRegion(String region) {
@@ -129,6 +139,7 @@ import java.util.List;
 
     /**
      * Gets the list of QRCode objects the Player has scanned
+     *
      * @return The list containing QRCode objects the Player has scanned
      */
     public List<QRCode> getCodes() {
@@ -137,6 +148,7 @@ import java.util.List;
 
     /**
      * Adds all codes from list to Player costs
+     *
      * @param codes Codes to add to player
      */
     public void setCodes(ArrayList<QRCode> codes) {
@@ -146,6 +158,7 @@ import java.util.List;
 
     /**
      * Adds a QRCode to the list of codes the Player has scanned
+     *
      * @param code The QRCode the Player scanned to be added to list of codes
      */
     public void addCode(QRCode code) {
@@ -154,6 +167,7 @@ import java.util.List;
 
     /**
      * Adds all QRCodes from list to Player list of codes
+     *
      * @param codes The list containing QRCode objects to add to Player list
      */
     public void addCodes(List<QRCode> codes) {
@@ -162,6 +176,7 @@ import java.util.List;
 
     /**
      * Deletes a QRCode from the list of codes the Player has scanned
+     *
      * @param code The QRCode to be removed from list of codes Player has scanned
      */
     public void delCode(QRCode code) {
@@ -170,8 +185,10 @@ import java.util.List;
 
 
     //this compares whole code, we need to just compare bode hash (dates will almost almost be different)
+
     /**
      * Checks if the QRCode given is a QRCode the Player has scanned
+     *
      * @param code The QRCode to be searched for in the Player's list of codes
      * @return True if the QRCode is in the Player list of codes, false otherwise
      */
@@ -185,9 +202,10 @@ import java.util.List;
 
     /**
      * Gets the sum of points from QRCode objects the Player has scanned
+     *
      * @return sum of points from QRCode objects the Player has scanned
      */
-    public int getSumOfCodePoints(){
+    public int getSumOfCodePoints() {
         List<QRCode> all_codes = getCodes();
         int sum = 0;
         for (QRCode object : all_codes) {
@@ -198,20 +216,23 @@ import java.util.List;
 
     /**
      * Gets the sum of codes Player has
+     *
      * @return the sum of codes
      */
-    public int getSumOfCodes(){
+    public int getSumOfCodes() {
         return codes.size();
     }
+
     /**
      * Gets the value of the highest code Player has
+     *
      * @return the highest value of Player codes owned
      */
     public int getHighestCode() {
         List<QRCode> all_codes = getCodes();
         int max_code = 0;
         for (QRCode object : all_codes) {
-            if (Integer.parseInt(object.getCodePoints())>max_code){
+            if (Integer.parseInt(object.getCodePoints()) > max_code) {
                 max_code = Integer.parseInt(object.getCodePoints());
             }
         }

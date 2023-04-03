@@ -23,7 +23,7 @@ import java.util.Comparator;
  * chain of responsibility pattern - ComparisonChain class from Google Guava library
  *
  * @version 1.0
- * */
+ */
 public class PlayerController {
     /**
      * The activity currently using the controller
@@ -44,6 +44,7 @@ public class PlayerController {
 
     /**
      * Constructor to initialize PlayerController
+     *
      * @param activity the activity using the controller
      */
     public PlayerController(AppCompatActivity activity) {
@@ -54,7 +55,8 @@ public class PlayerController {
 
     /**
      * Adds player(user) to the database
-     * @param player the player data to add to the database
+     *
+     * @param player   the player data to add to the database
      * @param listener the listener to call after adding
      */
     public void addUser(Player player, OnCompleteListener<Player> listener) {
@@ -80,6 +82,7 @@ public class PlayerController {
 
     /**
      * Gets the player data from the database
+     *
      * @param username the username of the player to get the data from
      * @param listener the listener to call after getting
      */
@@ -106,10 +109,11 @@ public class PlayerController {
 
     /**
      * Gets all players data from the database
+     *
      * @param listener the listener to call after getting all player data
      */
     public void getAllPlayerData(OnCompleteListener<ArrayList<Player>> listener) {
-        playerDB.getAllPlayers((playerList, success) ->{
+        playerDB.getAllPlayers((playerList, success) -> {
             if (success) {
                 Log.d(TAG, "All player data obtained");
                 listener.onComplete(playerList, true);
@@ -122,7 +126,8 @@ public class PlayerController {
 
     /**
      * Gets regional players from a given array of players
-     * @param user the user of the app
+     *
+     * @param user       the user of the app
      * @param playerList array of all players
      * @return array of players with the same region as user
      */
@@ -131,7 +136,7 @@ public class PlayerController {
         for (Player plr : playerList) {
             if ((user.getRegion()).equals(plr.getRegion())) {
                 regionalPlayers.add(plr);
-                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " "+ plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
+                Log.d(TAG, "profile : regional_players.add(plr): " + plr.getUsername() + " " + plr.getRegion() + " " + plr.getSumOfCodePoints() + " " + plr.getSumOfCodes() + " " + plr.getHighestCode());
             }
         }
         return regionalPlayers;
@@ -139,10 +144,11 @@ public class PlayerController {
 
     /**
      * Gets the ranking of the user compared to other players in the playerList
-     * @param user the user playing the app
+     *
+     * @param user       the user playing the app
      * @param playerList list of players to compare user to
-     * @param wordBrake string which is modified to display ranking
-     * @param rankType string representing how to compare user with others
+     * @param wordBrake  string which is modified to display ranking
+     * @param rankType   string representing how to compare user with others
      * @return string containing user ranking info
      */
     public String getRanking(Player user, ArrayList<Player> playerList, String wordBrake, String rankType) {
@@ -179,8 +185,9 @@ public class PlayerController {
 
     /**
      * Sorts players in list based on given query choice
+     *
      * @param playerList the list of players to sort
-     * @param query string representing how to sort the players
+     * @param query      string representing how to sort the players
      * @return array of sorted players
      */
     public ArrayList<Player> sortPlayers(ArrayList<Player> playerList, String query) {
@@ -211,7 +218,7 @@ public class PlayerController {
                     return Integer.compare(p2size, p1size);
                 }
             });
-        } else if (query.toLowerCase().equals("name")){
+        } else if (query.toLowerCase().equals("name")) {
             Collections.sort(playerList, new Comparator<Player>() {
                 @Override
                 public int compare(Player p1, Player p2) {
@@ -235,9 +242,10 @@ public class PlayerController {
 
     /**
      * Gets all players in list which contain the query
+     *
      * @param players the list of players to search through
-     * @param query the string which will be searched for in player data
-     * @param type string representing where to search for query in player data
+     * @param query   the string which will be searched for in player data
+     * @param type    string representing where to search for query in player data
      * @return list of players who contain the query
      */
     public ArrayList<Player> getPlayersContainQuery(ArrayList<Player> players, String query, String type) {
@@ -261,10 +269,11 @@ public class PlayerController {
 
     /**
      * Converts date time to a more easily readable format
+     *
      * @param joinedDate the date time
      * @return string of formatted date time
      */
-    public String getNiceDateFormat (String joinedDate){
+    public String getNiceDateFormat(String joinedDate) {
         String date = joinedDate;
         String date_joined = "";
         if (date != null) {
@@ -311,6 +320,7 @@ public class PlayerController {
 
     /**
      * Calculates the total points the player has
+     *
      * @param player the player whose code points is being calculated
      * @return the total sum of code points
      */
@@ -320,6 +330,7 @@ public class PlayerController {
 
     /**
      * Calculates the highest value code the player has
+     *
      * @param player the player whose highest code is being calculated
      * @return the value of the highest code player owns
      */
@@ -329,6 +340,7 @@ public class PlayerController {
 
     /**
      * Gets the total codes a player owns
+     *
      * @param player the player whose code count is being summed
      * @return the sum of the player's code count
      */

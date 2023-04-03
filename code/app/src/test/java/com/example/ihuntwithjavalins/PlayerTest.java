@@ -20,11 +20,6 @@ public class PlayerTest {
      */
     public Player mockPlayer() {return new Player();}
 
-//    /**
-//     * Creates mock player with only username and region
-//     * @return the mock player
-//     */
-//    public Player mockPlayerWithSomeInfo(){return new Player("Sabel Storm", "Canada");}
 
     /**
      * Creates mock player with only username and region

@@ -37,11 +37,13 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
     private ImageView codePicImage;
     private Button quickNavButton;
     private QRCode thisCode;
+
     /**
      * Initializes the activity and its components.
      * Retrieves the QRCode object from the previous activity and displays its information.
      * Retrieves the image associated with the QRCode from Firebase Storage and displays it in an ImageView.
      * Sets up the buttons to allow the user to view a photo associated with the QRCode or view its location on a map.
+     *
      * @param savedInstanceState The saved instance state of the activity.
      */
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +73,17 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         monsterID.generateAndSetImage(codePicImage, thisCode.getCodeHash());
 
         // https://stackoverflow.com/questions/29801031/how-to-add-button-tint-programmatically
-        if ( (thisCode.getCodePhotoRef() == null) || (thisCode.getCodePhotoRef().equals(""))){
+        if ((thisCode.getCodePhotoRef() == null) || (thisCode.getCodePhotoRef().equals(""))) {
             photoButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
         }
-        if ( (thisCode.getCodeLat() == null) || (thisCode.getCodeLat().equals(""))){
+        if ((thisCode.getCodeLat() == null) || (thisCode.getCodeLat().equals(""))) {
             geoButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
         }
 
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( (thisCode.getCodePhotoRef() != null) && (!thisCode.getCodePhotoRef().equals(""))){
+                if ((thisCode.getCodePhotoRef() != null) && (!thisCode.getCodePhotoRef().equals(""))) {
                     Intent intent = new Intent(QRCodeImageViewActivity.this, PhotoViewActivity.class);
                     intent.putExtra("imageSavedCodePhotoRef", thisCode.getCodePhotoRef());
                     startActivity(intent);
@@ -95,7 +97,7 @@ public class QRCodeImageViewActivity extends AppCompatActivity {
         geoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!thisCode.getCodeLat().equals("") && !thisCode.getCodeLon().equals("") ){
+                if (!thisCode.getCodeLat().equals("") && !thisCode.getCodeLon().equals("")) {
                     Intent intent = new Intent(QRCodeImageViewActivity.this, CodeRefOpenStreetMapActivity.class);
                     intent.putExtra("imageSavedCode", (Serializable) thisCode);
                     startActivity(intent);

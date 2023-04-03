@@ -15,14 +15,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-/** Tests various methods from the QRCode folder in the project */
+/**
+ * Tests various methods from the QRCode folder in the project
+ */
 public class QRCodeUnitTest {
     /**
      * Method to convert a given Unix format to Datetime string from the CommentListForCommentAdapter class in the QRCode folder
      * Method has been copied due to the Dependency of the class on context
+     *
      * @param unixMillis represents a unix time stamp
      * @return simple Date Time string
-     * */
+     */
     public String convertUnixMillisToDateTime(String unixMillis) {
         // https://javarevisited.blogspot.com/2012/12/how-to-convert-millisecond-to-date-in-java-example.html#axzz7wzpr7WmN
         //current time in milliseconds
@@ -36,9 +39,11 @@ public class QRCodeUnitTest {
     /**
      * Method to sort codes copied from the QRCodeController class in the QRCodes folder
      * Method has been copied due to the Dependency of the QRCodeController class on activities
-     * @param query a string query for sorting
+     *
+     * @param query    a string query for sorting
      * @param codeList a list of unsorted QRCodes
-     * @return an array list of sorted QRCodes*/
+     * @return an array list of sorted QRCodes
+     */
     public ArrayList<QRCode> sortCodes(ArrayList<QRCode> codeList, String query) {
         if (query.toLowerCase().equals("name")) {
             Collections.sort(codeList, new Comparator<QRCode>() {
@@ -69,7 +74,8 @@ public class QRCodeUnitTest {
 
     /**
      * Method to convert a given string of a date to a more legible format
-     * copied from the QRCodeViewActivity in the QRCode folder of the project*/
+     * copied from the QRCodeViewActivity in the QRCode folder of the project
+     */
     String getNiceDateFormat(String joinedDate) {
         String date = joinedDate;
         String date_joined = "";
@@ -115,7 +121,9 @@ public class QRCodeUnitTest {
         return date_joined;
     }
 
-    /** Test method from the CommentListForCommentAdapter class in the QRCode folder */
+    /**
+     * Test method from the CommentListForCommentAdapter class in the QRCode folder
+     */
     @Test
     public void testConvertUnixMillisToDateTime() {
         // Test for valid Unix timestamp
@@ -126,7 +134,8 @@ public class QRCodeUnitTest {
     }
 
     /**
-     * Test method from QRCodeController class for sorting a given list of QRCodes based on a query string */
+     * Test method from QRCodeController class for sorting a given list of QRCodes based on a query string
+     */
     @Test
     public void sortCodesTest() {
         // Create a list of QRCode objects to be sorted
@@ -158,7 +167,8 @@ public class QRCodeUnitTest {
     }
 
     /**
-     * Test method from QRCodeViewActivity for converting a given date string to a nicer format */
+     * Test method from QRCodeViewActivity for converting a given date string to a nicer format
+     */
     @Test
     public void getNiceDateFormatTest() {
         // Test with a valid date string
