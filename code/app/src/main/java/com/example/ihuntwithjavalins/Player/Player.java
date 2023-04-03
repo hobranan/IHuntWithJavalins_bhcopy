@@ -51,22 +51,6 @@ import java.util.List;
         this.dateJoined = "00000000";
     }
 
-//    /**
-//     * TODO
-//     */
-//    public Player(String username) {
-//        this.username = username;
-//    }
-//
-//    /**
-//     * TODO
-//     */
-//    public Player(String username, String email, String region) {
-//        this.username = username;
-//        this.email = email;
-//        this.region = region;
-//    }
-
     /**
      * Constructor for new instance of Player object without email given
      * @param username The username of the Player

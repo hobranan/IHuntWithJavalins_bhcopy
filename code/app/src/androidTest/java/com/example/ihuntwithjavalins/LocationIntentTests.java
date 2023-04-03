@@ -29,6 +29,7 @@ public class LocationIntentTests {
 
     /**
      * Sets up the Activity before every test
+     * @throws Exception Thrown when robotium setup fails
      */
     @Before
     public void setUp() throws Exception {

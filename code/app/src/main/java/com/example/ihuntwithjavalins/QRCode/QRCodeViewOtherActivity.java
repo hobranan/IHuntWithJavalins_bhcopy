@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ihuntwithjavalins.Comment.Comment;
+import com.example.ihuntwithjavalins.Comment.CommentListForCommentAdapter;
 import com.example.ihuntwithjavalins.MonsterID;
 import com.example.ihuntwithjavalins.QuickNavActivity;
 import com.example.ihuntwithjavalins.R;
