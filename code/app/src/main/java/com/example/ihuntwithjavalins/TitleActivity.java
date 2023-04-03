@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.checkerframework.checker.units.qual.A;
 
+/**
+ * Displays the starter title page that the app opens to*/
 public class TitleActivity extends Activity {
 
     @Override

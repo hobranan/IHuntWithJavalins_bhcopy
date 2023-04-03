@@ -19,7 +19,10 @@ import java.util.Date;
 public class QRCodeUnitTest {
     /**
      * Method to convert a given Unix format to Datetime string from the CommentListForCommentAdapter class in the QRCode folder
-     * Method has been copied due to the Dependency of the class on context */
+     * Method has been copied due to the Dependency of the class on context
+     * @param unixMillis represents a unix time stamp
+     * @return simple Date Time string
+     * */
     public String convertUnixMillisToDateTime(String unixMillis) {
         // https://javarevisited.blogspot.com/2012/12/how-to-convert-millisecond-to-date-in-java-example.html#axzz7wzpr7WmN
         //current time in milliseconds
@@ -32,7 +35,10 @@ public class QRCodeUnitTest {
 
     /**
      * Method to sort codes copied from the QRCodeController class in the QRCodes folder
-     * Method has been copied due to the Dependency of the QRCodeController class on activities */
+     * Method has been copied due to the Dependency of the QRCodeController class on activities
+     * @param query a string query for sorting
+     * @param codeList a list of unsorted QRCodes
+     * @return an array list of sorted QRCodes*/
     public ArrayList<QRCode> sortCodes(ArrayList<QRCode> codeList, String query) {
         if (query.toLowerCase().equals("name")) {
             Collections.sort(codeList, new Comparator<QRCode>() {

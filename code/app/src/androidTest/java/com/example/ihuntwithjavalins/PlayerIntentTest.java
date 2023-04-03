@@ -93,8 +93,8 @@ public class PlayerIntentTest {
      * Sets up the Activity before every test
      * creates a player with 2 QR codes and logs in as that player
      * Creates an extra QR code for later testing
+     * @throws Exception if the setup fails
      */
-
     @Before
     public void setUp() throws Exception {
 
@@ -152,6 +152,7 @@ public class PlayerIntentTest {
 
     /**
      * Makes sure the set up didn't fail
+     * @throws Exception if the setup fails
      */
     @Test
     public void start() throws Exception{
@@ -164,6 +165,7 @@ public class PlayerIntentTest {
     /**
      * Makes sure the player can open the camera to scan a QR Code for
      * US 01.01.01
+     * @throws InterruptedException if the remove player takes too long to remove
      */
     @Test
     public void openCamera() throws InterruptedException {
@@ -227,6 +229,7 @@ public class PlayerIntentTest {
      * Navigates to the players profile and checks for the total codes a player has and their total points
      * US 01.05.01
      * US 01.06.01
+     * @throws InterruptedException if the remove player takes too long to remove
      */
     @Test
     public void totalCodes() throws InterruptedException {

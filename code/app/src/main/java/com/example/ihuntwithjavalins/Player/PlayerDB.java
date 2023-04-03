@@ -318,7 +318,7 @@ public class PlayerDB {
 
     /**
      * Returns a list of QRCodes the user owns
-     * @return list of user owned QRCodes
+     * @param listener an on complete listener for a QRCOde array
      */
     public void getUserCodes (OnCompleteListener<ArrayList<QRCode>> listener){
         codeDB.getCodes((codeList, success)->{
@@ -333,7 +333,7 @@ public class PlayerDB {
     /**
      * Returns a list of QRCodes the given player owns
      * @param player the given player who owns the codes
-     * @return list of player owned QRCodes
+     * @param listener the on complete listener for a list of QRCodes
      */
     public void getPlayerCodes(Player player, OnCompleteListener<ArrayList<QRCode>> listener){
         String playerUsername = player.getUsername();

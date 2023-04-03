@@ -27,6 +27,7 @@ public class ScoringIntentTests {
 
     /**
      * Sets up the Activity before every test
+     * @throws Exception if the setup fails
      */
     @Before
     public void setUp() throws Exception {
@@ -35,6 +36,7 @@ public class ScoringIntentTests {
 
     /**
      * Makes sure the set up didn't fail
+     * @throws Exception if the setup fails
      */
     @Test
     public void start() throws Exception {
@@ -52,6 +54,7 @@ public class ScoringIntentTests {
     /**
      * Checks players high scores when clicked on button US07.01.01
      * Able to see high-score when clicked on button
+     * @throws Exception if the setup fails
      */
     @Test
     public void highScores() throws Exception{

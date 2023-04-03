@@ -190,7 +190,7 @@ public class QRCodeDB {
      * Gets and returns a list of QRCodes from the collection in the database
      * Used Lab 5 Code to iterate over Document Snapshots.
      * Citation: How to get data from firestore https://firebase.google.com/docs/firestore/query-data/get-data#java_14
-     * @return list of QRCodes from the database collection
+     * @param listener the on complete listener for a list of QRCodes
      */
     public void getCodes(OnCompleteListener<ArrayList<QRCode>> listener) {
         collection.get().addOnCompleteListener(new com.google.android.gms.tasks.OnCompleteListener<QuerySnapshot>() {

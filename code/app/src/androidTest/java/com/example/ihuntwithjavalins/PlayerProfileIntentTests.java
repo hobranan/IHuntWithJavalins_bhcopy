@@ -22,13 +22,14 @@ public class PlayerProfileIntentTests {
     private Solo solo;
 
     /**
-     * Puts us in ProfilActivity
+     * Puts us in ProfileActivity
      */
     @Rule
     public ActivityTestRule rule = new ActivityTestRule(ProfileActivity.class, true, true);
 
     /**
      * Sets up the Activity before every test
+     * @throws Exception if the setup fails
      */
     @Before
     public void setUp() throws Exception {
@@ -37,6 +38,7 @@ public class PlayerProfileIntentTests {
 
     /**
      * Makes sure the set up didn't fail
+     * @throws Exception if the setup fails
      */
     @Test
     public void start() throws Exception {

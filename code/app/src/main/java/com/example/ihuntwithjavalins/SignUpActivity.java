@@ -32,6 +32,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * Class for the signup_login page that the user opens */
 public class SignUpActivity extends AppCompatActivity {
     private Button confirmSignup;
     private EditText editText_signup_Username;

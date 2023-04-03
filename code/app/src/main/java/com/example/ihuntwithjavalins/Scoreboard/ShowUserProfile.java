@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Shows the other user profiles from the scoreboaard
+ * */
 public class ShowUserProfile extends AppCompatActivity {
     private Player player_details = new Player();
     private ArrayList<Player> playerList = new ArrayList<>();

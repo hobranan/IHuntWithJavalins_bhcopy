@@ -10,6 +10,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
+<<<<<<< Updated upstream
+=======
+ *
+>>>>>>> Stashed changes
  * Connects to Database, gettings the users unique firestore ID to identify them.
  * Predominantly code is from Well Fed project
  *

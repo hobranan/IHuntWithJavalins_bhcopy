@@ -60,8 +60,6 @@ import java.util.ArrayList;
  * The OpenStreetMapActivity class is an activity that displays a map using osmdroid library.
  * It loads the osmdroid configuration and inflates the map layout, which contains the map and some UI elements.
  * It also handles location tracking, map zooming and panning, and adding overlays to the map.
- * TODO: fix issue where map seems to overtake app and nearly-freezes back button action.
- * TODO: add algorithm to find codes within a lat/lon range
  */
 public class OpenStreetMapActivity extends AppCompatActivity {
     private String TAGmap = "Sample"; // used as string tag for debug-log messaging

@@ -47,8 +47,6 @@ import java.util.ArrayList;
  * singleton pattern - configuration class using getInstance()
  * observer pattern - ItemizedOverlayWithFocus observes the users interactions and notifies the listener
  * command pattern - view.onClickListener
- * TODO: fix issue where map seems to overtake app and nearly-freezes back button action.
- * TODO: add algorithm to find codes within a lat/lon range
  */
 public class CodeRefOpenStreetMapActivity extends AppCompatActivity {
     private String TAGmap = "Sample"; // used as string tag for debug-log messaging
